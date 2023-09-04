@@ -22,10 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -42,27 +39,21 @@ import androidx.compose.ui.unit.sp
 import com.frank.word.ChooseLessonMenu
 import com.frank.word.R
 import com.frank.word.addTime
+import com.frank.word.currentSentence1
+import com.frank.word.currentSentence2
+import com.frank.word.currentShowWord
+import com.frank.word.currentWordClass
 import com.frank.word.hideFunction
+import com.frank.word.inputText
+import com.frank.word.isDEL
+import com.frank.word.isFAVORITE
 import com.frank.word.isPlay
+import com.frank.word.isShowEditText
+import com.frank.word.isToAddTime
 import com.frank.word.musicStep
 import com.frank.word.myFontSize
+import com.frank.word.wordClassColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-
-var currentShowWord by mutableStateOf("")
-var currentWordClass by mutableStateOf("")
-var currentSentence1 by mutableStateOf("")
-var currentSentence2 by mutableStateOf("")
-var inputText by mutableStateOf("")
-var isShowEditText by mutableStateOf(false)
-
-var isNORMAL by mutableStateOf(false)
-var isFAVORITE by mutableStateOf(false)
-var isDEL by mutableStateOf(false)
-var isToAddTime by mutableStateOf(false)
-var isAdjust by mutableStateOf(false)
-var isShowDialog by mutableStateOf(false)
-var isShowPopupMenu by mutableStateOf(false)
-var wordClassColor by mutableStateOf(0)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -145,7 +136,8 @@ fun Home(
                     .padding(5.dp)
             )
         }
-        if (isShowEditText && !isToAddTime) {
+        if (isShowEditText && !isToAddTime
+        ) {
             Row(
                 Modifier
                     .fillMaxWidth()

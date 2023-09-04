@@ -1,7 +1,6 @@
 package com.frank.word
 
 import android.widget.Toast
-import com.frank.word.ui.inputText
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream

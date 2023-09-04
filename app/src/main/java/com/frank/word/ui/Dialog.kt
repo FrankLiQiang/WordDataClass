@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.frank.word.fileBeginIndex
 import com.frank.word.fileEndIndex
+import com.frank.word.isShowDialog
 
 var maxLessonNum = 0
 

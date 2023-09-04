@@ -1,13 +1,10 @@
 package com.frank.word
 
 import android.widget.Toast
-import com.frank.word.ui.inputText
-import com.frank.word.ui.isAdjust
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
-import java.text.DecimalFormat
 
 fun hideFunction(str: String) {
     //inputText = str
@@ -19,7 +16,7 @@ fun hideFunction(str: String) {
         }
         testWord(str)
     } else if (str.endsWith("＜") || str.endsWith("<")) {
-        showPrev();
+        showPrev()
         inputText = ""
     } else if (str.endsWith(" ")) {
         inputText = ""
@@ -66,7 +63,7 @@ fun addWord(str: String) {
     }
     var time = wordList[wordIndex].startPlayTime + wordList[wordIndex + 1].startPlayTime
     time /= 2
-    var word = Word()
+    val word = Word()
     word.rememberDepth = 0
     word.wordClass = "0"
     word.startPlayTime = time
@@ -148,7 +145,7 @@ fun removeWord2() {
 
 fun editWord(s: String) {
     val strArray: Array<String> =
-        s.substring(0, s.toString().length - 1).split("\n".toRegex())
+        s.substring(0, s.length - 1).split("\n".toRegex())
             .dropLastWhile { it.isEmpty() }
             .toTypedArray()
     when (strArray.size) {
@@ -195,7 +192,7 @@ fun searchWord(s: String) {
         Toast.makeText(mainActivity, "请选择顺序显示模式。", Toast.LENGTH_LONG).show()
         return
     }
-    val str: String = s.toString().substring(0, s.toString().length - 1)
+    val str: String = s.substring(0, s.length - 1)
     var foundIndex = -1
     for (i in wordList.indices) {
         if (wordList[i].foreign.contains(str)) {
@@ -241,10 +238,12 @@ fun searchWord0(searchStr: String): String {
                 val fileNames = lrcFile.list()
                 var fileName: String
                 var tmp: String?
-                for (j in fileNames.indices) {
-                    fileName = pathName + "/" + fileNames[j]
-                    tmp = searchWordFromFile(fileName, folder[i], fileNames[j], searchStr)
-                    ret.append(tmp)
+                if (fileNames != null) {
+                    for (j in fileNames.indices) {
+                        fileName = pathName + "/" + fileNames[j]
+                        tmp = searchWordFromFile(fileName, folder[i], fileNames[j], searchStr)
+                        ret.append(tmp)
+                    }
                 }
             }
         }
@@ -259,10 +258,10 @@ fun searchWord0(searchStr: String): String {
 
 fun searchWordFromFile(
     findFileName: String, folder: String,
-    fileName: String, search_str: String
-): String? {
+    fileName: String, searchStr: String
+): String {
     val lrcFile = File(findFileName)
-    val tmp: String = searchWordFromTxtFile(lrcFile, search_str)
+    val tmp: String = searchWordFromTxtFile(lrcFile, searchStr)
     return if (tmp.isEmpty()) {
         ""
     } else {
@@ -274,7 +273,7 @@ fun searchWordFromFile(
 
 fun searchWordFromTxtFile(file: File?, str: String?): String {
     val ret = java.lang.StringBuilder()
-    var tmp = ""
+    var tmp:String
     var read: InputStreamReader? = null
     var bufferedReader: BufferedReader? = null
     try {

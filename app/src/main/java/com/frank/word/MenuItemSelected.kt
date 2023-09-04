@@ -2,8 +2,6 @@ package com.frank.word
 
 import android.view.MenuItem
 import android.widget.Toast
-import com.frank.word.ui.inputText
-import com.frank.word.ui.isShowEditText
 
 fun readOnly(item: MenuItem) {
     item.isChecked = isShowEditText

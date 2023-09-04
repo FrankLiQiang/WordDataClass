@@ -1,8 +1,5 @@
 package com.frank.word
 
-import com.frank.word.ui.isToAddTime
-import java.text.DecimalFormat
-
 fun addTimeInit() {
     isToAddTime = true
     playOrder.clear()
@@ -16,7 +13,6 @@ fun addTimeInit() {
 
 fun addTime() {
     if (wordIndex < wordList.size) {
-        val decimalFormat = DecimalFormat("0000000")
         iStart = mediaPlayer.currentPosition
         showCurrentWord()
         wordList[wordIndex].startPlayTime = iStart
@@ -40,7 +36,6 @@ fun changeTime(isToLeft: Boolean) {
         }
     } else {
         if (iStart < mediaPlayer.duration - 200) {
-            val decimalFormat = DecimalFormat("0000000")
             iStart += 100
             wordList[playOrder[wordIndex]].startPlayTime = iStart
         }

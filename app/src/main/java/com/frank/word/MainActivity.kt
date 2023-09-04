@@ -26,8 +26,6 @@ import androidx.core.view.WindowCompat
 import androidx.documentfile.provider.DocumentFile
 import com.frank.word.ui.Home
 import com.frank.word.ui.SetBlackSystemBars
-import com.frank.word.ui.isShowDialog
-import com.frank.word.ui.isShowPopupMenu
 import com.frank.word.ui.maxLessonNum
 import com.frank.word.ui.theme.WordTheme
 import kotlin.system.exitProcess

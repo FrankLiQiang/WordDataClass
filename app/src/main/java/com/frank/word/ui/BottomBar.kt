@@ -27,6 +27,7 @@ import com.frank.word.R
 import com.frank.word.addFavoriteWord
 import com.frank.word.changeTime
 import com.frank.word.delWord
+import com.frank.word.isAdjust
 import com.frank.word.setWordNormal
 import com.frank.word.showNext
 import com.frank.word.showPrev

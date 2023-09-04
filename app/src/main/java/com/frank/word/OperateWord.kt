@@ -1,9 +1,5 @@
 package com.frank.word
 
-import com.frank.word.ui.isDEL
-import com.frank.word.ui.isFAVORITE
-import com.frank.word.ui.isNORMAL
-
 fun addFavoriteWord() {
     if (wordList[playOrder[wordIndex]].rememberDepth == SHOW_FAVORITE) {
         return

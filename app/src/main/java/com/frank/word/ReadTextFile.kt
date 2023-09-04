@@ -1,9 +1,6 @@
 package com.frank.word
 
 import android.widget.Toast
-import com.frank.word.ui.inputText
-import com.frank.word.ui.isAdjust
-import com.frank.word.ui.isToAddTime
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream

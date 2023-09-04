@@ -3,13 +3,6 @@ package com.frank.word
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.frank.word.ui.currentSentence1
-import com.frank.word.ui.currentSentence2
-import com.frank.word.ui.currentShowWord
-import com.frank.word.ui.isAdjust
-import com.frank.word.ui.isDEL
-import com.frank.word.ui.isFAVORITE
-import com.frank.word.ui.isNORMAL
 import kotlin.math.abs
 
 const val SHOW_ALL = 0

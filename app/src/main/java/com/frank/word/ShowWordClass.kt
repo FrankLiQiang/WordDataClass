@@ -1,9 +1,6 @@
 package com.frank.word
 
 import android.widget.Toast
-import com.frank.word.ui.currentWordClass
-import com.frank.word.ui.isAdjust
-import com.frank.word.ui.wordClassColor
 
 val wClass = arrayOf(
     "名词",
