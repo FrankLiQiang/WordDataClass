@@ -69,8 +69,8 @@ fun Home(
         Row(
             Modifier
                 .fillMaxWidth()
-                .height(50.dp)
-                .padding(5.dp)
+                //.height(33.dp)      //小米 Redmi Note11 Pro
+                .height(50.dp)        //Google Pixel 6A
         ) {}
         LinearProgressIndicator(
             progress = musicStep,
