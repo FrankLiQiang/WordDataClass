@@ -19,16 +19,16 @@ const val SHOW_RANGE_ALL = 4
 const val SHOW_RANGE_CLASS = 5
 
 var showWordType: Int = SHOW_ALL
-var iShowRange:Int = SHOW_RANGE_ALL
-var removed_num:Int = 0
-var normal_num:Int = 0
-var favorite_num:Int = 0
-var chosen_num:Int = 0
-var normalIndex:Int = 0
-var delIndex:Int = 0
-var favoriteIndex:Int = 0
-var chosenIndex:Int = 0
-var iEnd:Int = 0
+var iShowRange: Int = SHOW_RANGE_ALL
+var removed_num: Int = 0
+var normal_num: Int = 0
+var favorite_num: Int = 0
+var chosen_num: Int = 0
+var normalIndex: Int = 0
+var delIndex: Int = 0
+var favoriteIndex: Int = 0
+var chosenIndex: Int = 0
+var iEnd: Int = 0
 var isNextLesson: Boolean = false
 var allIndex by mutableStateOf(0)
 var all_num by mutableStateOf(0)
@@ -236,7 +236,7 @@ fun showCurrentWord(): Boolean {
         ) {
             """
      ${wordList[playOrder[wordIndex]].foreign}
-     ${wordList[playOrder[wordIndex]].pronunciation}
+     ${wordList[playOrder[wordIndex]].native}
      """.trimIndent()
         } else {
             """
@@ -248,7 +248,7 @@ fun showCurrentWord(): Boolean {
     } else if (showWordType == SHOW_FOREIGN) {
         str = wordList[playOrder[wordIndex]].foreign
     } else if (showWordType == SHOW_PRONUNCIATION) {
-        str = wordList[playOrder[wordIndex]].component1()
+        str = wordList[playOrder[wordIndex]].pronunciation
     } else if (showWordType == SHOW_NATIVE) {
         str = wordList[playOrder[wordIndex]].native
     }
