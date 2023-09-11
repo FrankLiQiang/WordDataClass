@@ -24,7 +24,7 @@ var isShowPopupMenu by mutableStateOf(false)
 var wordClassColor by mutableStateOf(0)
 
 data class Word(//var playTime: String = "0",
-                var wordClass: String = "",
+                var wordClass: String = "0",
                 var foreign: String = "",
                 var pronunciation: String = "",
                 var native: String = "",

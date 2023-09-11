@@ -20,7 +20,7 @@ fun saveFile(msg: String) {
                 iStart = wordList[i].startPlayTime
                 stringBuffer.append(timeFormat.format(iStart.toLong()))
                 //int a = newClass(iWordClass.get(i));
-                stringBuffer.append(decimalFormat.format(wordList[i].wordClass))
+                stringBuffer.append(decimalFormat.format(wordList[i].wordClass.toInt()))
                 stringBuffer.append(wordList[i].foreign)
                 stringBuffer.append(" ")
                 stringBuffer.append(wordList[i].pronunciation)
