@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val appName = stringResource(id = R.string.app_name)
-            title = appName + "　".repeat(13 - appName.length)
+            title = appName + "_".repeat(26 - appName.length)
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.GetContent()
             ) { result ->

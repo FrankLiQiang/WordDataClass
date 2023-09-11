@@ -45,6 +45,8 @@ fun playMp3(result: Uri, index: Int) {
 }
 
 fun doTask() {
+    if (!mediaPlayer.isPlaying) return
+
     if (!isLRC_Time_OK || !isLRC_Format_OK) {
         iEnd = mediaPlayer.duration
         if (isLRC_Time_OK || !isLRC_Format_OK) {
@@ -66,7 +68,7 @@ fun doTask() {
             if (currentPosition > wordList[playOrder[wordIndex] + 1].startPlayTime) {
                 showNext()
             }
-        } else {
+        } else if (!isAdjust){
             showNext()
         }
     } else {

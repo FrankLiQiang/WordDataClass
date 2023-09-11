@@ -19,7 +19,6 @@ fun saveFile(msg: String) {
                 stringBuffer.append(wordList[i].rememberDepth)
                 iStart = wordList[i].startPlayTime
                 stringBuffer.append(timeFormat.format(iStart.toLong()))
-                //int a = newClass(iWordClass.get(i));
                 stringBuffer.append(decimalFormat.format(wordList[i].wordClass.toInt()))
                 stringBuffer.append(wordList[i].foreign)
                 stringBuffer.append(" ")

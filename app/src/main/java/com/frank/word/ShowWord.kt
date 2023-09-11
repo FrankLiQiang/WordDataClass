@@ -30,8 +30,8 @@ var favoriteIndex: Int = 0
 var chosenIndex: Int = 0
 var iEnd: Int = 0
 var isNextLesson: Boolean = false
-var allIndex by mutableStateOf(0)
-var all_num by mutableStateOf(0)
+var allIndex  = 0   //by mutableStateOf(0)
+var all_num = 0  //by mutableStateOf(0)
 var CurrentWordClass by mutableStateOf(0)
 
 fun showWord() {

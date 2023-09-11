@@ -28,6 +28,7 @@ import com.frank.word.addFavoriteWord
 import com.frank.word.changeTime
 import com.frank.word.delWord
 import com.frank.word.isAdjust
+import com.frank.word.saveFile
 import com.frank.word.setWordNormal
 import com.frank.word.showNext
 import com.frank.word.showPrev
@@ -49,14 +50,21 @@ fun BottomBar() {
             TabItem(
                 R.drawable.outline_chevron_left_24, "Left",
                 Color.White,
-                {changeTime(true)},
+                { changeTime(true) },
+                Modifier
+                    .weight(1f)
+            )
+            TabItem(
+                R.drawable.outline_save_24, "Save",
+                Color.White,
+                { saveFile("") },
                 Modifier
                     .weight(1f)
             )
             TabItem(
                 R.drawable.outline_chevron_right_24, "Right",
                 Color.White,
-                {changeTime(false)},
+                { changeTime(false) },
                 Modifier
                     .weight(1f)
             )
@@ -92,19 +100,27 @@ fun BottomBar() {
 }
 
 @Composable
-fun TabItem(@DrawableRes iconId: Int, title: String, tint: Color, event:()->Unit, modifier: Modifier = Modifier) {
+fun TabItem(
+    @DrawableRes iconId: Int,
+    title: String,
+    tint: Color,
+    event: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val count = remember { mutableStateOf(0) }
     Column(
         modifier
             .padding(vertical = 8.dp)
-            .background(if (count.value == 1) Color.Cyan else Color.Transparent )
+            .background(if (count.value == 1) Color.Cyan else Color.Transparent)
             .pointerInput(Unit) {
                 detectTapGestures(
-                    onPress = { count.value = 1}, // 按下
+                    onPress = { count.value = 1 }, // 按下
 //                    onDoubleTap = { count.value = 2 }, // 双击
 //                    onLongPress = { count.value = 3 }, // 长按
-                    onTap = { count.value = 4
-                        event()} // 单击
+                    onTap = {
+                        count.value = 4
+                        event()
+                    } // 单击
                 )
             },
         horizontalAlignment = Alignment.CenterHorizontally

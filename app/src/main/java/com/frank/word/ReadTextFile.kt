@@ -108,12 +108,17 @@ fun readTxtFileIntoStringArrList(file: File?, isMakeLRC: Boolean) {
                     isLRC_Format_OK = false
                     //error = "1"
                 }
+                word.foreign = strArray[0]
+                word.pronunciation = strArray[0]
+                word.native = strArray[0]
+                wordList.add(word)
                 continue
             }
             if (strArray.size == 2) {
                 word.foreign = strArray[0]
                 word.pronunciation = strArray[0]
                 word.native = strArray[1]
+                wordList.add(word)
                 continue
             }
             if (strArray.size < 3 || lineTxt.trim { it <= ' ' }.isEmpty()) {
