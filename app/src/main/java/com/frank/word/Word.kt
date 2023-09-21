@@ -13,6 +13,7 @@ var currentSentence1 by mutableStateOf("")
 var currentSentence2 by mutableStateOf("")
 var inputText by mutableStateOf("")
 var isShowEditText by mutableStateOf(false)
+var isShowDict by mutableStateOf(false)
 
 var isNORMAL by mutableStateOf(false)
 var isFAVORITE by mutableStateOf(false)
@@ -22,19 +23,21 @@ var isAdjust by mutableStateOf(false)
 var isShowDialog by mutableStateOf(false)
 var isShowPopupMenu by mutableStateOf(false)
 var wordClassColor by mutableStateOf(0)
+var isToDraw by mutableStateOf(0)
 
-data class Word(//var playTime: String = "0",
-                var wordClass: String = "0",
-                var foreign: String = "",
-                var pronunciation: String = "",
-                var native: String = "",
-                var sentence1: String = "",
-                var sentence2: String = "",
-                var sentence3: String = "",
-                var startPlayTime: Int = 0,
+data class Word(
+//var playTime: String = "0",
+    var wordClass: String = "0",
+    var foreign: String = "",
+    var pronunciation: String = "",
+    var native: String = "",
+    var sentence1: String = "",
+    var sentence2: String = "",
+    var sentence3: String = "",
+    var startPlayTime: Int = 0,
 //                var lessonIndex: Int,
-                var rememberDepth: Int = 0,
+    var rememberDepth: Int = 0,
 //                var wordIndex: Int,
-                var isWord: Boolean = true,
-                var isOver: Boolean = false,
+    var isWord: Boolean = true,
+    var isOver: Boolean = false,
 )

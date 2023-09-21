@@ -53,7 +53,7 @@ fun doTask() {
             return
         }
     }
-    if(isFirstTime) {
+    if (isFirstTime) {
         mediaPlayer.seekTo(iStart)
         isFirstTime = false
     }
@@ -68,7 +68,7 @@ fun doTask() {
             if (currentPosition > wordList[playOrder[wordIndex] + 1].startPlayTime) {
                 showNext()
             }
-        } else if (!isAdjust){
+        } else if (!isAdjust) {
             showNext()
         }
     } else {

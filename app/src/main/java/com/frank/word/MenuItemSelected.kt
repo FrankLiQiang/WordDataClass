@@ -49,6 +49,8 @@ fun elseItemSelect(item: MenuItem): Boolean {
 fun doHome() {
     if (isFirstTime) {
         inputText = ""
+        isShowDict = true
+        isToDraw = 1 - isToDraw
     } else {
         if (!isPlay) {
             mediaPlayer.start()
@@ -175,7 +177,7 @@ fun showHelp() {
 
 }
 
-fun showWordType(item: MenuItem, type:Int) {
+fun showWordType(item: MenuItem, type: Int) {
     item.isChecked = true
     item.isCheckable = true
     showWordType = type

@@ -25,12 +25,12 @@ fun readTextFile(index: Int) {
         start = tmp.lastIndexOf("/")
         folderName = pathAndName.substring(start + 1, end)
     }
-    lrcPath = mainActivity.getExternalFilesDir(null).toString()
     val pathName = "$lrcPath/$folderName/$fileName.txt"
     try {
         isPlay = true
         isLRC_Format_OK = false
         isLRC_Time_OK = false
+        inputText = ""
         iStart = 0
         wordIndex = index
         loopIndex = 0
@@ -77,7 +77,9 @@ fun readTxtFileIntoStringArrList(file: File?, isMakeLRC: Boolean) {
         var strArray: Array<String>
         isLRC_Time_OK = true
         isLRC_Format_OK = true
-        while (bufferedReader.readLine().also { lineTxt = it?:"" } != null && !lineTxt.isEmpty()) {
+        while (bufferedReader.readLine()
+                .also { lineTxt = it ?: "" } != null && !lineTxt.isEmpty()
+        ) {
             if (lineTxt.length < 10 || !isNumeric(lineTxt.substring(0, 10))) {
                 isLRC_Time_OK = false
             }
@@ -177,7 +179,7 @@ fun showWordsNormal() {
     menu_word_class?.isVisible = true
 }
 
-fun readRawTxtFile(file:File): String {
+fun readRawTxtFile(file: File): String {
     val read: InputStreamReader
     val bufferedReader: BufferedReader
     val stringBuffer = StringBuilder()

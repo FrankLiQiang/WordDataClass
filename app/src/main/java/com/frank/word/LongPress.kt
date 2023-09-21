@@ -28,7 +28,7 @@ fun LongPressButton(
         modifier
             .pointerInput(Unit) {
                 detectDragGesturesAfterLongPress(
-                    onDrag = { _, _ ->},
+                    onDrag = { _, _ -> },
                     onDragStart = {
                         isLong = true
                         coroutineScope.launch {

@@ -162,7 +162,7 @@ fun showClassNext() {
     }
 }
 
-fun showClassVt():Boolean {
+fun showClassVt(): Boolean {
     CurrentWordClass = 16
     if (iShowRange == SHOW_RANGE_CLASS) {
         showClassNext()
@@ -179,7 +179,7 @@ fun showClassVt():Boolean {
     return true
 }
 
-fun showClassVi():Boolean {
+fun showClassVi(): Boolean {
     CurrentWordClass = 17
     if (iShowRange == SHOW_RANGE_CLASS) {
         showClassNext()

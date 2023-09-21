@@ -11,8 +11,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,10 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.documentfile.provider.DocumentFile
 import com.frank.word.ui.Home
 import com.frank.word.ui.SetBlackSystemBars
+import com.frank.word.ui.ShowTextFieldFun
 import com.frank.word.ui.maxLessonNum
 import com.frank.word.ui.theme.WordTheme
 import kotlin.system.exitProcess
@@ -118,12 +126,33 @@ class MainActivity : ComponentActivity() {
                     contentColor = Color.Black,
                 ) {
                     SetBlackSystemBars()
-                    if (!isFirstTime) {
+                    if (isFirstTime) {
+                        if (isShowDict) {
+                            Column {
+                                Row(Modifier.height(40.dp)) {}
+                                ShowTextFieldFun(
+                                    Modifier
+                                        .weight(1.0f)
+                                        .fillMaxWidth()
+                                        .padding(15.dp)
+                                )
+                                Slider(
+                                    value = myFontSize,
+                                    onValueChange = { myFontSize = it },
+                                    onValueChangeFinished = {},
+                                    valueRange = 0f..50f,
+                                    modifier = Modifier
+                                        .height(50.dp)
+                                        .padding(bottom = 20.dp)
+                                )
+                            }
+                        }
+                    } else {
                         Home(
                             myFontSize,
                             { myFontSize = it },
                             { pause() },
-                            100.0f
+                            50.0f
                         )
                     }
                 }

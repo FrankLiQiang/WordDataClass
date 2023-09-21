@@ -1,5 +1,7 @@
 package com.frank.word
 
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import java.io.BufferedReader
 import java.io.File
@@ -7,6 +9,14 @@ import java.io.FileInputStream
 import java.io.InputStreamReader
 
 fun hideFunction(str: String) {
+    if (isFirstTime) {
+        inputText = str
+        if (str.endsWith("\n")) {
+            searchWordAll(str)
+        }
+        return
+    }
+
     //inputText = str
     if (str.endsWith("\n")) {
         if (str == "\n") {
@@ -223,6 +233,13 @@ fun searchWordAll(s: String) {
     val str = s.substring(0, s.length - 1)
     val found: String = searchWord0(str)
     inputText = found
+    if (found.isNotEmpty()) {
+        val imm = mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(
+            mainActivity.currentFocus?.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
+    }
     //TODO 获得焦点
 }
 
@@ -230,6 +247,7 @@ fun searchWord0(searchStr: String): String {
     val ret = StringBuilder()
     val lrcFiles: File? = mainActivity.getExternalFilesDir(null)
     val folder = lrcFiles?.list()
+    lrcPath = mainActivity.getExternalFilesDir(null).toString()
     if (folder != null) {
         for (i in folder.indices) {
             val pathName = lrcPath + "/" + folder[i]
@@ -273,7 +291,7 @@ fun searchWordFromFile(
 
 fun searchWordFromTxtFile(file: File?, str: String?): String {
     val ret = java.lang.StringBuilder()
-    var tmp:String
+    var tmp: String
     var read: InputStreamReader? = null
     var bufferedReader: BufferedReader? = null
     try {
