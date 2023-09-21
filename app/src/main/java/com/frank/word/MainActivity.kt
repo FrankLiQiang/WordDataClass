@@ -93,6 +93,7 @@ class MainActivity : ComponentActivity() {
         mainActivity = this
         actionBar?.show()
         actionBar?.setDisplayHomeAsUpEnabled(true)
+        lrcPath = getExternalFilesDir(null).toString()
 
         setContent {
             val appName = stringResource(id = R.string.app_name)

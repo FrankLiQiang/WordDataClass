@@ -247,7 +247,6 @@ fun searchWord0(searchStr: String): String {
     val ret = StringBuilder()
     val lrcFiles: File? = mainActivity.getExternalFilesDir(null)
     val folder = lrcFiles?.list()
-    lrcPath = mainActivity.getExternalFilesDir(null).toString()
     if (folder != null) {
         for (i in folder.indices) {
             val pathName = lrcPath + "/" + folder[i]
