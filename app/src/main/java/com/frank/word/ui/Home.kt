@@ -56,7 +56,6 @@ fun Home(
     maxProgress: Float
 ) {
 
-    //val focusRequester = remember { FocusRequester() }
     ChooseLessonMenu()
     Column(Modifier.background(Color.Black)) {
         if (isToDraw < -1) return
