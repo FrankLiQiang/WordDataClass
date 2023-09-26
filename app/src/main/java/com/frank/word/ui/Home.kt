@@ -199,7 +199,7 @@ fun Home(
                     value = progress,
                     onValueChange = doSlider,
                     onValueChangeFinished = {},
-                    valueRange = 0f..maxProgress,
+                    valueRange = 30f..maxProgress,
                     modifier = Modifier
                         .height(20.dp)
                 )

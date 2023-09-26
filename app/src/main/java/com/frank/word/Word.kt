@@ -26,7 +26,6 @@ var wordClassColor by mutableStateOf(0)
 var isToDraw by mutableStateOf(0)
 
 data class Word(
-//var playTime: String = "0",
     var wordClass: String = "0",
     var foreign: String = "",
     var pronunciation: String = "",
@@ -38,6 +37,4 @@ data class Word(
 //                var lessonIndex: Int,
     var rememberDepth: Int = 0,
 //                var wordIndex: Int,
-    var isWord: Boolean = true,
-    var isOver: Boolean = false,
 )

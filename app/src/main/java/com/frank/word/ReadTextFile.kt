@@ -105,7 +105,6 @@ fun readTxtFileIntoStringArrList(file: File?, isMakeLRC: Boolean) {
             }
             if (strArray.size == 1) {
                 if (strArray[0] == "完了" || strArray[0] == "结束" || strArray[0] == "3") {
-                    word.isOver = true
                 } else {
                     isLRC_Format_OK = false
                     //error = "1"

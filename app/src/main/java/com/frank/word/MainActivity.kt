@@ -130,22 +130,24 @@ class MainActivity : ComponentActivity() {
                     if (isFirstTime) {
                         if (isShowDict) {
                             Column {
+                                //Row(Modifier.height(55.dp)) {}
                                 Row(Modifier.height(40.dp)) {}
                                 ShowTextFieldFun(
                                     Modifier
                                         .weight(1.0f)
                                         .fillMaxWidth()
-                                        .padding(15.dp)
+                                        //.padding(15.dp)
                                 )
                                 Slider(
                                     value = myFontSize,
                                     onValueChange = { myFontSize = it },
                                     onValueChangeFinished = {},
-                                    valueRange = 0f..50f,
+                                    valueRange = 20f..50f,
                                     modifier = Modifier
                                         .height(50.dp)
-                                        .padding(bottom = 20.dp)
+                                        .padding(20.dp)
                                 )
+                                //Row(Modifier.height(30.dp)) {}
                             }
                         }
                     } else {
@@ -153,7 +155,7 @@ class MainActivity : ComponentActivity() {
                             myFontSize,
                             { myFontSize = it },
                             { pause() },
-                            50.0f
+                            70.0f
                         )
                     }
                 }
