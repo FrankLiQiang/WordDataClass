@@ -22,21 +22,21 @@
                 <item
                     android:id="@+id/folder"
                     android:title="@string/play_folder"
-                    android:showAsAction="always" />
+                    android:showAsAction="ifRoom" />
                 <item
                     android:id="@+id/folder_range"
                     android:title="@string/play_open_from"
                     android:visible="false"
-                    android:showAsAction="always" />
+                    android:showAsAction="ifRoom" />
                 <item
                     android:id="@+id/choose_lesson"
                     android:visible="false"
                     android:title="@string/choose_lesson"
-                    android:showAsAction="always" />
+                    android:showAsAction="ifRoom" />
                 <item
                     android:id="@+id/open"
                     android:title="@string/play_single"
-                    android:showAsAction="always" />
+                    android:showAsAction="ifRoom" />
             </group>
         </menu>
     </item>

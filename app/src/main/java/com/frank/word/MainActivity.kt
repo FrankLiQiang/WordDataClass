@@ -25,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -123,8 +122,6 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
-                    //color = Color.Black,
-                    contentColor = Color.Black,
                 ) {
                     SetBlackSystemBars()
                     if (isFirstTime) {
@@ -136,7 +133,7 @@ class MainActivity : ComponentActivity() {
                                     Modifier
                                         .weight(1.0f)
                                         .fillMaxWidth()
-                                        //.padding(15.dp)
+                                    //.padding(15.dp)
                                 )
                                 Slider(
                                     value = myFontSize,

@@ -1,8 +1,7 @@
 package com.frank.word.ui
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,12 +11,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,7 +35,6 @@ fun BottomBar() {
     Row(
         Modifier
             .height(130.dp)
-            .background(Color.Black)
     ) {
         LongPressButton(
             ::showPrev,
@@ -107,26 +102,15 @@ fun TabItem(
     event: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val count = remember { mutableStateOf(0) }
     Column(
         modifier
             .padding(vertical = 8.dp)
-            .background(if (count.value == 1) Color.Cyan else Color.Transparent)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = { count.value = 1 }, // 按下
-//                    onDoubleTap = { count.value = 2 }, // 双击
-//                    onLongPress = { count.value = 3 }, // 长按
-                    onTap = {
-                        count.value = 4
-                        event()
-                    } // 单击
-                )
-            },
+            .clickable { event() },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
-            painterResource(iconId), title,
+            painterResource(iconId),
+            title,
             Modifier
                 .size(50.dp)
                 .fillMaxWidth(),

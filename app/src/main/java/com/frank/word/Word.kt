@@ -34,6 +34,7 @@ data class Word(
     var sentence2: String = "",
     var sentence3: String = "",
     var startPlayTime: Int = 0,
+    var middlePlayTime: Int = 0,
 //                var lessonIndex: Int,
     var rememberDepth: Int = 0,
 //                var wordIndex: Int,
