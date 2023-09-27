@@ -36,6 +36,7 @@ import com.frank.word.currentSentence2
 import com.frank.word.currentShowWord
 import com.frank.word.currentWordClass
 import com.frank.word.isDEL
+import com.frank.word.isEditFile
 import com.frank.word.isFAVORITE
 import com.frank.word.isMiddleTime
 import com.frank.word.isPlay
@@ -64,47 +65,49 @@ fun Home(
                 .height(30.dp)      //小米 Redmi Note11 Pro
             //.height(50.dp)        //Google Pixel 6A
         ) {}
-        LinearProgressIndicator(
-            progress = musicStep,
-            Modifier
-                .fillMaxWidth()
-        )
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(5.dp)
-        ) {
-            Text(
-                text = currentWordClass,
-                style = TextStyle(
-                    fontSize = 17.sp,
-                    color = Color.White,
-                    textAlign = TextAlign.Start
-                ),
-                modifier = Modifier
-                    .width(23.dp)
-                    .padding(3.dp)
-                    .background(if (wordClassColor == 1) Color.Cyan else Color.Black)
-            )
-            ClickableText(
-                text = AnnotatedString(currentShowWord),
-                style = TextStyle(
-                    fontSize = myFontSize.sp,
-                    color = if (isPlay) Color.White else Color.Cyan,
-                    textAlign = TextAlign.Start
-                ),
-                onClick = pause,
-                modifier = Modifier
+        if (!isEditFile) {
+            LinearProgressIndicator(
+                progress = musicStep,
+                Modifier
                     .fillMaxWidth()
-                    .background(
-                        if (isFAVORITE)
-                            colorResource(R.color.purple_700)
-                        else if (isDEL)
-                            colorResource(R.color.gray)
-                        else
-                            colorResource(R.color.transparent)
-                    )
             )
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+            ) {
+                Text(
+                    text = currentWordClass,
+                    style = TextStyle(
+                        fontSize = 17.sp,
+                        color = Color.White,
+                        textAlign = TextAlign.Start
+                    ),
+                    modifier = Modifier
+                        .width(23.dp)
+                        .padding(3.dp)
+                        .background(if (wordClassColor == 1) Color.Cyan else Color.Black)
+                )
+                ClickableText(
+                    text = AnnotatedString(currentShowWord),
+                    style = TextStyle(
+                        fontSize = myFontSize.sp,
+                        color = if (isPlay) Color.White else Color.Cyan,
+                        textAlign = TextAlign.Start
+                    ),
+                    onClick = pause,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            if (isFAVORITE)
+                                colorResource(R.color.purple_700)
+                            else if (isDEL)
+                                colorResource(R.color.gray)
+                            else
+                                colorResource(R.color.transparent)
+                        )
+                )
+            }
         }
         SetLessonRangDialog()
         SetPauseTimeDialog()

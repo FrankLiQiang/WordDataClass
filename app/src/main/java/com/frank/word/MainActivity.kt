@@ -48,6 +48,7 @@ lateinit var mediaPlayer: MediaPlayer
 
 var isPlay by mutableStateOf(true)
 var isFirstTime by mutableStateOf(true)
+var isEditFile by mutableStateOf(false)
 var fileName = ""
 var titleString = ""
 var playVolume = 1.0f
@@ -241,6 +242,10 @@ class MainActivity : ComponentActivity() {
 
             R.id.play_pause_time -> {
                 isShowPauseTimeDialog = true
+            }
+
+            R.id.edit_word -> {
+                editWordFile()
             }
 
             else -> {

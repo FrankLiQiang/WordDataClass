@@ -56,6 +56,9 @@ fun doHome() {
         isShowDict = true
         isToDraw = 1 - isToDraw
     } else {
+        if (isEditFile && isShowEditText) {
+            saveFile("")
+        }
         if (!isPlay) {
             mediaPlayer.start()
         }
@@ -194,5 +197,13 @@ fun setMute(item: MenuItem, volume: Float) {
         item.isChecked = true
         item.isCheckable = true
         mediaPlayer.setVolume(volume, volume)
+    }
+}
+
+fun editWordFile() {
+    if (lrcFile != null) {
+        isLRC_Time_OK = false
+        val str = readRawTxtFile(lrcFile!!)
+        editWords(str)
     }
 }

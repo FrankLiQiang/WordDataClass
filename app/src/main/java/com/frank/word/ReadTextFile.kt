@@ -36,6 +36,7 @@ fun readTextFile(index: Int) {
         loopIndex = 0
         isAdjust = false
         isToAddTime = false
+        isEditFile = false
         wordList.clear()
         playOrder.clear()
         lrcFile = File(pathName)
@@ -104,10 +105,8 @@ fun readTxtFileIntoStringArrList(file: File?, isMakeLRC: Boolean) {
                     .toTypedArray()
             }
             if (strArray.size == 1) {
-                if (strArray[0] == "完了" || strArray[0] == "结束" || strArray[0] == "3") {
-                } else {
+                if (strArray[0] != "完了" && strArray[0] != "结束" && strArray[0] != "3") {
                     isLRC_Format_OK = false
-                    //error = "1"
                 }
                 word.foreign = strArray[0]
                 word.pronunciation = strArray[0]
@@ -189,7 +188,7 @@ fun readRawTxtFile(file: File): String {
         read = InputStreamReader(FileInputStream(file))
         bufferedReader = BufferedReader(read)
         var lineTxt: String
-        while (bufferedReader.readLine().also { lineTxt = it } != null) {
+        while (bufferedReader.readLine().also { lineTxt = it ?: "" } != null) {
             if (isLRC_Time_OK) {
                 stringBuffer.append(lineTxt.substring(10))
             } else {
@@ -213,6 +212,8 @@ fun editWords(str: String) {
         Toast.makeText(mainActivity, "单词文件格式错误！", Toast.LENGTH_LONG).show()
     }
     inputText = str
+    isShowEditText = true
+    isEditFile = true
     iStart = 0
 }
 

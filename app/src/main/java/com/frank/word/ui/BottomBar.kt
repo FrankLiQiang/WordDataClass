@@ -24,6 +24,7 @@ import com.frank.word.addFavoriteWord
 import com.frank.word.changeTime
 import com.frank.word.delWord
 import com.frank.word.isAdjust
+import com.frank.word.isEditFile
 import com.frank.word.saveFile
 import com.frank.word.setWordNormal
 import com.frank.word.showNext
@@ -32,6 +33,9 @@ import com.frank.word.ui.theme.WordTheme
 
 @Composable
 fun BottomBar() {
+    if (isEditFile) {
+        return
+    }
     Row(
         Modifier
             .height(130.dp)

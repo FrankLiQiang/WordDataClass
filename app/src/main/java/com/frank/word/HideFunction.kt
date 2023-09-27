@@ -17,6 +17,11 @@ fun hideFunction(str: String) {
         return
     }
 
+    if (isEditFile) {
+        inputText = str
+        return
+    }
+
     //inputText = str
     if (str.endsWith("\n")) {
         if (str == "\n") {
