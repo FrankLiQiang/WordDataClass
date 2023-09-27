@@ -62,6 +62,9 @@
     <string name="background">Black</string>
     <string name="one_key">One Key</string>
     <string name="read_only">Read Only</string>
+    <string name="foreign_only">Foreign Only</string>
     <string name="edit_word">Edit Word File</string>
     <string name="font_size">Font Size</string>
+    <string name="middle_time">Break Time</string>
+    <string name="pause_time">Pause Time</string>
 </resources>

@@ -113,6 +113,9 @@ class MainActivity : ComponentActivity() {
                 isPlay = !mediaPlayer.isPlaying
                 if (mediaPlayer.isPlaying) {
                     mediaPlayer.pause()
+                    if (isToAddTime && isMiddleTime) {
+                        saveFile("")
+                    }
                 } else {
                     mediaPlayer.start()
                 }
@@ -127,8 +130,8 @@ class MainActivity : ComponentActivity() {
                     if (isFirstTime) {
                         if (isShowDict) {
                             Column {
-                                //Row(Modifier.height(55.dp)) {}
-                                Row(Modifier.height(40.dp)) {}
+                                Row(Modifier.height(55.dp)) {}
+                                //Row(Modifier.height(40.dp)) {}
                                 ShowTextFieldFun(
                                     Modifier
                                         .weight(1.0f)
@@ -144,7 +147,7 @@ class MainActivity : ComponentActivity() {
                                         .height(50.dp)
                                         .padding(20.dp)
                                 )
-                                //Row(Modifier.height(30.dp)) {}
+                                Row(Modifier.height(30.dp)) {}
                             }
                         }
                     } else {
@@ -216,11 +219,28 @@ class MainActivity : ComponentActivity() {
             R.id.folder -> openFolder()
             R.id.one_key -> doOneKey()
             R.id.folder_range -> {
-                isShowDialog = true
+                isShowChooseLessonDialog = true
             }
 
             R.id.choose_lesson -> {
                 isShowPopupMenu = true
+            }
+
+            R.id.middle_play -> {
+                isToAddTime = !isToAddTime
+                isMiddleTime = !isMiddleTime
+                item.isChecked = isMiddleTime
+                item.isCheckable = true
+            }
+
+            R.id.play_middle -> {
+                isForeignOnly = !isForeignOnly
+                item.isChecked = isForeignOnly
+                item.isCheckable = true
+            }
+
+            R.id.play_pause_time -> {
+                isShowPauseTimeDialog = true
             }
 
             else -> {

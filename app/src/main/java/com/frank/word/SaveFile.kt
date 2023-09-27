@@ -31,6 +31,11 @@ fun saveFile(msg: String) {
                 stringBuffer.append(wordList[i].sentence2)
                 stringBuffer.append(" ")
                 stringBuffer.append(wordList[i].sentence3)
+                iStart = wordList[i].middlePlayTime
+                if (iStart != 0) {
+                    stringBuffer.append(" ")
+                    stringBuffer.append(timeFormat.format(iStart.toLong()))
+                }
                 stringBuffer.append("\n")
             }
         } else {

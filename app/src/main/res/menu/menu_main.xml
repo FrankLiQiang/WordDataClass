@@ -4,15 +4,15 @@
     tools:context="com.frank.word.WordActivity">
     <item
         android:id="@+id/item_pause"
+        android:showAsAction="never"
         android:title="@string/pause_img"
-        android:visible="false"
-        android:showAsAction="never" />
+        android:visible="false" />
 
     <item
         android:id="@+id/item_save_lrc"
-        android:visible="false"
+        android:showAsAction="never"
         android:title="@string/play_save"
-        android:showAsAction="never" />
+        android:visible="false" />
 
     <item
         android:id="@+id/open_file"
@@ -21,22 +21,22 @@
             <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/folder"
-                    android:title="@string/play_folder"
-                    android:showAsAction="ifRoom" />
+                    android:showAsAction="ifRoom"
+                    android:title="@string/play_folder" />
                 <item
                     android:id="@+id/folder_range"
+                    android:showAsAction="ifRoom"
                     android:title="@string/play_open_from"
-                    android:visible="false"
-                    android:showAsAction="ifRoom" />
+                    android:visible="false" />
                 <item
                     android:id="@+id/choose_lesson"
-                    android:visible="false"
+                    android:showAsAction="ifRoom"
                     android:title="@string/choose_lesson"
-                    android:showAsAction="ifRoom" />
+                    android:visible="false" />
                 <item
                     android:id="@+id/open"
-                    android:title="@string/play_single"
-                    android:showAsAction="ifRoom" />
+                    android:showAsAction="ifRoom"
+                    android:title="@string/play_single" />
             </group>
         </menu>
     </item>
@@ -45,26 +45,26 @@
         android:id="@+id/read_only"
         android:checkable="true"
         android:checked="true"
-        android:title="@string/read_only"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="@string/read_only" />
     <item
         android:id="@+id/one_key"
-        android:title="@string/one_key"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="@string/one_key" />
     <item
         android:id="@+id/edit_word"
-        android:title="@string/edit_word"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="@string/edit_word" />
     <item
         android:id="@+id/menu_single_check"
-        android:title="@string/choose_mode"
-        android:showAsAction="withText">
+        android:showAsAction="withText"
+        android:title="@string/choose_mode">
         <menu>
             <group
                 android:id="@+id/group_single"
                 android:checkableBehavior="single"
-                android:title="@string/choose_mode"
-                android:menuCategory="system">
+                android:menuCategory="system"
+                android:title="@string/choose_mode">
                 <item
                     android:id="@+id/single_menu_00"
                     android:title="Infinite Loop" />
@@ -95,32 +95,32 @@
             <group
                 android:id="@+id/group_order"
                 android:checkableBehavior="single"
-                android:title="@string/choose_mode"
-                android:menuCategory="system">
+                android:menuCategory="system"
+                android:title="@string/choose_mode">
                 <item
                     android:id="@+id/in_order"
                     android:checked="true"
-                    android:title="@string/play_in_order"/>
+                    android:title="@string/play_in_order" />
                 <item
                     android:id="@+id/play_in_random"
-                    android:title="@string/play_in_random"/>
+                    android:title="@string/play_in_random" />
                 <item
                     android:id="@+id/play_all_random"
-                    android:title="@string/play_all_random"/>
+                    android:title="@string/play_all_random" />
             </group>
         </menu>
     </item>
 
     <item
         android:id="@+id/menu_show_range"
-        android:title="@string/play_show_range"
-        android:showAsAction="withText">
+        android:showAsAction="withText"
+        android:title="@string/play_show_range">
         <menu>
             <group
                 android:id="@+id/group_show_range"
                 android:checkableBehavior="single"
-                android:title="@string/play_show_range"
-                android:menuCategory="system">
+                android:menuCategory="system"
+                android:title="@string/play_show_range">
                 <item
                     android:id="@+id/show_range_all"
                     android:checked="true"
@@ -146,14 +146,23 @@
 
     <item
         android:id="@+id/menu_show_type"
-        android:title="@string/play_show_type"
-        android:showAsAction="withText">
+        android:showAsAction="withText"
+        android:title="@string/play_show_type">
         <menu>
+            <item
+                android:id="@+id/play_middle"
+                android:checkable="true"
+                android:checked="false"
+                android:showAsAction="never"
+                android:title="@string/foreign_only" />
+            <item
+                android:id="@+id/play_pause_time"
+                android:title="@string/pause_time" />
             <group
                 android:id="@+id/group_show_type"
                 android:checkableBehavior="single"
-                android:title="@string/play_show_type"
-                android:menuCategory="system">
+                android:menuCategory="system"
+                android:title="@string/play_show_type">
                 <item
                     android:id="@+id/show_word_all"
                     android:checked="true"
@@ -176,14 +185,14 @@
 
     <item
         android:id="@+id/menu_play_mode"
-        android:title="@string/play_mode"
-        android:showAsAction="withText">
+        android:showAsAction="withText"
+        android:title="@string/play_mode">
         <menu>
             <group
                 android:id="@+id/group_play_mode"
                 android:checkableBehavior="single"
-                android:title="@string/play_mode"
-                android:menuCategory="system">
+                android:menuCategory="system"
+                android:title="@string/play_mode">
                 <item
                     android:id="@+id/mode_normal"
                     android:checked="true"
@@ -192,20 +201,25 @@
                     android:id="@+id/mode_mute"
                     android:title="@string/mute_mode" />
             </group>
+            <item
+                android:id="@+id/middle_play"
+                android:checkable="true"
+                android:checked="false"
+                android:title="@string/middle_time" />
         </menu>
     </item>
 
     <item
         android:id="@+id/menu_word_class"
+        android:showAsAction="withText"
         android:title="词性"
-        android:visible="false"
-        android:showAsAction="withText">
+        android:visible="false">
         <menu>
             <group
                 android:id="@+id/group_word_class"
                 android:checkableBehavior="single"
-                android:title="词性"
-                android:menuCategory="system">
+                android:menuCategory="system"
+                android:title="词性">
                 <item
                     android:id="@+id/class_noun"
                     android:checked="true"
@@ -215,8 +229,8 @@
                     android:title="代词" />
                 <item
                     android:id="@+id/class_shuci"
-                    android:visible="false"
-                    android:title="数词" />
+                    android:title="数词"
+                    android:visible="false" />
                 <item
                     android:id="@+id/class_verb_1"
                     android:title="动1" />
@@ -240,19 +254,19 @@
                     android:title="副词" />
                 <item
                     android:id="@+id/class_jiexuci"
-                    android:visible="false"
-                    android:title="接续词" />
+                    android:title="接续词"
+                    android:visible="false" />
                 <item
                     android:id="@+id/class_tanci"
                     android:title="叹词" />
                 <item
                     android:id="@+id/class_zhudongci"
-                    android:visible="false"
-                    android:title="助动词" />
+                    android:title="助动词"
+                    android:visible="false" />
                 <item
                     android:id="@+id/class_zhuci"
-                    android:visible="false"
-                    android:title="助词" />
+                    android:title="助词"
+                    android:visible="false" />
                 <item
                     android:id="@+id/class_zhuanyou"
                     android:title="专有名词" />
@@ -271,16 +285,16 @@
 
     <item
         android:id="@+id/item_quick"
-        android:visible="false"
+        android:showAsAction="always"
         android:title="@string/play_quick"
-        android:showAsAction="always" />
+        android:visible="false" />
     <item
         android:id="@+id/item_save"
-        android:visible="false"
+        android:showAsAction="always"
         android:title="@string/play_save"
-        android:showAsAction="always" />
+        android:visible="false" />
     <item
         android:id="@+id/help"
-        android:title="Help"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="Help" />
 </menu>

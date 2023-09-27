@@ -23,7 +23,11 @@ fun elseItemSelect(item: MenuItem): Boolean {
             item.isCheckable = true
             loopIndex = 0
             if (loopNumber != 1 && wordIndex < playOrder.size && wordList.size > playOrder[wordIndex] + 1) {
-                iEnd = wordList[playOrder[wordIndex] + 1].startPlayTime
+                iEnd = if (isForeignOnly && wordList[playOrder[wordIndex]].middlePlayTime > 0) {
+                    wordList[playOrder[wordIndex]].middlePlayTime
+                } else {
+                    wordList[playOrder[wordIndex] + 1].startPlayTime
+                }
             }
             return false
         }
@@ -185,8 +189,10 @@ fun showWordType(item: MenuItem, type: Int) {
 }
 
 fun setMute(item: MenuItem, volume: Float) {
-    playVolume = volume
-    item.isChecked = true
-    item.isCheckable = true
-    mediaPlayer.setVolume(volume, volume)
+    if (!isFirstTime) {
+        playVolume = volume
+        item.isChecked = true
+        item.isCheckable = true
+        mediaPlayer.setVolume(volume, volume)
+    }
 }

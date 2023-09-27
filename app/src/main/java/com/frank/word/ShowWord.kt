@@ -44,7 +44,11 @@ fun showSeekTo() {
     if (wordIndex < playOrder.size && playOrder[wordIndex] < wordList.size) {
         iStart = wordList[playOrder[wordIndex]].startPlayTime
         if (playOrder[wordIndex] + 1 < wordList.size) {
-            iEnd = wordList[playOrder[wordIndex] + 1].startPlayTime
+            iEnd = if (isForeignOnly && wordList[playOrder[wordIndex]].middlePlayTime > 0) {
+                wordList[playOrder[wordIndex]].middlePlayTime
+            } else {
+                wordList[playOrder[wordIndex] + 1].startPlayTime
+            }
         }
         if (!isFirstTime && abs(iStart - mediaPlayer.currentPosition) > 1000) {
             mediaPlayer.seekTo(iStart)

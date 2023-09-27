@@ -24,20 +24,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.frank.word.fileBeginIndex
-import com.frank.word.fileEndIndex
-import com.frank.word.isShowDialog
+import com.frank.word.isShowPauseTimeDialog
+import com.frank.word.pauseTime
 
-var maxLessonNum = 0
+var maxPauseTime = 0
 
 @Composable
-private fun CustomDialogWithResultExample(
+private fun ShowPauseTimeDialog(
     onDismiss: () -> Unit,
     onNegativeClick: () -> Unit,
-    onPositiveClick: (Int, Int) -> Unit
+    onPositiveClick: (Long) -> Unit
 ) {
-    var lessonFrom by remember { mutableStateOf(fileBeginIndex + 1) }
-    var lessonTo by remember { mutableStateOf(fileEndIndex + 1) }
+    var thePauseTime by remember { mutableStateOf(pauseTime) }
 
     Dialog(onDismissRequest = onDismiss) {
 
@@ -49,7 +47,7 @@ private fun CustomDialogWithResultExample(
             Column(modifier = Modifier.padding(8.dp)) {
 
                 Text(
-                    text = "Select Lesson Range",
+                    text = "Pause Time",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                     modifier = Modifier.padding(8.dp)
@@ -65,35 +63,16 @@ private fun CustomDialogWithResultExample(
 
                     Column {
 
-                        Text(text = "Lesson From $lessonFrom")
+                        Text(text = "Pause Time $thePauseTime 毫秒")
                         Slider(
-                            value = lessonFrom.toFloat(),
+                            value = thePauseTime.toFloat() / 10,
                             onValueChange = {
-                                if (it.toInt() > lessonFrom) {
-                                    lessonTo = it.toInt()
-                                }
-                                lessonFrom = it.toInt()
+                                thePauseTime = it.toLong() * 10
                             },
-                            valueRange = 1f..maxLessonNum.toFloat(),
+                            valueRange = 0f..500f,
                             onValueChangeFinished = {}
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Text(text = "Lesson To $lessonTo")
-                        Slider(
-                            value = lessonTo.toFloat(),
-                            onValueChange = {
-                                if (lessonFrom > it.toInt()) {
-                                    lessonFrom = it.toInt()
-                                }
-                                lessonTo = it.toInt()
-                            },
-                            valueRange = 1f..maxLessonNum.toFloat(),
-                            onValueChangeFinished = {}
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(24.dp))
                     }
                 }
 
@@ -108,7 +87,7 @@ private fun CustomDialogWithResultExample(
                     }
                     Spacer(modifier = Modifier.width(4.dp))
                     TextButton(onClick = {
-                        onPositiveClick(lessonFrom, lessonTo)
+                        onPositiveClick(thePauseTime)
                     }) {
                         Text(text = "OK")
                     }
@@ -119,21 +98,19 @@ private fun CustomDialogWithResultExample(
 }
 
 @Composable
-fun SetLessonRangDialog() {
+fun SetPauseTimeDialog() {
 
-    if (isShowDialog) {
-        CustomDialogWithResultExample(
+    if (isShowPauseTimeDialog) {
+        ShowPauseTimeDialog(
             onDismiss = {
-                isShowDialog = !isShowDialog
+                isShowPauseTimeDialog = !isShowPauseTimeDialog
             },
             onNegativeClick = {
-                isShowDialog = !isShowDialog
+                isShowPauseTimeDialog = !isShowPauseTimeDialog
             },
-            onPositiveClick = { from, to ->
-                isShowDialog = !isShowDialog
-
-                fileBeginIndex = from - 1
-                fileEndIndex = to - 1
+            onPositiveClick = { pTime ->
+                isShowPauseTimeDialog = !isShowPauseTimeDialog
+                pauseTime = pTime
             }
         )
     }

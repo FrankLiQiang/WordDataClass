@@ -65,8 +65,17 @@ fun doTask() {
         return
     } else if (loopNumber == 1) {
         if (playOrder[wordIndex] + 1 < wordList.size) {
-            if (currentPosition > wordList[playOrder[wordIndex] + 1].startPlayTime) {
-                showNext()
+            if (currentPosition > iEnd) {
+                if (isForeignOnly) {
+                    Thread() {
+                        mediaPlayer.pause()
+                        Thread.sleep(pauseTime)
+                        mediaPlayer.start()
+                        showNext()
+                    }.start()
+                } else {
+                    showNext()
+                }
             }
         } else if (!isAdjust) {
             showNext()

@@ -5,14 +5,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Slider
@@ -31,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.frank.word.ChooseLessonMenu
 import com.frank.word.R
+import com.frank.word.addMiddleTime
 import com.frank.word.addTime
 import com.frank.word.currentSentence1
 import com.frank.word.currentSentence2
@@ -38,6 +37,7 @@ import com.frank.word.currentShowWord
 import com.frank.word.currentWordClass
 import com.frank.word.isDEL
 import com.frank.word.isFAVORITE
+import com.frank.word.isMiddleTime
 import com.frank.word.isPlay
 import com.frank.word.isShowEditText
 import com.frank.word.isToAddTime
@@ -47,7 +47,6 @@ import com.frank.word.myFontSize
 import com.frank.word.wordClassColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Home(
     progress: Float,
@@ -108,6 +107,7 @@ fun Home(
             )
         }
         SetLessonRangDialog()
+        SetPauseTimeDialog()
         if (currentSentence1.isNotEmpty()) {
             Text(
                 text = AnnotatedString(currentSentence1),
@@ -177,13 +177,21 @@ fun Home(
                 painterResource(R.drawable.outline_add_circle_outline_24),
                 "",
                 Modifier
-                    .fillMaxSize()
+                    .weight(1.0f)
+                    .fillMaxWidth()
                     .padding(50.dp)
                     .clickable {
-                        addTime()
+                        if (isMiddleTime) {
+                            addMiddleTime()
+                        } else {
+                            addTime()
+                        }
                     },
                 tint = Color.LightGray
             )
+            if (isMiddleTime) {
+                BottomBar()
+            }
         } else {
             Row(modifier = Modifier.padding(10.dp)) {
                 Text(

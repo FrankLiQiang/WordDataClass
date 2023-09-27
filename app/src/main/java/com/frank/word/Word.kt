@@ -19,11 +19,15 @@ var isNORMAL by mutableStateOf(false)
 var isFAVORITE by mutableStateOf(false)
 var isDEL by mutableStateOf(false)
 var isToAddTime by mutableStateOf(false)
+var isMiddleTime by mutableStateOf(false)
+var isForeignOnly by mutableStateOf(false)
 var isAdjust by mutableStateOf(false)
-var isShowDialog by mutableStateOf(false)
+var isShowChooseLessonDialog by mutableStateOf(false)
+var isShowPauseTimeDialog by mutableStateOf(false)
 var isShowPopupMenu by mutableStateOf(false)
 var wordClassColor by mutableStateOf(0)
 var isToDraw by mutableStateOf(0)
+var pauseTime = 0L
 
 data class Word(
     var wordClass: String = "0",

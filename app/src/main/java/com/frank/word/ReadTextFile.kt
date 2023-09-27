@@ -134,6 +134,9 @@ fun readTxtFileIntoStringArrList(file: File?, isMakeLRC: Boolean) {
                 word.sentence1 = strArray[3]
                 word.sentence2 = strArray[4]
             }
+            if (strArray.size >= 7) {
+                word.middlePlayTime = strArray[6].toInt()
+            }
             wordList.add(word)
         }
         bufferedReader.close()

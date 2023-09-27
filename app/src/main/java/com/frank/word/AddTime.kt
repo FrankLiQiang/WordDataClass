@@ -11,6 +11,14 @@ fun addTimeInit() {
     iStart = 0
 }
 
+fun addMiddleTime() {
+    wordList[wordIndex].middlePlayTime = mediaPlayer.currentPosition
+    if (wordIndex == wordList.size - 2) {
+        saveFile("")
+    }
+    showNext()
+}
+
 fun addTime() {
     if (wordIndex < wordList.size) {
         iStart = mediaPlayer.currentPosition
