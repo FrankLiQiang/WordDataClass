@@ -116,6 +116,53 @@
         android:showAsAction="withText"
         android:title="@string/play_show_range">
         <menu>
+            <item
+                android:showAsAction="withText"
+                android:title="词性">
+                <menu>
+                    <group
+                        android:id="@+id/group_word_class1"
+                        android:checkableBehavior="single"
+                        android:menuCategory="system"
+                        android:title="词性">
+                        <item
+                            android:id="@+id/class_noun1"
+                            android:checked="true"
+                            android:title="名" />
+                        <item
+                            android:id="@+id/class_verb_10"
+                            android:title="動１" />
+                        <item
+                            android:id="@+id/class_verb_20"
+                            android:title="動２" />
+                        <item
+                            android:id="@+id/class_verb_30"
+                            android:title="動３" />
+                        <item
+                            android:id="@+id/class_vi0"
+                            android:title="自動" />
+                        <item
+                            android:id="@+id/class_vt0"
+                            android:title="他動" />
+                        <item
+                            android:id="@+id/class_adj_10"
+                            android:title="イ形" />
+                        <item
+                            android:id="@+id/class_adj_20"
+                            android:title="ナ形" />
+                        <item
+                            android:id="@+id/class_fuci0"
+                            android:title="副" />
+                        <item
+                            android:id="@+id/class_jietou"
+                            android:title="接頭" />
+                        <item
+                            android:id="@+id/class_jiewei"
+                            android:title="接尾"/>
+                    </group>
+                </menu>
+
+            </item>
             <group
                 android:id="@+id/group_show_range"
                 android:checkableBehavior="single"
@@ -137,9 +184,6 @@
                 <item
                     android:id="@+id/show_range_favorite"
                     android:title="@string/play_favorite" />
-                <item
-                    android:id="@+id/play_class"
-                    android:title="词性" />
             </group>
         </menu>
     </item>

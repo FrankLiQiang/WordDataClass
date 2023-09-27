@@ -136,6 +136,12 @@ fun readTxtFileIntoStringArrList(file: File?, isMakeLRC: Boolean) {
             if (strArray.size >= 7) {
                 word.middlePlayTime = strArray[6].toInt()
             }
+            if (strArray.size >= 8) {
+                word.wordClass = strArray[7]
+            }
+            if (strArray.size >= 9) {
+                word.tone = strArray[8]
+            }
             wordList.add(word)
         }
         bufferedReader.close()

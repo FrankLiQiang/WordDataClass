@@ -31,6 +31,7 @@ var pauseTime = 0L
 
 data class Word(
     var wordClass: String = "0",
+    var tone: String = "",
     var foreign: String = "",
     var pronunciation: String = "",
     var native: String = "",

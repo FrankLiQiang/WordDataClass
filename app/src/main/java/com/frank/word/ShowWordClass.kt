@@ -23,15 +23,26 @@ val wClass = arrayOf(
 )
 
 fun showWordClass() {
+    if (!isNumeric(wordList[playOrder[wordIndex]].wordClass)) {
+        currentWordClass = wordList[playOrder[wordIndex]].wordClass
+        currentWordClass += wordList[playOrder[wordIndex]].tone
+        return
+    }
     val classId0 = wordList[playOrder[wordIndex]].wordClass.toInt()
     wordClassColor = classId0
     val classId = classId0 % 20
-    if (classId0 in 43..45) {
-        currentWordClass = "自${wClass[classId]}"
-    } else if (classId0 in 23..25) {
-        currentWordClass = "他${wClass[classId]}"
-    } else {
-        currentWordClass = wClass[classId]
+    currentWordClass = when (classId0) {
+        in 43..45 -> {
+            "自${wClass[classId]}"
+        }
+
+        in 23..25 -> {
+            "他${wClass[classId]}"
+        }
+
+        else -> {
+            wClass[classId]
+        }
     }
     menuWordClass[classId]!!.isChecked = true
 }
@@ -41,21 +52,29 @@ fun showClassPrev() {
     if (wordIndex > 0) {
         var isFound = false
         for (i in wordIndex - 1 downTo 0) {
-            val wClass = wordList[playOrder[i]].wordClass.toInt()
-            if (CurrentWordClass == 16) {
-                if (wClass in 23..25) {
-                    wordIndex = i
-                    isFound = true
-                    break
-                }
-            } else if (CurrentWordClass == 17) {
-                if (wClass >= 43 && wClass <= 45) {
-                    wordIndex = i
-                    isFound = true
-                    break
+            if (isNumeric(wordList[playOrder[i]].wordClass)) {
+                val wClass = wordList[playOrder[i]].wordClass.toInt()
+                if (CurrentWordClass == 16) {
+                    if (wClass in 23..25) {
+                        wordIndex = i
+                        isFound = true
+                        break
+                    }
+                } else if (CurrentWordClass == 17) {
+                    if (wClass in 43..45) {
+                        wordIndex = i
+                        isFound = true
+                        break
+                    }
+                } else {
+                    if (wClass % 20 == CurrentWordClass) {
+                        wordIndex = i
+                        isFound = true
+                        break
+                    }
                 }
             } else {
-                if (wClass % 20 == CurrentWordClass) {
+                if (wordList[playOrder[i]].wordClass.contains(CurrentClassStr)) {
                     wordIndex = i
                     isFound = true
                     break
@@ -67,19 +86,26 @@ fun showClassPrev() {
                 showPrevLesson()
             } else {
                 for (i in wordList.size - offset downTo wordIndex + 1) {
-                    val wClass = wordList[playOrder[i]].wordClass.toInt()
-                    if (CurrentWordClass == 16) {
-                        if (wClass >= 23 && wClass <= 25) {
-                            wordIndex = i
-                            break
-                        }
-                    } else if (CurrentWordClass == 17) {
-                        if (wClass >= 43 && wClass <= 45) {
-                            wordIndex = i
-                            break
+                    if (isNumeric(wordList[playOrder[i]].wordClass)) {
+                        val wClass = wordList[playOrder[i]].wordClass.toInt()
+                        if (CurrentWordClass == 16) {
+                            if (wClass in 23..25) {
+                                wordIndex = i
+                                break
+                            }
+                        } else if (CurrentWordClass == 17) {
+                            if (wClass in 43..45) {
+                                wordIndex = i
+                                break
+                            }
+                        } else {
+                            if (wClass % 20 == CurrentWordClass) {
+                                wordIndex = i
+                                break
+                            }
                         }
                     } else {
-                        if (wClass % 20 == CurrentWordClass) {
+                        if (wordList[playOrder[i]].wordClass.contains(CurrentClassStr)) {
                             wordIndex = i
                             break
                         }
@@ -103,21 +129,29 @@ fun showClassNext() {
     if (wordIndex < wordList.size - offset) {
         var isFound = false
         for (i in wordIndex + 1..wordList.size - offset) {
-            val wClass = wordList[playOrder[i]].wordClass.toInt()
-            if (CurrentWordClass == 16) {
-                if (wClass in 23..25) {
-                    wordIndex = i
-                    isFound = true
-                    break
-                }
-            } else if (CurrentWordClass == 17) {
-                if (wClass in 43..45) {
-                    wordIndex = i
-                    isFound = true
-                    break
+            if (isNumeric(wordList[playOrder[i]].wordClass)) {
+                val wClass = wordList[playOrder[i]].wordClass.toInt()
+                if (CurrentWordClass == 16) {
+                    if (wClass in 23..25) {
+                        wordIndex = i
+                        isFound = true
+                        break
+                    }
+                } else if (CurrentWordClass == 17) {
+                    if (wClass in 43..45) {
+                        wordIndex = i
+                        isFound = true
+                        break
+                    }
+                } else {
+                    if (wClass % 20 == CurrentWordClass) {
+                        wordIndex = i
+                        isFound = true
+                        break
+                    }
                 }
             } else {
-                if (wClass % 20 == CurrentWordClass) {
+                if (wordList[playOrder[i]].wordClass.contains(CurrentClassStr)) {
                     wordIndex = i
                     isFound = true
                     break
@@ -130,19 +164,26 @@ fun showClassNext() {
                 return
             } else {
                 for (i in 0 until wordIndex) {
-                    val wClass = wordList[playOrder[i]].wordClass.toInt()
-                    if (CurrentWordClass == 16) {
-                        if (wClass in 23..25) {
-                            wordIndex = i
-                            break
-                        }
-                    } else if (CurrentWordClass == 17) {
-                        if (wClass in 43..45) {
-                            wordIndex = i
-                            break
+                    if (isNumeric(wordList[playOrder[i]].wordClass)) {
+                        val wClass = wordList[playOrder[i]].wordClass.toInt()
+                        if (CurrentWordClass == 16) {
+                            if (wClass in 23..25) {
+                                wordIndex = i
+                                break
+                            }
+                        } else if (CurrentWordClass == 17) {
+                            if (wClass in 43..45) {
+                                wordIndex = i
+                                break
+                            }
+                        } else {
+                            if (wClass % 20 == CurrentWordClass) {
+                                wordIndex = i
+                                break
+                            }
                         }
                     } else {
-                        if (wClass % 20 == CurrentWordClass) {
+                        if (wordList[playOrder[i]].wordClass.contains(CurrentClassStr)) {
                             wordIndex = i
                             break
                         }

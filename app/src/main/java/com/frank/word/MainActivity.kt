@@ -212,7 +212,19 @@ class MainActivity : ComponentActivity() {
                 return if (showClassVi()) true else super.onOptionsItemSelected(item)
             }
 
-            R.id.play_class -> showRangeClass(item)
+            R.id.class_noun1,
+            R.id.class_verb_10,
+            R.id.class_verb_20,
+            R.id.class_verb_30,
+            R.id.class_vi0,
+            R.id.class_vt0,
+            R.id.class_adj_10,
+            R.id.class_adj_20,
+            R.id.class_fuci0,
+            R.id.class_jietou,
+            R.id.class_jiewei,
+            -> showRangeClass(item)
+
             R.id.class_vt -> showRangeClass(item)
             R.id.class_vi -> showRangeClass(item)
             R.id.help -> showHelp()

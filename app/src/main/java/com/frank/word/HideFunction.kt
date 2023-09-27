@@ -51,6 +51,10 @@ fun hideFunction(str: String) {
         searchWordAll(str)
     } else if (str.endsWith("@")) {
         adjustWord()
+    } else if (str.endsWith("%")) {
+        editWordClass(str)
+    } else if (str.endsWith("(")) {
+        editWordTone(str)
     } else {
         inputText = str
     }
@@ -339,3 +343,16 @@ fun adjustWord() {
     showTitle()
     inputText = ""
 }
+
+fun editWordClass(s: String) {
+    wordList[playOrder[wordIndex]].wordClass = s.substring(0, s.length - 1)
+    saveFile("")
+    showWord()
+}
+
+fun editWordTone(s: String) {
+    wordList[playOrder[wordIndex]].tone = s.substring(0, s.length - 1)
+    saveFile("")
+    showWord()
+}
+

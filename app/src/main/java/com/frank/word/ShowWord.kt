@@ -33,6 +33,7 @@ var isNextLesson: Boolean = false
 var allIndex = 0   //by mutableStateOf(0)
 var all_num = 0  //by mutableStateOf(0)
 var CurrentWordClass by mutableStateOf(0)
+var CurrentClassStr by mutableStateOf("")
 
 fun showWord() {
     if (showCurrentWord()) {
@@ -79,6 +80,9 @@ fun showFirstWord() {
         all_num = wordList.size - 1
         if (wordIndex == -1) {
             for (i in wordList.size - 2 downTo 0) {
+                if (!isNumeric(wordList[playOrder[i]].wordClass)) {
+                    break
+                }
                 val iwClass = wordList[playOrder[i]].wordClass.toInt()
                 if (CurrentWordClass == 16) {
                     if (iwClass in 23..25) {
@@ -102,6 +106,9 @@ fun showFirstWord() {
             }
         } else {
             for (i in wordList.indices) {
+                if (!isNumeric(wordList[playOrder[i]].wordClass)) {
+                    break
+                }
                 val iwClass = wordList[playOrder[i]].wordClass.toInt()
                 if (CurrentWordClass == 16) {
                     if (iwClass in 23..25) {

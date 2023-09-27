@@ -154,6 +154,7 @@ fun showRangeFavorite(item: MenuItem): Boolean {
 
 fun showRangeClass(item: MenuItem) {
     iShowRange = SHOW_RANGE_CLASS
+    CurrentClassStr = item.title.toString()
     item.isChecked = true
 }
 

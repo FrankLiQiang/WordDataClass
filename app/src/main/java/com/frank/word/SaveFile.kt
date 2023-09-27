@@ -19,7 +19,11 @@ fun saveFile(msg: String) {
                 stringBuffer.append(wordList[i].rememberDepth)
                 iStart = wordList[i].startPlayTime
                 stringBuffer.append(timeFormat.format(iStart.toLong()))
-                stringBuffer.append(decimalFormat.format(wordList[i].wordClass.toInt()))
+                if (isNumeric(wordList[i].wordClass)) {
+                    stringBuffer.append(decimalFormat.format(wordList[i].wordClass.toInt()))
+                } else {
+                    stringBuffer.append("00")
+                }
                 stringBuffer.append(wordList[i].foreign)
                 stringBuffer.append(" ")
                 stringBuffer.append(wordList[i].pronunciation)
@@ -36,6 +40,14 @@ fun saveFile(msg: String) {
                     stringBuffer.append(" ")
                     stringBuffer.append(timeFormat.format(iStart.toLong()))
                 }
+                if (!isNumeric(wordList[i].wordClass)) {
+                    stringBuffer.append(" ")
+                    stringBuffer.append(wordList[i].wordClass)
+                }
+                if (wordList[i].tone.isNotEmpty()) {
+                    stringBuffer.append(" ")
+                    stringBuffer.append(wordList[i].tone)
+                }
                 stringBuffer.append("\n")
             }
         } else {
@@ -46,7 +58,11 @@ fun saveFile(msg: String) {
                 stringBuffer = StringBuilder()
                 for (i in wordList.indices) {
                     stringBuffer.append(wordList[i].rememberDepth)
-                    stringBuffer.append(decimalFormat.format(wordList[i].wordClass))
+                    if (isNumeric(wordList[i].wordClass)) {
+                        stringBuffer.append(decimalFormat.format(wordList[i].wordClass))
+                    } else {
+                        stringBuffer.append("00")
+                    }
                     iStart = wordList[i].startPlayTime
                     stringBuffer.append(timeFormat.format(iStart.toLong()))
                     stringBuffer.append(strArray[i])
