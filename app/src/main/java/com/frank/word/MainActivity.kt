@@ -219,6 +219,7 @@ class MainActivity : ComponentActivity() {
             R.id.class_adj_20,
             R.id.class_fuci0,
             R.id.class_lianti,
+            R.id.class_lianyu,
             R.id.class_jietou,
             R.id.class_jiewei,
             -> showRangeClass(item)
