@@ -351,7 +351,18 @@ fun editWordClass(s: String) {
 }
 
 fun editWordTone(s: String) {
-    wordList[playOrder[wordIndex]].tone = s.substring(0, s.length - 1)
+    val t = "⓪①②③④⑤⑥⑦⑧⑨"
+    val str0 = s.substring(0, s.length - 1)
+    if (!isNumeric(str0)) {
+        return
+    }
+    var str = ""
+    for (i in str0.indices){
+        val l = s.substring(i, i + 1).toInt()
+        str += t.substring(l, l + 1)
+
+    }
+    wordList[playOrder[wordIndex]].tone = str
     saveFile("")
     showWord()
 }

@@ -114,9 +114,6 @@ class MainActivity : ComponentActivity() {
                 isPlay = !mediaPlayer.isPlaying
                 if (mediaPlayer.isPlaying) {
                     mediaPlayer.pause()
-                    if (isToAddTime && isMiddleTime) {
-                        saveFile("")
-                    }
                 } else {
                     mediaPlayer.start()
                 }
@@ -242,6 +239,7 @@ class MainActivity : ComponentActivity() {
             R.id.middle_play -> {
                 isToAddTime = !isToAddTime
                 isMiddleTime = !isMiddleTime
+                isAdjust = isMiddleTime
                 item.isChecked = isMiddleTime
                 item.isCheckable = true
             }

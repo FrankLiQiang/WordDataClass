@@ -62,8 +62,8 @@ fun Home(
         Row(
             Modifier
                 .fillMaxWidth()
-                //.height(30.dp)      //小米 Redmi Note11 Pro
-                .height(50.dp)        //Google Pixel 6A
+                .height(30.dp)      //小米 Redmi Note11 Pro
+                //.height(50.dp)        //Google Pixel 6A
         ) {}
         if (!isEditFile) {
             LinearProgressIndicator(
@@ -209,7 +209,7 @@ fun Home(
                     value = progress,
                     onValueChange = doSlider,
                     onValueChangeFinished = {},
-                    valueRange = 30f..maxProgress,
+                    valueRange = 20f..maxProgress,
                     modifier = Modifier
                         .height(20.dp)
                 )
