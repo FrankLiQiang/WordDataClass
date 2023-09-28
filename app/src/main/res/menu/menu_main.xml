@@ -140,10 +140,10 @@
                             android:title="動3" />
                         <item
                             android:id="@+id/class_vi0"
-                            android:title="自動" />
+                            android:title="自" />
                         <item
                             android:id="@+id/class_vt0"
-                            android:title="他動" />
+                            android:title="他" />
                         <item
                             android:id="@+id/class_adj_10"
                             android:title="イ形" />
