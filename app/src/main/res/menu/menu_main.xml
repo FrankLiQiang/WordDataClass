@@ -154,6 +154,9 @@
                             android:id="@+id/class_fuci0"
                             android:title="副" />
                         <item
+                            android:id="@+id/class_lianti"
+                            android:title="連体" />
+                        <item
                             android:id="@+id/class_jietou"
                             android:title="接頭" />
                         <item
