@@ -26,7 +26,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.frank.word.fileBeginIndex
 import com.frank.word.fileEndIndex
+import com.frank.word.fileIndex
+import com.frank.word.files
 import com.frank.word.isShowChooseLessonDialog
+import com.frank.word.playMp3
+import com.frank.word.sortFiles
 
 var maxLessonNum = 0
 
@@ -69,7 +73,7 @@ private fun ShowChooseLessonDialog(
                         Slider(
                             value = lessonFrom.toFloat(),
                             onValueChange = {
-                                if (it.toInt() > lessonFrom) {
+                                if (it.toInt() > lessonTo) {
                                     lessonTo = it.toInt()
                                 }
                                 lessonFrom = it.toInt()
@@ -132,8 +136,16 @@ fun SetLessonRangDialog() {
             onPositiveClick = { from, to ->
                 isShowChooseLessonDialog = !isShowChooseLessonDialog
 
-                fileBeginIndex = from - 1
-                fileEndIndex = to - 1
+                fileBeginIndex = from
+                fileEndIndex = to
+
+                if (fileIndex in fileBeginIndex..fileEndIndex) {
+                    return@ShowChooseLessonDialog
+                }
+
+                fileIndex = fileBeginIndex
+                sortFiles()
+                playMp3(files[fileIndex].uri, 0)
             }
         )
     }

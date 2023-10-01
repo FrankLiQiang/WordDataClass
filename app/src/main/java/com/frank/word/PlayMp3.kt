@@ -77,8 +77,14 @@ fun doTask() {
                     showNext()
                 }
             }
-        } else if (!isAdjust) {
-            showNext()
+        } else {
+            if (isAdjust) {
+                if (isToAddTime && isMiddleTime) {
+                    showNext()
+                }
+            } else {
+                showNext()
+            }
         }
     } else {
         if (currentPosition < iEnd) {

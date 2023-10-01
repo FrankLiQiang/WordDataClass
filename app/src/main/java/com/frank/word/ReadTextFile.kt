@@ -34,8 +34,8 @@ fun readTextFile(index: Int) {
         iStart = 0
         wordIndex = index
         loopIndex = 0
-        isAdjust = false
-        isToAddTime = false
+//        isAdjust = false
+//        isToAddTime = false
         isEditFile = false
         wordList.clear()
         playOrder.clear()
