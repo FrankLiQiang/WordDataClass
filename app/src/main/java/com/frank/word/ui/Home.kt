@@ -1,5 +1,6 @@
 package com.frank.word.ui
 
+import android.view.MotionEvent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -17,8 +18,10 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -45,9 +48,14 @@ import com.frank.word.isToAddTime
 import com.frank.word.isToDraw
 import com.frank.word.musicStep
 import com.frank.word.myFontSize
+import com.frank.word.showNext
+import com.frank.word.showPrev
 import com.frank.word.wordClassColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+private var StartX = 0f
+
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun Home(
     progress: Float,
@@ -117,15 +125,17 @@ fun Home(
                 fontSize = myFontSize.sp,
                 color = if (isPlay) Color.White else Color.Cyan,
                 textAlign = TextAlign.Start,
+                lineHeight = (myFontSize * 1.2f).sp,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)
+                    //.padding(5.dp)
             )
         }
         if (currentSentence2.isNotEmpty()) {
             Text(
                 text = AnnotatedString(currentSentence2),
                 fontSize = myFontSize.sp,
+                lineHeight = (myFontSize * 1.2f).sp,
                 color = if (isPlay) Color.White else Color.Cyan,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
@@ -133,45 +143,31 @@ fun Home(
                     .padding(5.dp)
             )
         }
-        if (isShowEditText && !isToAddTime
-        ) {
+        if (isShowEditText && !isToAddTime) {
             ShowTextFieldFun(
                 Modifier
                     .fillMaxWidth()
                     .weight(1.0f)
                     .padding(5.dp)
             )
-//            Row(
-//                Modifier
-//                    .fillMaxWidth()
-//                    .weight(1.0f)
-//                    .padding(5.dp)
-//            ) {
-//                OutlinedTextField(
-//                    value = inputText,
-//                    onValueChange = { hideFunction(it) },
-//                    label = { Text("Enter text") },
-//                    textStyle = TextStyle(
-//                        color = Color.White,
-//                        fontWeight = FontWeight.Bold,
-//                        fontSize = myFontSize.sp
-//                    ),
-//                    modifier = Modifier
-//                        .background(Color.Black)
-//                        .focusRequester(focusRequester)
-//                        .focusable()
-//                        .fillMaxWidth()
-//                        .padding(start = 5.dp, end = 5.dp)
-//                )
-//                LaunchedEffect(Unit) {
-//                    focusRequester.requestFocus()
-//                }
-//            }
         } else if (!isToAddTime) {
             Row(
                 Modifier
                     .fillMaxWidth()
                     .weight(1.0f)
+                    .pointerInteropFilter {
+                        when (it.action) {
+                            MotionEvent.ACTION_DOWN -> { StartX = it.x }
+                            MotionEvent.ACTION_UP -> {
+                                if (it.x > StartX) {
+                                    showNext()
+                                } else {
+                                    showPrev()
+                                }
+                            }
+                        }
+                        true
+                    }
                     .padding(5.dp)
             ) {}
         }
@@ -180,7 +176,7 @@ fun Home(
                 painterResource(R.drawable.outline_add_circle_outline_24),
                 "",
                 Modifier
-                    .weight(1.0f)
+                    .weight(3.0f)
                     .fillMaxWidth()
                     .padding(50.dp)
                     .clickable {
