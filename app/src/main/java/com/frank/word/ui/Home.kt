@@ -71,7 +71,7 @@ fun Home(
             Modifier
                 .fillMaxWidth()
                 .height(30.dp)      //小米 Redmi Note11 Pro
-                //.height(50.dp)        //Google Pixel 6A
+            //.height(50.dp)        //Google Pixel 6A
         ) {}
         if (!isEditFile) {
             LinearProgressIndicator(
@@ -128,7 +128,7 @@ fun Home(
                 lineHeight = (myFontSize * 1.2f).sp,
                 modifier = Modifier
                     .fillMaxWidth()
-                    //.padding(5.dp)
+                //.padding(5.dp)
             )
         }
         if (currentSentence2.isNotEmpty()) {
@@ -157,7 +157,10 @@ fun Home(
                     .weight(1.0f)
                     .pointerInteropFilter {
                         when (it.action) {
-                            MotionEvent.ACTION_DOWN -> { StartX = it.x }
+                            MotionEvent.ACTION_DOWN -> {
+                                StartX = it.x
+                            }
+
                             MotionEvent.ACTION_UP -> {
                                 if (it.x > StartX) {
                                     showNext()
