@@ -32,21 +32,6 @@ fun elseItemSelect(item: MenuItem): Boolean {
             return false
         }
     }
-    for (i in 6..21) {
-        if (item.itemId == numberArray[i]) {
-            item.isChecked = true
-            item.isCheckable = true
-            CurrentWordClass = i - 6
-            if (iShowRange == SHOW_RANGE_CLASS) {
-                showClassNext()
-            } else {
-                wordList[playOrder[wordIndex]].wordClass = wClass[CurrentWordClass]
-                saveFile("")
-                showCurrentWord()
-            }
-            return false
-        }
-    }
     return true
 }
 

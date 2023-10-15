@@ -1,5 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.frank.word.WordActivity">
     <item
@@ -164,7 +163,7 @@
                             android:title="接頭" />
                         <item
                             android:id="@+id/class_jiewei"
-                            android:title="接尾"/>
+                            android:title="接尾" />
                     </group>
                 </menu>
 
@@ -256,80 +255,6 @@
                 android:checkable="true"
                 android:checked="false"
                 android:title="@string/middle_time" />
-        </menu>
-    </item>
-
-    <item
-        android:id="@+id/menu_word_class"
-        android:showAsAction="withText"
-        android:title="词性"
-        android:visible="false">
-        <menu>
-            <group
-                android:id="@+id/group_word_class"
-                android:checkableBehavior="single"
-                android:menuCategory="system"
-                android:title="词性">
-                <item
-                    android:id="@+id/class_noun"
-                    android:checked="true"
-                    android:title="名词" />
-                <item
-                    android:id="@+id/class_daici"
-                    android:title="代词" />
-                <item
-                    android:id="@+id/class_shuci"
-                    android:title="数词"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/class_verb_1"
-                    android:title="动1" />
-                <item
-                    android:id="@+id/class_verb_2"
-                    android:title="动2" />
-                <item
-                    android:id="@+id/class_verb_3"
-                    android:title="动3" />
-                <item
-                    android:id="@+id/class_adj_1"
-                    android:title="形1" />
-                <item
-                    android:id="@+id/class_adj_2"
-                    android:title="形2" />
-                <item
-                    android:id="@+id/class_liantici"
-                    android:title="连体词" />
-                <item
-                    android:id="@+id/class_fuci"
-                    android:title="副词" />
-                <item
-                    android:id="@+id/class_jiexuci"
-                    android:title="接续词"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/class_tanci"
-                    android:title="叹词" />
-                <item
-                    android:id="@+id/class_zhudongci"
-                    android:title="助动词"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/class_zhuci"
-                    android:title="助词"
-                    android:visible="false" />
-                <item
-                    android:id="@+id/class_zhuanyou"
-                    android:title="专有名词" />
-                <item
-                    android:id="@+id/class_duanyu"
-                    android:title="短语" />
-                <item
-                    android:id="@+id/class_vt"
-                    android:title="他动词" />
-                <item
-                    android:id="@+id/class_vi"
-                    android:title="自动词" />
-            </group>
         </menu>
     </item>
 

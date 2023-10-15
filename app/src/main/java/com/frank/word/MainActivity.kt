@@ -57,7 +57,6 @@ lateinit var openFolder: () -> Unit
 lateinit var pause: () -> Unit
 var rangeItem: MenuItem? = null
 var chooseItem: MenuItem? = null
-var menu_word_class: MenuItem? = null
 
 class MainActivity : ComponentActivity() {
 
@@ -165,7 +164,6 @@ class MainActivity : ComponentActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         rangeItem = menu!!.findItem(R.id.folder_range)
         chooseItem = menu.findItem(R.id.choose_lesson)
-        menu_word_class = menu.findItem(R.id.menu_word_class)
         menuInit(menu)
         return true
     }
@@ -201,14 +199,6 @@ class MainActivity : ComponentActivity() {
                 return if (showRangeFavorite(item)) true else super.onOptionsItemSelected(item)
             }
 
-            R.id.class_vt -> {
-                return if (showClassVt()) true else super.onOptionsItemSelected(item)
-            }
-
-            R.id.class_vi -> {
-                return if (showClassVi()) true else super.onOptionsItemSelected(item)
-            }
-
             R.id.class_noun1,
             R.id.class_verb_10,
             R.id.class_verb_20,
@@ -224,8 +214,6 @@ class MainActivity : ComponentActivity() {
             R.id.class_jiewei,
             -> showRangeClass(item)
 
-            R.id.class_vt -> showRangeClass(item)
-            R.id.class_vi -> showRangeClass(item)
             R.id.help -> showHelp()
             R.id.open -> openMP3()
             R.id.folder -> openFolder()
