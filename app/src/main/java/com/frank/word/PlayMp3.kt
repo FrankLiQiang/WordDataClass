@@ -26,7 +26,8 @@ fun playMp3(result: Uri, index: Int) {
                             if (titleString.isNotEmpty()) mainActivity.title = titleString
                             titleString = ""
                             doTask()
-                        } catch (_: Exception) {
+                        } catch (e: Exception) {
+                            e.toString()
                         }
                     }
                 }

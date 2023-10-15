@@ -43,10 +43,13 @@ fun readTextFile(index: Int) {
         if (lrcFile!!.exists()) {
             isLRC_Time_OK = true
             readTxtFileIntoStringArrList(lrcFile!!, false)
+            for (item: Int in 0 until wordList.size) {
+                playOrder.add(item)
+            }
             sortWords()
             if (isLRC_Time_OK) {
                 if (isLRC_Format_OK) {
-                    showWordsNormal()
+                    showFirstWord()
                 } else {
                     val str: String = readRawTxtFile(lrcFile!!)
                     editWords(str)
@@ -64,7 +67,8 @@ fun readTextFile(index: Int) {
         } else {
             editWords("")
         }
-    } catch (_: java.lang.Exception) {
+    } catch (e: java.lang.Exception) {
+        e.toString()
     }
 }
 
@@ -161,11 +165,6 @@ fun readTxtFileIntoStringArrList(file: File?, isMakeLRC: Boolean) {
 }
 
 fun sortWords() {
-    if (playOrder.isEmpty()) {
-        for (item: Int in 0 until wordList.size) {
-            playOrder.add(item)
-        }
-    }
     if (sortType == 1 || sortType == 2) {
         shuffleWords()
     }
@@ -179,11 +178,6 @@ fun shuffleWords() {
         playOrder[iRandNum] = playOrder[i]
         playOrder[i] = temp
     }
-}
-
-fun showWordsNormal() {
-    showFirstWord()
-    menu_word_class?.isVisible = true
 }
 
 fun readRawTxtFile(file: File): String {

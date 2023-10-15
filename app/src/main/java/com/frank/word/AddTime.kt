@@ -3,6 +3,9 @@ package com.frank.word
 fun addTimeInit() {
     isToAddTime = true
     playOrder.clear()
+    for (item: Int in 0 until wordList.size) {
+        playOrder.add(item)
+    }
     sortType = 0
     musicStep = 0.0f
     showWordType = SHOW_ALL

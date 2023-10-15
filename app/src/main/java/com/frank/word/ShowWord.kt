@@ -80,24 +80,29 @@ fun showFirstWord() {
         all_num = wordList.size - 1
         if (wordIndex == -1) {
             for (i in wordList.size - 2 downTo 0) {
-                if (!isNumeric(wordList[playOrder[i]].wordClass)) {
-                    break
-                }
-                val iwClass = wordList[playOrder[i]].wordClass.toInt()
-                if (CurrentWordClass == 16) {
-                    if (iwClass in 23..25) {
-                        wordIndex = i
-                        isFound = true
-                        break
-                    }
-                } else if (CurrentWordClass == 17) {
-                    if (iwClass in 43..45) {
-                        wordIndex = i
-                        isFound = true
-                        break
+                if (isNumeric(wordList[playOrder[i]].wordClass)) {
+                    val iwClass = wordList[playOrder[i]].wordClass.toInt()
+                    if (CurrentWordClass == 16) {
+                        if (iwClass in 23..25) {
+                            wordIndex = i
+                            isFound = true
+                            break
+                        }
+                    } else if (CurrentWordClass == 17) {
+                        if (iwClass in 43..45) {
+                            wordIndex = i
+                            isFound = true
+                            break
+                        }
+                    } else {
+                        if (iwClass % 20 == CurrentWordClass) {
+                            wordIndex = i
+                            isFound = true
+                            break
+                        }
                     }
                 } else {
-                    if (iwClass % 20 == CurrentWordClass) {
+                    if (wordList[playOrder[i]].wordClass.contains(CurrentClassStr)) {
                         wordIndex = i
                         isFound = true
                         break
@@ -106,24 +111,29 @@ fun showFirstWord() {
             }
         } else {
             for (i in wordList.indices) {
-                if (!isNumeric(wordList[playOrder[i]].wordClass)) {
-                    break
-                }
-                val iwClass = wordList[playOrder[i]].wordClass.toInt()
-                if (CurrentWordClass == 16) {
-                    if (iwClass in 23..25) {
-                        wordIndex = i
-                        isFound = true
-                        break
-                    }
-                } else if (CurrentWordClass == 17) {
-                    if (iwClass in 43..45) {
-                        wordIndex = i
-                        isFound = true
-                        break
+                if (isNumeric(wordList[playOrder[i]].wordClass)) {
+                    val iwClass = wordList[playOrder[i]].wordClass.toInt()
+                    if (CurrentWordClass == 16) {
+                        if (iwClass in 23..25) {
+                            wordIndex = i
+                            isFound = true
+                            break
+                        }
+                    } else if (CurrentWordClass == 17) {
+                        if (iwClass in 43..45) {
+                            wordIndex = i
+                            isFound = true
+                            break
+                        }
+                    } else {
+                        if (iwClass % 20 == CurrentWordClass) {
+                            wordIndex = i
+                            isFound = true
+                            break
+                        }
                     }
                 } else {
-                    if (iwClass % 20 == CurrentWordClass) {
+                    if (wordList[playOrder[i]].wordClass.contains(CurrentClassStr)) {
                         wordIndex = i
                         isFound = true
                         break
@@ -234,6 +244,7 @@ fun showFirstWord() {
         wordIndex = 0
     }
     showWord()
+    menu_word_class?.isVisible = true
 }
 
 fun showCurrentWord(): Boolean {
