@@ -1,6 +1,7 @@
 package com.frank.word
 
 import android.widget.Toast
+import com.frank.word.ui.lastClickItem
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
@@ -39,6 +40,7 @@ fun readTextFile(index: Int) {
         isEditFile = false
         wordList.clear()
         playOrder.clear()
+        lastClickItem = null
         lrcFile = File(pathName)
         if (lrcFile!!.exists()) {
             isLRC_Time_OK = true

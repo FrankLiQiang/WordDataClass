@@ -100,7 +100,7 @@ fun showCurrentWord(): Boolean {
     if (wordIndex >= wordList.size || wordIndex >= playOrder.size) {
         return false
     }
-    if (isShowList) {
+    if (isShowList && wordIndex >= 0) {
         moveToCurrentWord(wordIndex)
     }
 

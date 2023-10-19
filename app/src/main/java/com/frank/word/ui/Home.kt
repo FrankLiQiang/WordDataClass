@@ -278,7 +278,11 @@ fun Home(
                         wordList[row].isItemChosen = true
                         lastClickItem = wordList[row]
                         //scrollState.animateScrollToItem(row)
-                        scrollState.scrollToItem(row)
+                        try{
+                            scrollState.scrollToItem(row)
+                        }catch (e:Exception) {
+
+                        }
                         isToDraw = 1 - isToDraw
                     }
                 }
