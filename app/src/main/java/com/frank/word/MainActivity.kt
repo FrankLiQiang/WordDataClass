@@ -152,7 +152,7 @@ class MainActivity : ComponentActivity() {
                             myFontSize,
                             { myFontSize = it },
                             { pause() },
-                            70.0f
+                            50.0f
                         )
                     }
                 }
@@ -234,6 +234,12 @@ class MainActivity : ComponentActivity() {
                 item.isCheckable = true
             }
 
+            R.id.show_mode -> {
+                isShowList = !isShowList
+                item.isChecked = isShowList
+                item.isCheckable = true
+            }
+
             R.id.play_middle -> {
                 isForeignOnly = !isForeignOnly
                 item.isChecked = isForeignOnly
@@ -273,7 +279,7 @@ fun MainUIPreview() {
             myFontSize,
             { myFontSize = it },
             {},
-            100.0f
+            50.0f
         )
     }
 }

@@ -136,8 +136,8 @@ fun SetLessonRangDialog() {
             onPositiveClick = { from, to ->
                 isShowChooseLessonDialog = !isShowChooseLessonDialog
 
-                fileBeginIndex = from
-                fileEndIndex = to
+                fileBeginIndex = from - 1
+                fileEndIndex = to - 1
 
                 if (fileIndex in fileBeginIndex..fileEndIndex) {
                     return@ShowChooseLessonDialog

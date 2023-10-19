@@ -3,6 +3,7 @@ package com.frank.word
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.frank.word.ui.moveToCurrentWord
 import kotlin.math.abs
 
 const val SHOW_ALL = 0
@@ -99,6 +100,10 @@ fun showCurrentWord(): Boolean {
     if (wordIndex >= wordList.size || wordIndex >= playOrder.size) {
         return false
     }
+    if (isShowList) {
+        moveToCurrentWord(wordIndex)
+    }
+
     var str = ""
     if (showWordType == SHOW_ALL) {
         str = if (wordList[playOrder[wordIndex]].foreign

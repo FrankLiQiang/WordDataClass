@@ -36,6 +36,14 @@ fun elseItemSelect(item: MenuItem): Boolean {
 }
 
 fun doHome() {
+    if (isShowList) {
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.pause()
+        } else {
+            mediaPlayer.start()
+        }
+        return
+    }
     if (isFirstTime) {
         inputText = ""
         isShowDict = true

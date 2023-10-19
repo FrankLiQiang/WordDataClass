@@ -20,6 +20,7 @@ var isFAVORITE by mutableStateOf(false)
 var isDEL by mutableStateOf(false)
 var isToAddTime by mutableStateOf(false)
 var isMiddleTime by mutableStateOf(false)
+var isShowList by mutableStateOf(false)
 var isForeignOnly by mutableStateOf(false)
 var isAdjust by mutableStateOf(false)
 var isShowChooseLessonDialog by mutableStateOf(false)
@@ -43,4 +44,5 @@ data class Word(
 //                var lessonIndex: Int,
     var rememberDepth: Int = 0,
 //                var wordIndex: Int,
+    var isItemChosen: Boolean = false,
 )
