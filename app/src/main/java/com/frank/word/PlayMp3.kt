@@ -41,6 +41,7 @@ fun playMp3(result: Uri, index: Int) {
     mediaPlayer.setDataSource(mainActivity, result)
     mediaPlayer.prepare()
     mediaPlayer.start()
+    MediaButtonReceiver(mainActivity,mainActivity)
     pathAndName = result.path ?: ""
     readTextFile(index)
 }

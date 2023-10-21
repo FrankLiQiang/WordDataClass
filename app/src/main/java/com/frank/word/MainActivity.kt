@@ -1,9 +1,13 @@
 package com.frank.word
 
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.content.IntentFilter
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
@@ -20,13 +24,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.documentfile.provider.DocumentFile
@@ -58,8 +60,9 @@ lateinit var pause: () -> Unit
 var rangeItem: MenuItem? = null
 var chooseItem: MenuItem? = null
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
 
+    private val mBluetoothStateReceiver: BluetoothStateReceiver = BluetoothStateReceiver()
     private val dirRequest =
         registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
             uri?.let {
@@ -158,6 +161,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        registerBluetoothReceiver()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -269,17 +273,41 @@ class MainActivity : ComponentActivity() {
         }
         exitProcess(0)
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun MainUIPreview() {
-    WordTheme {
-        Home(
-            myFontSize,
-            { myFontSize = it },
-            {},
-            50.0f
-        )
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        var bRet = true
+        if (KeyEvent.KEYCODE_HEADSETHOOK == keyCode) {
+            mediaPlayer.pause()
+            bRet = true
+        } else if (KeyEvent.KEYCODE_MEDIA_NEXT == keyCode) {
+            showNext();
+        } else if (KeyEvent.KEYCODE_MEDIA_PREVIOUS == keyCode) {
+            showPrev();
+        } else {
+            bRet = super.onKeyDown(keyCode, event)
+        }
+        return bRet
+    }
+
+    //https://www.cnblogs.com/komine/p/16187278.html
+    override fun onKeyDown(keyAction: Int) {
+        when (keyAction) {
+            MediaButtonReceiver.KeyActions.PLAY_ACTION -> mediaPlayer.start()
+            MediaButtonReceiver.KeyActions.PAUSE_ACTION -> mediaPlayer.pause()
+            MediaButtonReceiver.KeyActions.PREV_ACTION -> showPrev()
+            MediaButtonReceiver.KeyActions.NEXT_ACTION -> showNext()
+        }
+    }
+
+    private fun registerBluetoothReceiver() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+        intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
+        intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
+        intentFilter.addAction("android.bluetooth.BluetoothAdapter.STATE_OFF")
+        intentFilter.addAction("android.bluetooth.BluetoothAdapter.STATE_ON")
+
+        registerReceiver(mBluetoothStateReceiver, intentFilter)
     }
 }
+

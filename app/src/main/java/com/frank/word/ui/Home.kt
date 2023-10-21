@@ -126,8 +126,8 @@ fun Home(
         Row(
             Modifier
                 .fillMaxWidth()
-                .height(30.dp)      //小米 Redmi Note11 Pro
-//                .height(50.dp)        //Google Pixel 6A
+//                .height(30.dp)      //小米 Redmi Note11 Pro
+                .height(50.dp)        //Google Pixel 6A
         ) {}
         SetLessonRangDialog()
         SetPauseTimeDialog()
