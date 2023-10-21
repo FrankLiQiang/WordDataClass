@@ -1,7 +1,7 @@
 package com.frank.word
 
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
+//import android.bluetooth.BluetoothAdapter
+//import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.MediaPlayer
@@ -62,7 +62,7 @@ var chooseItem: MenuItem? = null
 
 class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
 
-    private val mBluetoothStateReceiver: BluetoothStateReceiver = BluetoothStateReceiver()
+//    private val mBluetoothStateReceiver: BluetoothStateReceiver = BluetoothStateReceiver()
     private val dirRequest =
         registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
             uri?.let {
@@ -161,7 +161,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                 }
             }
         }
-        registerBluetoothReceiver()
+        //registerBluetoothReceiver()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -299,15 +299,15 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
         }
     }
 
-    private fun registerBluetoothReceiver() {
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
-        intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
-        intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
-        intentFilter.addAction("android.bluetooth.BluetoothAdapter.STATE_OFF")
-        intentFilter.addAction("android.bluetooth.BluetoothAdapter.STATE_ON")
-
-        registerReceiver(mBluetoothStateReceiver, intentFilter)
-    }
+//    private fun registerBluetoothReceiver() {
+//        val intentFilter = IntentFilter()
+//        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+//        intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
+//        intentFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
+//        intentFilter.addAction("android.bluetooth.BluetoothAdapter.STATE_OFF")
+//        intentFilter.addAction("android.bluetooth.BluetoothAdapter.STATE_ON")
+//
+//        registerReceiver(mBluetoothStateReceiver, intentFilter)
+//    }
 }
 
