@@ -61,6 +61,7 @@ import com.frank.word.isEditFile
 import com.frank.word.isFAVORITE
 import com.frank.word.isMiddleTime
 import com.frank.word.isPlay
+import com.frank.word.isRightIndex
 import com.frank.word.isShowEditText
 import com.frank.word.isShowList
 import com.frank.word.isToAddTime
@@ -126,8 +127,8 @@ fun Home(
         Row(
             Modifier
                 .fillMaxWidth()
-//                .height(30.dp)      //小米 Redmi Note11 Pro
-                .height(50.dp)        //Google Pixel 6A
+                .height(30.dp)      //小米 Redmi Note11 Pro
+//                .height(50.dp)        //Google Pixel 6A
         ) {}
         SetLessonRangDialog()
         SetPauseTimeDialog()
@@ -265,7 +266,7 @@ fun Home(
                 state = scrollState,
                 modifier = Modifier
                     .weight(1f)
-                .background(Color.White)
+                    .background(Color.White)
             ) {
 
                 if (isToDraw < -1) return@LazyColumn
@@ -278,9 +279,9 @@ fun Home(
                         wordList[row].isItemChosen = true
                         lastClickItem = wordList[row]
                         //scrollState.animateScrollToItem(row)
-                        try{
+                        try {
                             scrollState.scrollToItem(row)
-                        }catch (e:Exception) {
+                        } catch (e: Exception) {
 
                         }
                         isToDraw = 1 - isToDraw
@@ -289,101 +290,103 @@ fun Home(
 
                 itemsIndexed(wordList.subList(0, wordList.size - 1)) { index, menuItem ->
 
-                    NavigationDrawerItem(
-                        modifier = Modifier.height(60.dp),
-                        colors = NavigationDrawerItemDefaults.colors(
-                            selectedContainerColor = Color.White,
-                            unselectedContainerColor = Color.White,
-                        ),
-                        shape = MaterialTheme.shapes.small,
-                        selected = true,
-                        icon = {
-                            Icon(
-                                painter = painterResource(R.drawable.baseline_brightness_1_24),
-                                contentDescription = stringResource(id = R.string.app_name),
-                                tint = if (menuItem.isItemChosen) Color.Red else Color.DarkGray,
-                            )
-                        },
-                        label = {
-                            Row {
-                                Text(
-                                    text = decimalFormat.format(index + 1),
-                                    fontSize = 14.sp,
-                                    color = Color.Blue,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    style = MaterialTheme.typography.labelMedium,
+                    if (isRightIndex(index)) {
+                        NavigationDrawerItem(
+                            modifier = Modifier.height(60.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = Color.White,
+                                unselectedContainerColor = Color.White,
+                            ),
+                            shape = MaterialTheme.shapes.small,
+                            selected = true,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(R.drawable.baseline_brightness_1_24),
+                                    contentDescription = stringResource(id = R.string.app_name),
+                                    tint = if (menuItem.isItemChosen) Color.Red else Color.DarkGray,
                                 )
-                                Text(
-                                    text = menuItem.foreign,
-                                    fontSize = myFontSize.sp,
-                                    color = Color.Black,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    style = MaterialTheme.typography.labelMedium,
-                                )
-                                Text(
-                                    text = menuItem.wordClass + menuItem.tone,
-                                    fontSize = 20.sp,
-                                    color = Color.Blue,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    style = MaterialTheme.typography.labelMedium,
-                                )
-                            }
-                        },
-                        onClick = {
-                            if (lastClickItem != null && menuItem != lastClickItem) {
-                                lastClickItem!!.isItemChosen = false
-                            }
-                            menuItem.isItemChosen = !menuItem.isItemChosen
-                            if (menuItem.isItemChosen) {
-                                lastClickItem = menuItem
-                                wordIndex = index
-                                showWord()
-                            }
-                            isItem = true
-                            isToDraw = 1 - isToDraw
-                        },
-                    )
-                    if (menuItem.isItemChosen) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.LightGray)
+                            },
+                            label = {
+                                Row {
+                                    Text(
+                                        text = decimalFormat.format(index + 1),
+                                        fontSize = 14.sp,
+                                        color = Color.Blue,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        style = MaterialTheme.typography.labelMedium,
+                                    )
+                                    Text(
+                                        text = menuItem.foreign,
+                                        fontSize = myFontSize.sp,
+                                        color = Color.Black,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        style = MaterialTheme.typography.labelMedium,
+                                    )
+                                    Text(
+                                        text = menuItem.wordClass + menuItem.tone,
+                                        fontSize = 20.sp,
+                                        color = Color.Blue,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        style = MaterialTheme.typography.labelMedium,
+                                    )
+                                }
+                            },
+                            onClick = {
+                                if (lastClickItem != null && menuItem != lastClickItem) {
+                                    lastClickItem!!.isItemChosen = false
+                                }
+                                menuItem.isItemChosen = !menuItem.isItemChosen
+                                if (menuItem.isItemChosen) {
+                                    lastClickItem = menuItem
+                                    wordIndex = index
+                                    showWord()
+                                }
+                                isItem = true
+                                isToDraw = 1 - isToDraw
+                            },
                         )
-                        {
-                            Text(
+                        if (menuItem.isItemChosen) {
+                            Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .background(
-                                        brush = Brush.verticalGradient(
-                                            colors = listOf(
-                                                Color.DarkGray,
-                                                Color.LightGray,
-                                            ),
-                                            startY = 0f,
-                                            endY = 30f,
-                                            tileMode = TileMode.Clamp
-                                        )
-                                    )
-                                    .padding(5.dp)
-                                    .padding(start = 50.dp)
-                                    .clickable {
-                                        menuItem.isItemChosen = false
-                                        isItem = false
-                                        isToDraw = 1 - isToDraw
-                                    },
-                                text = menuItem.pronunciation + "\n" + menuItem.native,
-                                fontSize = myFontSize.sp,
-                                color = Color.Black,
-                                lineHeight = (myFontSize + 2).sp,
-                                maxLines = 10,
-                                style = MaterialTheme.typography.labelMedium,
+                                    .background(Color.LightGray)
                             )
+                            {
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(
+                                            brush = Brush.verticalGradient(
+                                                colors = listOf(
+                                                    Color.DarkGray,
+                                                    Color.LightGray,
+                                                ),
+                                                startY = 0f,
+                                                endY = 30f,
+                                                tileMode = TileMode.Clamp
+                                            )
+                                        )
+                                        .padding(5.dp)
+                                        .padding(start = 50.dp)
+                                        .clickable {
+                                            menuItem.isItemChosen = false
+                                            isItem = false
+                                            isToDraw = 1 - isToDraw
+                                        },
+                                    text = menuItem.pronunciation + "\n" + menuItem.native,
+                                    fontSize = myFontSize.sp,
+                                    color = Color.Black,
+                                    lineHeight = (myFontSize + 2).sp,
+                                    maxLines = 10,
+                                    style = MaterialTheme.typography.labelMedium,
+                                )
+                            }
                         }
+                        Divider(color = Color.LightGray)
                     }
-                    Divider(color = Color.LightGray)
                 }
             }
             showSlider()

@@ -21,6 +21,7 @@ fun saveFile(msg: String) {
                 stringBuffer.append(timeFormat.format(iStart.toLong()))
                 if (isNumeric(wordList[i].wordClass)) {
                     stringBuffer.append(decimalFormat.format(wordList[i].wordClass.toInt()))
+                    wordList[i].wordClass = wClass[wordList[i].wordClass.toInt()]
                 } else {
                     stringBuffer.append("00")
                 }
@@ -36,10 +37,8 @@ fun saveFile(msg: String) {
                 stringBuffer.append(" ")
                 stringBuffer.append(wordList[i].sentence3)
                 iStart = wordList[i].middlePlayTime
-                if (iStart != 0) {
-                    stringBuffer.append(" ")
-                    stringBuffer.append(timeFormat.format(iStart.toLong()))
-                }
+                stringBuffer.append(" ")
+                stringBuffer.append(timeFormat.format(iStart.toLong()))
                 if (!isNumeric(wordList[i].wordClass)) {
                     stringBuffer.append(" ")
                     stringBuffer.append(wordList[i].wordClass)

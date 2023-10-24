@@ -271,7 +271,7 @@ fun isRightIndex(index: Int): Boolean {
         }
 
         SHOW_RANGE_ALL -> {
-            return !(isAdjust && wordList[playOrder[index]].rememberDepth == 3)
+            return !(isAdjust || wordList[playOrder[index]].rememberDepth == 3)
         }
 
         SHOW_CHOSEN -> {

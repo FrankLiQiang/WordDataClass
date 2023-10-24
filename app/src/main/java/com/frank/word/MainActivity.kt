@@ -204,6 +204,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
             }
 
             R.id.class_noun1,
+            R.id.class_verb,
             R.id.class_verb_10,
             R.id.class_verb_20,
             R.id.class_verb_30,
