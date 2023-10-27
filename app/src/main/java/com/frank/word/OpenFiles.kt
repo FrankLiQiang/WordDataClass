@@ -45,7 +45,9 @@ fun showPrevLesson() {
         fileIndex = fileEndIndex
     }
     isNextLesson = false
-    playMp3(files[fileIndex].uri, -1)
+    pathAndName = files[fileIndex].uri.path!!
+    mp3Uri = files[fileIndex].uri
+    readTextFile(-1)
     isNextLesson = true
 }
 
@@ -56,5 +58,7 @@ fun showNextLesson() {
         fileIndex = fileBeginIndex
     }
     isNextLesson = true
-    playMp3(files[fileIndex].uri, 1)
+    pathAndName = files[fileIndex].uri.path!!
+    mp3Uri = files[fileIndex].uri
+    readTextFile(1)
 }

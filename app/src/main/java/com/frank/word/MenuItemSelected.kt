@@ -146,9 +146,21 @@ fun showRangeFavorite(item: MenuItem): Boolean {
 }
 
 fun showRangeClass(item: MenuItem) {
-    iShowRange = SHOW_RANGE_CLASS
-    CurrentClassStr = item.title.toString()
-    item.isChecked = true
+    if (isPlayFolder) {
+        iShowRange = SHOW_RANGE_CLASS
+        CurrentClassStr = item.title.toString()
+        item.isChecked = true
+    } else {
+        for (i in 0..wordList.size - 2) {
+            if (wordList[playOrder[i]].wordClass.contains(item.title.toString())) {
+                iShowRange = SHOW_RANGE_CLASS
+                CurrentClassStr = item.title.toString()
+                item.isChecked = true
+                return
+            }
+        }
+        Toast.makeText(mainActivity, "没有相应单词", Toast.LENGTH_LONG).show()
+    }
 }
 
 fun showHelp() {

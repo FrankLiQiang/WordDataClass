@@ -3,7 +3,6 @@ package com.frank.word
 //import android.bluetooth.BluetoothAdapter
 //import android.bluetooth.BluetoothDevice
 import android.content.Intent
-import android.content.IntentFilter
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
@@ -62,7 +61,7 @@ var chooseItem: MenuItem? = null
 
 class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
 
-//    private val mBluetoothStateReceiver: BluetoothStateReceiver = BluetoothStateReceiver()
+    //    private val mBluetoothStateReceiver: BluetoothStateReceiver = BluetoothStateReceiver()
     private val dirRequest =
         registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
             uri?.let {
@@ -84,7 +83,9 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                 isPlayFolder = true
                 rangeItem?.isVisible = true
                 chooseItem?.isVisible = true
-                playMp3(files[0].uri, 0)
+                pathAndName = files[0].uri.path ?: ""
+                mp3Uri = files[0].uri
+                readTextFile(0)
             }
         }
 
@@ -103,7 +104,9 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.GetContent()
             ) { result ->
-                playMp3(result ?: Uri.EMPTY, 0)
+                pathAndName = result?.path!!
+                mp3Uri = result
+                readTextFile(0)
             }
             openMP3 = {
                 rangeItem?.isVisible = false
@@ -281,9 +284,9 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
             mediaPlayer.pause()
             bRet = true
         } else if (KeyEvent.KEYCODE_MEDIA_NEXT == keyCode) {
-            showNext();
+            showNext()
         } else if (KeyEvent.KEYCODE_MEDIA_PREVIOUS == keyCode) {
-            showPrev();
+            showPrev()
         } else {
             bRet = super.onKeyDown(keyCode, event)
         }

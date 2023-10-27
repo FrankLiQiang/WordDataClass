@@ -29,7 +29,9 @@ import com.frank.word.fileEndIndex
 import com.frank.word.fileIndex
 import com.frank.word.files
 import com.frank.word.isShowChooseLessonDialog
-import com.frank.word.playMp3
+import com.frank.word.mp3Uri
+import com.frank.word.pathAndName
+import com.frank.word.readTextFile
 import com.frank.word.sortFiles
 
 var maxLessonNum = 0
@@ -145,7 +147,9 @@ fun SetLessonRangDialog() {
 
                 fileIndex = fileBeginIndex
                 sortFiles()
-                playMp3(files[fileIndex].uri, 0)
+                pathAndName = files[fileIndex].uri.path!!
+                mp3Uri = files[fileIndex].uri
+                readTextFile(0)
             }
         )
     }

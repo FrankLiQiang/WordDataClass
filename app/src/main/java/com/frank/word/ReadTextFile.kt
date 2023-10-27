@@ -33,7 +33,6 @@ fun readTextFile(index: Int) {
         isLRC_Time_OK = false
         inputText = ""
         iStart = 0
-        wordIndex = index
         loopIndex = 0
 //        isAdjust = false
 //        isToAddTime = false
@@ -51,7 +50,38 @@ fun readTextFile(index: Int) {
             sortWords()
             if (isLRC_Time_OK) {
                 if (isLRC_Format_OK) {
-                    showFirstWord()
+                    var isFound = false
+                    if (index == -1) {
+                        for (i: Int in wordList.size - 2 downTo 0) {
+                            if (isRightIndex(i)) {
+                                wordIndex = i
+                                isFound = true
+                                break
+                            }
+                        }
+                    } else {
+                        for (i: Int in 0 until wordList.size) {
+                            if (isRightIndex(i)) {
+                                wordIndex = i
+                                isFound = true
+                                break
+                            }
+                        }
+                    }
+                    if (isFound) {
+                        showFirstWord()
+                        playMp3()
+                    } else {
+                        if (isPlayFolder) {
+                            if (index == -1) {
+                                showPrevLesson()
+                            } else {
+                                showNextLesson()
+                            }
+                        } else {
+                            Toast.makeText(mainActivity, "没有相应单词", Toast.LENGTH_LONG).show()
+                        }
+                    }
                 } else {
                     val str: String = readRawTxtFile(lrcFile!!)
                     editWords(str)

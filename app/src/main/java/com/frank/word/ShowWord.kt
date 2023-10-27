@@ -1,5 +1,6 @@
 package com.frank.word
 
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -33,7 +34,6 @@ var iEnd = 0
 var isNextLesson = false
 var allIndex = 0   //by mutableStateOf(0)
 var all_num = 0  //by mutableStateOf(0)
-var CurrentWordClass by mutableStateOf(0)
 var CurrentClassStr by mutableStateOf("")
 
 fun showWord() {
@@ -78,22 +78,23 @@ fun showFirstWord() {
     }
     chosen_num = normal_num + favorite_num
     all_num = chosen_num + removed_num
-    if (isPrev) {
-        wordIndex = wordList.size - offset
-        allIndex = all_num
-        favoriteIndex = favorite_num
-        delIndex = removed_num
-        normalIndex = normal_num
-        showPrev()
-    } else {
-        wordIndex = -1
-        allIndex = -1
-        favoriteIndex = -1
-        delIndex = -1
-        normalIndex = -1
-        chosenIndex = -1
-        showNext()
-    }
+    showWord()
+//    if (isPrev) {
+//        wordIndex = wordList.size - offset
+//        allIndex = all_num
+//        favoriteIndex = favorite_num
+//        delIndex = removed_num
+//        normalIndex = normal_num
+//        showPrev()
+//    } else {
+//        wordIndex = -1
+//        allIndex = -1
+//        favoriteIndex = -1
+//        delIndex = -1
+//        normalIndex = -1
+//        chosenIndex = -1
+//        showNext()
+//    }
 }
 
 fun showCurrentWord(): Boolean {
@@ -170,7 +171,18 @@ fun showTitle() {
     musicStep = (show_index + 1).toFloat() / show_num.toFloat()
 }
 
+var beginIndex = -1
 fun showPrev() {
+    if (!isPlayFolder) {
+        if (beginIndex == -1) {
+            beginIndex = wordIndex
+        } else {
+            if (beginIndex == wordIndex) {
+                Toast.makeText(mainActivity, "没有相应单词", Toast.LENGTH_LONG).show()
+                return
+            }
+        }
+    }
     val offset = if (isAdjust) 1 else 2
     if (wordIndex > 0) {
         wordIndex--
@@ -189,6 +201,7 @@ fun showPrev() {
                 }
             }
             showWord()
+            beginIndex = -1
         } else {
             showPrev()
         }
@@ -208,6 +221,16 @@ fun showPrev() {
 }
 
 fun showNext() {
+    if (!isPlayFolder) {
+        if (beginIndex == -1) {
+            beginIndex = wordIndex
+        } else {
+            if (beginIndex == wordIndex) {
+                Toast.makeText(mainActivity, "没有相应单词", Toast.LENGTH_LONG).show()
+                return
+            }
+        }
+    }
     val offset = if (isAdjust) 1 else 2
     if (wordIndex < wordList.size - offset) {
         wordIndex++
@@ -226,6 +249,7 @@ fun showNext() {
                 }
             }
             showWord()
+            beginIndex = -1
         } else {
             showNext()
         }
@@ -248,26 +272,26 @@ fun showNext() {
 fun isRightIndex(index: Int): Boolean {
     when (iShowRange) {
         SHOW_RANGE_CLASS -> {
-            if (isNumeric(wordList[playOrder[index]].wordClass)) {
-                val wClass = wordList[playOrder[index]].wordClass.toInt()
-                if (CurrentWordClass == 16) {
-                    if (wClass in 23..25) {
-                        return true
-                    }
-                } else if (CurrentWordClass == 17) {
-                    if (wClass in 43..45) {
-                        return true
-                    }
-                } else {
-                    if (wClass % 20 == CurrentWordClass) {
-                        return true
-                    }
-                }
-            } else {
+//            if (isNumeric(wordList[playOrder[index]].wordClass)) {
+//                val wClass = wordList[playOrder[index]].wordClass.toInt()
+//                if (CurrentWordClass == 16) {
+//                    if (wClass in 23..25) {
+//                        return true
+//                    }
+//                } else if (CurrentWordClass == 17) {
+//                    if (wClass in 43..45) {
+//                        return true
+//                    }
+//                } else {
+//                    if (wClass % 20 == CurrentWordClass) {
+//                        return true
+//                    }
+//                }
+//            } else {
                 if (wordList[playOrder[index]].wordClass.contains(CurrentClassStr)) {
                     return true
                 }
-            }
+//            }
         }
 
         SHOW_RANGE_ALL -> {

@@ -66,7 +66,9 @@ fun ChooseLessonMenu() {
                         fileEndIndex = fileIndex
                     }
                     sortFiles()
-                    playMp3(files[fileIndex].uri, 0)
+                    pathAndName = files[fileIndex].uri.path!!
+                    mp3Uri = files[fileIndex].uri
+                    readTextFile(0)
                 }
                 isShowPopupMenu = false
             })

@@ -8,8 +8,10 @@ import java.util.TimerTask
 
 var thisTimer: Timer = Timer()
 var thisTask: TimerTask? = null
+var mp3Uri: Uri? = null
 
-fun playMp3(result: Uri, index: Int) {
+fun playMp3() {
+
     if (isFirstTime) {
         mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(
@@ -38,12 +40,10 @@ fun playMp3(result: Uri, index: Int) {
         mediaPlayer.reset()
     }
     isFirstTime = true
-    mediaPlayer.setDataSource(mainActivity, result)
+    mediaPlayer.setDataSource(mainActivity, mp3Uri!!)
     mediaPlayer.prepare()
     mediaPlayer.start()
     //MediaButtonReceiver(mainActivity,mainActivity)
-    pathAndName = result.path ?: ""
-    readTextFile(index)
 }
 
 fun doTask() {
