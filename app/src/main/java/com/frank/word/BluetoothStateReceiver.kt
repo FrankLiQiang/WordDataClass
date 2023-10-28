@@ -15,10 +15,10 @@ import androidx.core.app.ActivityCompat
  * @author komine
  * 监听蓝牙音频设备的连接状态
  */
-class BluetoothStateReceiver : BroadcastReceiver(){
+class BluetoothStateReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        when(intent?.action){
+        when (intent?.action) {
 
             //蓝牙已连接,如果不需要判断是否为音频设备,下面代码块的判断可以不要
             BluetoothDevice.ACTION_ACL_CONNECTED -> {
@@ -55,7 +55,7 @@ class BluetoothStateReceiver : BroadcastReceiver(){
         }
     }
 
-    companion object{
+    companion object {
         private const val PROFILE_HEADSET = 0
 
         private const val PROFILE_A2DP = 1
@@ -76,7 +76,10 @@ class BluetoothStateReceiver : BroadcastReceiver(){
         if (bluetoothClass == null) {
             return false
         }
-        return if (doesClassMatch(bluetoothClass, PROFILE_HEADSET)) true else doesClassMatch(bluetoothClass, PROFILE_A2DP)
+        return if (doesClassMatch(bluetoothClass, PROFILE_HEADSET)) true else doesClassMatch(
+            bluetoothClass,
+            PROFILE_A2DP
+        )
     }
 
     //系统源码拷贝

@@ -56,8 +56,6 @@ var playVolume = 1.0f
 lateinit var openMP3: () -> Unit
 lateinit var openFolder: () -> Unit
 lateinit var pause: () -> Unit
-var rangeItem: MenuItem? = null
-var chooseItem: MenuItem? = null
 
 class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
 
@@ -170,7 +168,10 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         rangeItem = menu!!.findItem(R.id.folder_range)
-        chooseItem = menu.findItem(R.id.choose_lesson)
+        chooseItem = menu.findItem(R.id.class_item)
+        chooseItem0 = menu.findItem(R.id.class_item0)
+        chooseItem1 = menu.findItem(R.id.class_item1)
+
         menuInit(menu)
         return true
     }

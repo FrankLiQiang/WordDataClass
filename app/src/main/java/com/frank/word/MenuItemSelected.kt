@@ -66,6 +66,7 @@ fun doOneKey() {
 }
 
 fun showRangeAll(item: MenuItem) {
+    setMenuItemCheckFalse()
     iShowRange = SHOW_RANGE_ALL
     sortFiles()
     sortWords()
@@ -81,6 +82,7 @@ fun showRangeChosen(item: MenuItem): Boolean {
         return false
     }
     iShowRange = SHOW_CHOSEN
+    setMenuItemCheckFalse()
     item.isChecked = true
     item.isCheckable = true
     sortFiles()
@@ -99,6 +101,7 @@ fun showRangeDel(item: MenuItem): Boolean {
         return false
     }
     iShowRange = SHOW_DEL
+    setMenuItemCheckFalse()
     item.isChecked = true
     item.isCheckable = true
     sortFiles()
@@ -117,6 +120,7 @@ fun showRangeNormal(item: MenuItem): Boolean {
         return false
     }
     iShowRange = SHOW_RANGE_NORMAL
+    setMenuItemCheckFalse()
     item.isChecked = true
     sortFiles()
     sortWords()
@@ -134,6 +138,7 @@ fun showRangeFavorite(item: MenuItem): Boolean {
         return false
     }
     iShowRange = SHOW_FAVORITE
+    setMenuItemCheckFalse()
     item.isChecked = true
     sortFiles()
     sortWords()
@@ -145,16 +150,23 @@ fun showRangeFavorite(item: MenuItem): Boolean {
     return true
 }
 
+fun setMenuItemCheckFalse() {
+    chooseItem0?.isChecked = true
+    chooseItem1?.isChecked = true
+}
+
 fun showRangeClass(item: MenuItem) {
     if (isPlayFolder) {
         iShowRange = SHOW_RANGE_CLASS
         CurrentClassStr = item.title.toString()
+        setMenuItemCheckFalse()
         item.isChecked = true
     } else {
         for (i in 0..wordList.size - 2) {
             if (wordList[playOrder[i]].wordClass.contains(item.title.toString())) {
                 iShowRange = SHOW_RANGE_CLASS
                 CurrentClassStr = item.title.toString()
+                setMenuItemCheckFalse()
                 item.isChecked = true
                 return
             }
@@ -186,7 +198,12 @@ fun showHelp() {
 &：查找并移动到指定单词位置
 *：在所有书中，查找单词
 @：调整单词播放时刻 切换
-?：显示本帮助信息。"""
+%：修改词性
+(：修改音调
+9：添加，修改例句1
+?：显示本帮助信息。
+
+"""
 
 }
 

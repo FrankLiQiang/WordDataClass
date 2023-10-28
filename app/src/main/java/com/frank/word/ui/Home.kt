@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.ClickableText
@@ -127,8 +126,8 @@ fun Home(
         Row(
             Modifier
                 .fillMaxWidth()
-                .height(30.dp)      //小米 Redmi Note11 Pro
-//                .height(50.dp)        //Google Pixel 6A
+//                .height(30.dp)      //小米 Redmi Note11 Pro
+                .height(50.dp)        //Google Pixel 6A
         ) {}
         SetLessonRangDialog()
         SetPauseTimeDialog()

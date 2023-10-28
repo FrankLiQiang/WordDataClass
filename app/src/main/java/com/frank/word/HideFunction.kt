@@ -359,7 +359,7 @@ fun editWordTone(s: String) {
         return
     }
     var str = ""
-    for (i in str0.indices){
+    for (i in str0.indices) {
         val l = s.substring(i, i + 1).toInt()
         str += t.substring(l, l + 1)
 

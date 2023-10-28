@@ -126,7 +126,6 @@
                         android:title="词性">
                         <item
                             android:id="@+id/class_noun1"
-                            android:checked="true"
                             android:title="名" />
                         <item
                             android:id="@+id/class_verb"
@@ -173,6 +172,11 @@
                         <item
                             android:id="@+id/class_item"
                             android:title="短" />
+                        <item
+                            android:id="@+id/class_item0"
+                            android:title="短"
+                            android:checked="true"
+                            android:visible="false"/>
                     </group>
                 </menu>
 
@@ -198,6 +202,10 @@
                 <item
                     android:id="@+id/show_range_favorite"
                     android:title="@string/play_favorite" />
+                <item
+                    android:id="@+id/class_item1"
+                    android:title="短"
+                    android:visible="false"/>
             </group>
         </menu>
     </item>
