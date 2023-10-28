@@ -16,38 +16,42 @@ fun saveFile(msg: String) {
         if (msg.isEmpty()) {
             stringBuffer = StringBuilder()
             for (i in wordList.indices) {
-                stringBuffer.append(wordList[i].rememberDepth)
-                iStart = wordList[i].startPlayTime
-                stringBuffer.append(timeFormat.format(iStart.toLong()))
-                if (isNumeric(wordList[i].wordClass)) {
-                    stringBuffer.append(decimalFormat.format(wordList[i].wordClass.toInt()))
-                    wordList[i].wordClass = wClass[wordList[i].wordClass.toInt()]
-                } else {
-                    stringBuffer.append("00")
-                }
-                stringBuffer.append(wordList[i].foreign)
-                stringBuffer.append(" ")
-                stringBuffer.append(wordList[i].pronunciation)
-                stringBuffer.append(" ")
-                stringBuffer.append(wordList[i].native)
-                stringBuffer.append(" ")
-                stringBuffer.append(wordList[i].sentence1)
-                stringBuffer.append(" ")
-                stringBuffer.append(wordList[i].sentence2)
-                stringBuffer.append(" ")
-                stringBuffer.append(wordList[i].sentence3)
-                iStart = wordList[i].middlePlayTime
-                stringBuffer.append(" ")
-                stringBuffer.append(timeFormat.format(iStart.toLong()))
-                if (!isNumeric(wordList[i].wordClass)) {
+                try {
+                    stringBuffer.append(wordList[i].rememberDepth)
+                    iStart = wordList[i].startPlayTime
+                    stringBuffer.append(timeFormat.format(iStart.toLong()))
+                    if (isNumeric(wordList[i].wordClass)) {
+                        stringBuffer.append(decimalFormat.format(wordList[i].wordClass.toInt()))
+                        wordList[i].wordClass = wClass[wordList[i].wordClass.toInt() % 20]
+                    } else {
+                        stringBuffer.append("00")
+                    }
+                    stringBuffer.append(wordList[i].foreign)
                     stringBuffer.append(" ")
-                    stringBuffer.append(wordList[i].wordClass)
-                }
-                if (wordList[i].tone.isNotEmpty()) {
+                    stringBuffer.append(wordList[i].pronunciation)
                     stringBuffer.append(" ")
-                    stringBuffer.append(wordList[i].tone)
+                    stringBuffer.append(wordList[i].native)
+                    stringBuffer.append(" ")
+                    stringBuffer.append(wordList[i].sentence1)
+                    stringBuffer.append(" ")
+                    stringBuffer.append(wordList[i].sentence2)
+                    stringBuffer.append(" ")
+                    stringBuffer.append(wordList[i].sentence3)
+                    iStart = wordList[i].middlePlayTime
+                    stringBuffer.append(" ")
+                    stringBuffer.append(timeFormat.format(iStart.toLong()))
+                    if (!isNumeric(wordList[i].wordClass)) {
+                        stringBuffer.append(" ")
+                        stringBuffer.append(wordList[i].wordClass)
+                    }
+                    if (wordList[i].tone.isNotEmpty()) {
+                        stringBuffer.append(" ")
+                        stringBuffer.append(wordList[i].tone)
+                    }
+                    stringBuffer.append("\n")
+                } catch (ee: Exception) {
+                    ee.printStackTrace()
                 }
-                stringBuffer.append("\n")
             }
         } else {
             val str: String = inputText

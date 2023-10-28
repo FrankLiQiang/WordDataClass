@@ -55,6 +55,8 @@ fun hideFunction(str: String) {
         editWordClass(str)
     } else if (str.endsWith("(")) {
         editWordTone(str)
+    } else if (str.endsWith("9")) {
+        editSentence1(str)
     } else {
         inputText = str
     }
@@ -367,3 +369,9 @@ fun editWordTone(s: String) {
     showWord()
 }
 
+fun editSentence1(s: String) {
+    val str = s.substring(0, s.length - 1)
+    wordList[playOrder[wordIndex]].sentence1 = str
+    saveFile("")
+    showWord()
+}

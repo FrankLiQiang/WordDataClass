@@ -220,6 +220,8 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
             R.id.class_lianyu,
             R.id.class_jietou,
             R.id.class_jiewei,
+            R.id.class_spec,
+            R.id.class_item,
             -> showRangeClass(item)
 
             R.id.help -> showHelp()

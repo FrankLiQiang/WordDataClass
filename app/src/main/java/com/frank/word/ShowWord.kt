@@ -288,10 +288,10 @@ fun isRightIndex(index: Int): Boolean {
 //                    }
 //                }
 //            } else {
-                if (wordList[playOrder[index]].wordClass.contains(CurrentClassStr)) {
-                    return true
-                }
-//            }
+            if (wordList[playOrder[index]].wordClass.contains(CurrentClassStr)) {
+                return true
+            }
+//        }
         }
 
         SHOW_RANGE_ALL -> {

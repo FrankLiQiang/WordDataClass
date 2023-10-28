@@ -167,6 +167,12 @@
                         <item
                             android:id="@+id/class_jiewei"
                             android:title="接尾" />
+                        <item
+                            android:id="@+id/class_spec"
+                            android:title="专" />
+                        <item
+                            android:id="@+id/class_item"
+                            android:title="短" />
                     </group>
                 </menu>
 
