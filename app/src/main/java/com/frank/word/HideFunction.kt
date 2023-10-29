@@ -366,7 +366,6 @@ fun editWordTone(s: String) {
     for (i in str0.indices) {
         val l = s.substring(i, i + 1).toInt()
         str += t.substring(l, l + 1)
-
     }
     wordList[playOrder[wordIndex]].tone = str
     saveFile("")
