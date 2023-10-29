@@ -166,9 +166,9 @@ fun readTxtFileIntoStringArrList(file: File?, isMakeLRC: Boolean) {
             word.pronunciation = strArray[1]
             word.native = strArray[2]
             if (strArray.size >= 6) {
-                word.sentence1 = strArray[3]
-                word.sentence2 = strArray[4]
-                word.sentence3 = strArray[5]
+                word.sentence1 = strArray[3].replace("%","\n")
+                word.sentence2 = strArray[4].replace("%","\n")
+                word.sentence3 = strArray[5].replace("%","\n")
             }
             if (strArray.size >= 7 && isNumeric(strArray[6])) {
                 word.middlePlayTime = strArray[6].toInt()

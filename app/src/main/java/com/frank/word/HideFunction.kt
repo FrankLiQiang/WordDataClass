@@ -57,6 +57,10 @@ fun hideFunction(str: String) {
         editWordTone(str)
     } else if (str.endsWith("9")) {
         editSentence1(str)
+    } else if (str.endsWith("8")) {
+        editSentence2(str)
+    } else if (str.endsWith("7")) {
+        editSentence3(str)
     } else {
         inputText = str
     }
@@ -372,6 +376,19 @@ fun editWordTone(s: String) {
 fun editSentence1(s: String) {
     val str = s.substring(0, s.length - 1)
     wordList[playOrder[wordIndex]].sentence1 = str
+    saveFile("")
+    showWord()
+}
+
+fun editSentence2(s: String) {
+    val str = s.substring(0, s.length - 1)
+    wordList[playOrder[wordIndex]].sentence2 = str
+    saveFile("")
+    showWord()
+}
+fun editSentence3(s: String) {
+    val str = s.substring(0, s.length - 1)
+    wordList[playOrder[wordIndex]].sentence3 = str
     saveFile("")
     showWord()
 }
