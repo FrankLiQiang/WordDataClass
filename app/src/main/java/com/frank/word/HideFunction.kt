@@ -239,7 +239,6 @@ fun searchWord(s: String) {
     } else {
         wordIndex = foundIndex
         inputText = ""
-        allIndex = foundIndex
         showWord()
     }
 }

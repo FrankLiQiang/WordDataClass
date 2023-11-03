@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
+var wordNum = 0
 var wordList: ArrayList<Word> = arrayListOf()
 var playOrder: ArrayList<Int> = arrayListOf()
 

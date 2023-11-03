@@ -12,6 +12,7 @@ var isLRC_Time_OK: Boolean = false
 var isLRC_Format_OK: Boolean = false
 var iStart: Int = 0
 var wordIndex: Int = 0
+var wordShowIndex = 0
 var loopIndex: Int = 0
 var loopNumber: Int = 1
 var sortType: Int = 0
@@ -34,8 +35,6 @@ fun readTextFile(index: Int) {
         inputText = ""
         iStart = 0
         loopIndex = 0
-//        isAdjust = false
-//        isToAddTime = false
         isEditFile = false
         wordList.clear()
         playOrder.clear()
@@ -50,25 +49,25 @@ fun readTextFile(index: Int) {
             sortWords()
             if (isLRC_Time_OK) {
                 if (isLRC_Format_OK) {
-                    var isFound = false
+                    wordNum = 0
+                    wordIndex = -1
                     if (index == -1) {
                         for (i: Int in wordList.size - 2 downTo 0) {
                             if (isRightIndex(i)) {
-                                wordIndex = i
-                                isFound = true
-                                break
+                                if (wordIndex == -1) wordIndex = i
+                                wordNum++
                             }
                         }
                     } else {
                         for (i: Int in 0 until wordList.size) {
                             if (isRightIndex(i)) {
-                                wordIndex = i
-                                isFound = true
-                                break
+                                if (wordIndex == -1) wordIndex = i
+                                wordNum++
                             }
                         }
                     }
-                    if (isFound) {
+                    if (wordNum > 0) {
+                        wordShowIndex = if (index == -1) wordNum else 1
                         showFirstWord()
                         playMp3()
                     } else {
