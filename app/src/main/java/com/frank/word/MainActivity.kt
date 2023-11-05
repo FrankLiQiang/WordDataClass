@@ -10,6 +10,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -33,8 +34,10 @@ import androidx.core.view.WindowCompat
 import androidx.documentfile.provider.DocumentFile
 import com.frank.word.ui.Home
 import com.frank.word.ui.SetBlackSystemBars
+import com.frank.word.ui.SetSettingDialog
 import com.frank.word.ui.ShowTextFieldFun
 import com.frank.word.ui.maxLessonNum
+import com.frank.word.ui.saveInfo
 import com.frank.word.ui.theme.WordTheme
 import kotlin.system.exitProcess
 
@@ -50,9 +53,9 @@ lateinit var mediaPlayer: MediaPlayer
 var isPlay by mutableStateOf(true)
 var isFirstTime by mutableStateOf(true)
 var isEditFile by mutableStateOf(false)
+var playVolume by mutableStateOf(1.0f)
 var fileName = ""
 var titleString = ""
-var playVolume = 1.0f
 lateinit var openMP3: () -> Unit
 lateinit var openFolder: () -> Unit
 lateinit var pause: () -> Unit
@@ -107,12 +110,24 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                 readTextFile(0)
             }
             openMP3 = {
-                rangeItem?.isVisible = false
-                chooseItem?.isVisible = false
-                isPlayFolder = false
-                launcher.launch("audio/*")
+                if (!iShowDel && !iShowNormal && !iShowFavorite) {
+                    Toast.makeText(mainActivity, "请选择单词范围。", Toast.LENGTH_LONG).show()
+                    isShowSettingDialog = true
+                } else {
+                    rangeItem?.isVisible = false
+                    chooseItem?.isVisible = false
+                    isPlayFolder = false
+                    launcher.launch("audio/*")
+                }
             }
-            openFolder = { dirRequest.launch(Uri.EMPTY) }
+            openFolder = {
+                if (!iShowDel && !iShowNormal && !iShowFavorite) {
+                    Toast.makeText(mainActivity, "请选择单词范围。", Toast.LENGTH_LONG).show()
+                    isShowSettingDialog = true
+                } else {
+                    dirRequest.launch(Uri.EMPTY)
+                }
+            }
             pause = {
                 isPlay = !mediaPlayer.isPlaying
                 if (mediaPlayer.isPlaying) {
@@ -123,6 +138,11 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
             }
 
             WordTheme {
+                SetSettingDialog()
+                if (isToSaveInfo) {
+                    saveInfo()
+                    isToSaveInfo = false
+                }
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = Color.Black // MaterialTheme.colorScheme.background,
@@ -168,11 +188,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         rangeItem = menu!!.findItem(R.id.folder_range)
-        chooseItem = menu.findItem(R.id.class_item)
-        chooseItem0 = menu.findItem(R.id.class_item0)
-        chooseItem1 = menu.findItem(R.id.class_item1)
-
-        menuInit(menu)
+        chooseItem = menu.findItem(R.id.choose_lesson)
         return true
     }
 
@@ -180,61 +196,15 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
         when (item.itemId) {
             android.R.id.home -> doHome()
             R.id.read_only -> readOnly(item)
-            R.id.in_order -> playOrder(item, 0)
-            R.id.play_in_random -> playOrder(item, 1)
-            R.id.play_all_random -> playOrder(item, 2)
-            R.id.show_word_all -> showWordType(item, SHOW_ALL)
-            R.id.show_word_foreign -> showWordType(item, SHOW_FOREIGN)
-            R.id.show_word_pronunciation -> showWordType(item, SHOW_PRONUNCIATION)
-            R.id.show_word_native -> showWordType(item, SHOW_NATIVE)
-            R.id.show_none -> showWordType(item, SHOW_NONE)
-            R.id.mode_normal -> setMute(item, 1.0f)
-            R.id.mode_mute -> setMute(item, 0.0f)
-            R.id.show_range_all -> showRangeAll(item)
-            R.id.show_range_chosen -> {
-                return if (showRangeChosen(item)) true else super.onOptionsItemSelected(item)
-            }
-
-            R.id.show_range_del -> {
-                return if (showRangeDel(item)) true else super.onOptionsItemSelected(item)
-            }
-
-            R.id.show_range_normal -> {
-                return if (showRangeNormal(item)) true else super.onOptionsItemSelected(item)
-            }
-
-            R.id.show_range_favorite -> {
-                return if (showRangeFavorite(item)) true else super.onOptionsItemSelected(item)
-            }
-
-            R.id.class_noun1,
-            R.id.class_verb,
-            R.id.class_verb_10,
-            R.id.class_verb_20,
-            R.id.class_verb_30,
-            R.id.class_vi0,
-            R.id.class_vt0,
-            R.id.class_adj_10,
-            R.id.class_adj_20,
-            R.id.class_fuci0,
-            R.id.class_lianti,
-            R.id.class_lianyu,
-            R.id.class_jietou,
-            R.id.class_jiewei,
-            R.id.class_spec,
-            R.id.class_item,
-            -> showRangeClass(item)
-
             R.id.help -> showHelp()
             R.id.open -> openMP3()
             R.id.folder -> openFolder()
-            R.id.one_key -> doOneKey()
             R.id.folder_range -> {
                 isShowChooseLessonDialog = true
             }
 
             R.id.choose_lesson -> {
-                isShowPopupMenu = true
+                isChooseSingleLessonDialog = true
             }
 
             R.id.middle_play -> {
@@ -245,28 +215,12 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                 item.isCheckable = true
             }
 
-            R.id.show_mode -> {
-                isShowList = !isShowList
-                item.isChecked = isShowList
-                item.isCheckable = true
-            }
-
-            R.id.play_middle -> {
-                isForeignOnly = !isForeignOnly
-                item.isChecked = isForeignOnly
-                item.isCheckable = true
-            }
-
-            R.id.play_pause_time -> {
-                isShowPauseTimeDialog = true
-            }
-
             R.id.edit_word -> {
                 editWordFile()
             }
 
-            else -> {
-                return if (elseItemSelect(item)) true else super.onOptionsItemSelected(item)
+            R.id.setting -> {
+                isShowSettingDialog = true
             }
         }
         return true

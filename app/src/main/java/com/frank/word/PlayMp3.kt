@@ -42,6 +42,7 @@ fun playMp3() {
     isFirstTime = true
     mediaPlayer.setDataSource(mainActivity, mp3Uri!!)
     mediaPlayer.prepare()
+    mediaPlayer.setVolume(playVolume, playVolume)
     mediaPlayer.start()
     //MediaButtonReceiver(mainActivity,mainActivity)
 }

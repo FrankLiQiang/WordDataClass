@@ -17,7 +17,7 @@ val wClass = arrayOf(
     "助词",
     "专",
     "短",
-    ""
+    "全部"
 )
 
 fun showWordClass() {

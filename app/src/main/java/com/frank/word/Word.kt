@@ -25,11 +25,14 @@ var isShowList by mutableStateOf(false)
 var isForeignOnly by mutableStateOf(false)
 var isAdjust by mutableStateOf(false)
 var isShowChooseLessonDialog by mutableStateOf(false)
+var isChooseSingleLessonDialog by mutableStateOf(false)
+var isShowCixingDialog by mutableStateOf(false)
+var isShowSettingDialog by mutableStateOf(true)
+var isToSaveInfo by mutableStateOf(true)
 var isShowPauseTimeDialog by mutableStateOf(false)
-var isShowPopupMenu by mutableStateOf(false)
 var wordClassColor by mutableStateOf(0)
 var isToDraw by mutableStateOf(0)
-var pauseTime = 0L
+var pauseTime by mutableStateOf(0L)
 
 data class Word(
     var wordClass: String = "0",

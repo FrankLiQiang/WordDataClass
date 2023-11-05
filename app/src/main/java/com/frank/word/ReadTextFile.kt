@@ -1,6 +1,9 @@
 package com.frank.word
 
 import android.widget.Toast
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.frank.word.ui.lastClickItem
 import java.io.BufferedReader
 import java.io.File
@@ -14,8 +17,8 @@ var iStart: Int = 0
 var wordIndex: Int = 0
 var wordShowIndex = 0
 var loopIndex: Int = 0
-var loopNumber: Int = 1
-var sortType: Int = 0
+var loopNumber by mutableStateOf(1)
+var sortType by mutableStateOf(0)
 
 fun readTextFile(index: Int) {
     var start = pathAndName.lastIndexOf("/")
@@ -59,7 +62,7 @@ fun readTextFile(index: Int) {
                             }
                         }
                     } else {
-                        for (i: Int in 0 until wordList.size) {
+                        for (i: Int in 0 until wordList.size - 1) {
                             if (isRightIndex(i)) {
                                 if (wordIndex == -1) wordIndex = i
                                 wordNum++
@@ -90,6 +93,7 @@ fun readTextFile(index: Int) {
                 if (isLRC_Format_OK) {
                     loopNumber = 0
                     addTimeInit()
+                    playMp3()
                 } else {
                     val str: String = readRawTxtFile(lrcFile!!)
                     editWords(str)
@@ -165,9 +169,9 @@ fun readTxtFileIntoStringArrList(file: File?, isMakeLRC: Boolean) {
             word.pronunciation = strArray[1]
             word.native = strArray[2]
             if (strArray.size >= 6) {
-                word.sentence1 = strArray[3].replace("%","\n")
-                word.sentence2 = strArray[4].replace("%","\n")
-                word.sentence3 = strArray[5].replace("%","\n")
+                word.sentence1 = strArray[3].replace("%", "\n")
+                word.sentence2 = strArray[4].replace("%", "\n")
+                word.sentence3 = strArray[5].replace("%", "\n")
             }
             if (strArray.size >= 7 && isNumeric(strArray[6])) {
                 word.middlePlayTime = strArray[6].toInt()

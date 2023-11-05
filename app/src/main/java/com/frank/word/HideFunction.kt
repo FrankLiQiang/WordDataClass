@@ -82,7 +82,7 @@ fun testWord(str: String) {
 }
 
 fun addWord(str: String) {
-    if (!isAdjust || sortType != 0 || iShowRange != SHOW_RANGE_ALL || wordIndex == wordList.size - 1) {
+    if (!isAdjust || sortType != 0 || !iShowNormal || !iShowDel || !iShowFavorite || wordIndex == wordList.size - 1) {
         Toast.makeText(mainActivity, "要：调时，顺序，全部播放，才可以。", Toast.LENGTH_LONG).show()
         return
     }
@@ -125,7 +125,7 @@ fun addWord(str: String) {
 }
 
 fun removeWord() {
-    if (!isAdjust || sortType != 0 || iShowRange != SHOW_RANGE_ALL || wordIndex == wordList.size - 1) {
+    if (!isAdjust || sortType != 0 || !iShowNormal || !iShowDel || !iShowFavorite || wordIndex == wordList.size - 1) {
         Toast.makeText(
             mainActivity,
             "要：调整时刻模式，顺序，全部播放，才可以。",
@@ -144,7 +144,7 @@ fun removeWord2() {
         inputText = ""
         return
     }
-    if (!isAdjust || sortType != 0 || iShowRange != SHOW_RANGE_ALL || wordIndex == wordList.size - 1) {
+    if (!isAdjust || sortType != 0 || !iShowNormal || !iShowDel || !iShowFavorite || wordIndex == wordList.size - 1) {
         Toast.makeText(
             mainActivity,
             "要：调整时刻模式，顺序，全部播放，才可以。",
@@ -153,16 +153,6 @@ fun removeWord2() {
         inputText = ""
         return
     }
-    if (wordList[playOrder[wordIndex]].rememberDepth == SHOW_FAVORITE) {
-        favorite_num--
-    }
-    if (wordList[playOrder[wordIndex]].rememberDepth == SHOW_DEL) {
-        removed_num--
-    }
-    if (wordList[playOrder[wordIndex]].rememberDepth == SHOW_RANGE_NORMAL) {
-        normal_num--
-    }
-    chosen_num = normal_num + favorite_num
     wordList[playOrder[wordIndex]].rememberDepth = 3
     saveFile("")
     inputText = ""
@@ -207,7 +197,7 @@ fun editWord(s: String) {
 }
 
 fun searchWord(s: String) {
-    if (iShowRange != SHOW_RANGE_ALL) {
+    if (!iShowNormal || !iShowDel || !iShowFavorite) {
         inputText = ""
         Toast.makeText(mainActivity, "请选择显示所有单词模式。", Toast.LENGTH_LONG).show()
         return
@@ -336,7 +326,7 @@ fun searchWordFromTxtFile(file: File?, str: String?): String {
 }
 
 fun adjustWord() {
-    if (iShowRange != SHOW_RANGE_ALL) {
+    if (!iShowNormal || !iShowDel || !iShowFavorite) {
         inputText = ""
         Toast.makeText(mainActivity, "请选择显示所有单词模式。", Toast.LENGTH_LONG).show()
         return
@@ -384,6 +374,7 @@ fun editSentence2(s: String) {
     saveFile("")
     showWord()
 }
+
 fun editSentence3(s: String) {
     val str = s.substring(0, s.length - 1)
     wordList[playOrder[wordIndex]].sentence3 = str

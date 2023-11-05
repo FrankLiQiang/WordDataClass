@@ -2,18 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.frank.word.WordActivity">
     <item
-        android:id="@+id/item_pause"
-        android:showAsAction="never"
-        android:title="@string/pause_img"
-        android:visible="false" />
-
-    <item
-        android:id="@+id/item_save_lrc"
-        android:showAsAction="never"
-        android:title="@string/play_save"
-        android:visible="false" />
-
-    <item
         android:id="@+id/open_file"
         android:title="@string/play_open">
         <menu>
@@ -41,255 +29,34 @@
     </item>
 
     <item
-        android:id="@+id/read_only"
-        android:checkable="true"
-        android:checked="true"
+        android:id="@+id/edit"
+        android:title="@string/edit">
+        <menu>
+            <group android:checkableBehavior="none">
+                <item
+                    android:id="@+id/read_only"
+                    android:checkable="true"
+                    android:checked="true"
+                    android:showAsAction="never"
+                    android:title="@string/read_only" />
+                <item
+                    android:id="@+id/edit_word"
+                    android:showAsAction="never"
+                    android:title="@string/edit_word" />
+                <item
+                    android:id="@+id/middle_play"
+                    android:checkable="true"
+                    android:checked="false"
+                    android:title="@string/middle_time" />
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/setting"
         android:showAsAction="never"
-        android:title="@string/read_only" />
-    <item
-        android:id="@+id/one_key"
-        android:showAsAction="never"
-        android:title="@string/one_key" />
-    <item
-        android:id="@+id/edit_word"
-        android:showAsAction="never"
-        android:title="@string/edit_word" />
-    <item
-        android:id="@+id/menu_single_check"
-        android:showAsAction="withText"
-        android:title="@string/choose_mode">
-        <menu>
-            <group
-                android:id="@+id/group_single"
-                android:checkableBehavior="single"
-                android:menuCategory="system"
-                android:title="@string/choose_mode">
-                <item
-                    android:id="@+id/single_menu_00"
-                    android:title="Infinite Loop" />
-                <item
-                    android:id="@+id/single_menu_01"
-                    android:checked="true"
-                    android:title="Loop 01" />
-                <item
-                    android:id="@+id/single_menu_02"
-                    android:title="Loop 02" />
-                <item
-                    android:id="@+id/single_menu_03"
-                    android:title="Loop 03" />
-                <item
-                    android:id="@+id/single_menu_04"
-                    android:title="Loop 04" />
-                <item
-                    android:id="@+id/single_menu_05"
-                    android:title="Loop 05" />
-            </group>
-        </menu>
-    </item>
+        android:title="设置" />
 
-    <item
-        android:id="@+id/order"
-        android:title="@string/play_sequence">
-        <menu>
-            <group
-                android:id="@+id/group_order"
-                android:checkableBehavior="single"
-                android:menuCategory="system"
-                android:title="@string/choose_mode">
-                <item
-                    android:id="@+id/in_order"
-                    android:checked="true"
-                    android:title="@string/play_in_order" />
-                <item
-                    android:id="@+id/play_in_random"
-                    android:title="@string/play_in_random" />
-                <item
-                    android:id="@+id/play_all_random"
-                    android:title="@string/play_all_random" />
-            </group>
-        </menu>
-    </item>
-
-    <item
-        android:id="@+id/menu_show_range"
-        android:showAsAction="withText"
-        android:title="@string/play_show_range">
-        <menu>
-            <item
-                android:showAsAction="withText"
-                android:title="词性">
-                <menu>
-                    <group
-                        android:id="@+id/group_word_class1"
-                        android:checkableBehavior="single"
-                        android:menuCategory="system"
-                        android:title="词性">
-                        <item
-                            android:id="@+id/class_noun1"
-                            android:title="名" />
-                        <item
-                            android:id="@+id/class_verb"
-                            android:title="動" />
-                        <item
-                            android:id="@+id/class_verb_10"
-                            android:title="動1" />
-                        <item
-                            android:id="@+id/class_verb_20"
-                            android:title="動2" />
-                        <item
-                            android:id="@+id/class_verb_30"
-                            android:title="動3" />
-                        <item
-                            android:id="@+id/class_vi0"
-                            android:title="自" />
-                        <item
-                            android:id="@+id/class_vt0"
-                            android:title="他" />
-                        <item
-                            android:id="@+id/class_adj_10"
-                            android:title="イ形" />
-                        <item
-                            android:id="@+id/class_adj_20"
-                            android:title="ナ形" />
-                        <item
-                            android:id="@+id/class_fuci0"
-                            android:title="副" />
-                        <item
-                            android:id="@+id/class_lianti"
-                            android:title="連体" />
-                        <item
-                            android:id="@+id/class_lianyu"
-                            android:title="連語" />
-                        <item
-                            android:id="@+id/class_jietou"
-                            android:title="接頭" />
-                        <item
-                            android:id="@+id/class_jiewei"
-                            android:title="接尾" />
-                        <item
-                            android:id="@+id/class_spec"
-                            android:title="专" />
-                        <item
-                            android:id="@+id/class_item"
-                            android:title="短" />
-                        <item
-                            android:id="@+id/class_item0"
-                            android:title="短"
-                            android:checked="true"
-                            android:visible="false"/>
-                    </group>
-                </menu>
-
-            </item>
-            <group
-                android:id="@+id/group_show_range"
-                android:checkableBehavior="single"
-                android:menuCategory="system"
-                android:title="@string/play_show_range">
-                <item
-                    android:id="@+id/show_range_all"
-                    android:checked="true"
-                    android:title="@string/show_all" />
-                <item
-                    android:id="@+id/show_range_chosen"
-                    android:title="@string/show_chosen" />
-                <item
-                    android:id="@+id/show_range_del"
-                    android:title="@string/show_remove" />
-                <item
-                    android:id="@+id/show_range_normal"
-                    android:title="@string/show_normal" />
-                <item
-                    android:id="@+id/show_range_favorite"
-                    android:title="@string/play_favorite" />
-                <item
-                    android:id="@+id/class_item1"
-                    android:title="短"
-                    android:visible="false"/>
-            </group>
-        </menu>
-    </item>
-
-    <item
-        android:id="@+id/menu_show_type"
-        android:showAsAction="withText"
-        android:title="@string/play_show_type">
-        <menu>
-            <item
-                android:id="@+id/play_middle"
-                android:checkable="true"
-                android:checked="false"
-                android:showAsAction="never"
-                android:title="@string/foreign_only" />
-            <item
-                android:id="@+id/play_pause_time"
-                android:title="@string/pause_time" />
-            <group
-                android:id="@+id/group_show_type"
-                android:checkableBehavior="single"
-                android:menuCategory="system"
-                android:title="@string/play_show_type">
-                <item
-                    android:id="@+id/show_word_all"
-                    android:checked="true"
-                    android:title="@string/show_all" />
-                <item
-                    android:id="@+id/show_word_foreign"
-                    android:title="@string/show_foreign" />
-                <item
-                    android:id="@+id/show_word_pronunciation"
-                    android:title="@string/show_pronunciation" />
-                <item
-                    android:id="@+id/show_word_native"
-                    android:title="@string/show_native" />
-                <item
-                    android:id="@+id/show_none"
-                    android:title="@string/show_none" />
-            </group>
-        </menu>
-    </item>
-
-    <item
-        android:id="@+id/menu_play_mode"
-        android:showAsAction="withText"
-        android:title="@string/play_mode">
-        <menu>
-            <group
-                android:id="@+id/group_play_mode"
-                android:checkableBehavior="single"
-                android:menuCategory="system"
-                android:title="@string/play_mode">
-                <item
-                    android:id="@+id/mode_normal"
-                    android:checked="true"
-                    android:title="@string/normal_mode" />
-                <item
-                    android:id="@+id/mode_mute"
-                    android:title="@string/mute_mode" />
-            </group>
-            <item
-                android:id="@+id/middle_play"
-                android:checkable="true"
-                android:checked="false"
-                android:title="@string/middle_time" />
-            <item
-                android:id="@+id/show_mode"
-                android:checkable="true"
-                android:checked="false"
-                android:title="@string/show_model" />
-        </menu>
-    </item>
-
-    <item
-        android:id="@+id/item_quick"
-        android:showAsAction="always"
-        android:title="@string/play_quick"
-        android:visible="false" />
-    <item
-        android:id="@+id/item_save"
-        android:showAsAction="always"
-        android:title="@string/play_save"
-        android:visible="false" />
     <item
         android:id="@+id/help"
         android:showAsAction="never"

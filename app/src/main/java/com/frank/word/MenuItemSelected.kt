@@ -1,7 +1,6 @@
 package com.frank.word
 
 import android.view.MenuItem
-import android.widget.Toast
 
 fun readOnly(item: MenuItem) {
     item.isChecked = isShowEditText
@@ -13,26 +12,6 @@ fun playOrder(item: MenuItem, index: Int) {
     item.isChecked = true
     sortFiles()
     sortWords()
-}
-
-fun elseItemSelect(item: MenuItem): Boolean {
-    for (i in 0..5) {
-        if (item.itemId == numberArray[i]) {
-            loopNumber = i
-            item.isChecked = true
-            item.isCheckable = true
-            loopIndex = 0
-            if (loopNumber != 1 && wordIndex < playOrder.size && wordList.size > playOrder[wordIndex] + 1) {
-                iEnd = if (isForeignOnly && wordList[playOrder[wordIndex]].middlePlayTime > 0) {
-                    wordList[playOrder[wordIndex]].middlePlayTime
-                } else {
-                    wordList[playOrder[wordIndex] + 1].startPlayTime
-                }
-            }
-            return false
-        }
-    }
-    return true
 }
 
 fun doHome() {
@@ -56,122 +35,6 @@ fun doHome() {
             mediaPlayer.start()
         }
         readTextFile(0)
-    }
-}
-
-fun doOneKey() {
-    loopNumber = 1
-    sortType = 1
-    iShowRange = SHOW_FAVORITE
-}
-
-fun showRangeAll(item: MenuItem) {
-    setMenuItemCheckFalse()
-    iShowRange = SHOW_RANGE_ALL
-    sortFiles()
-    sortWords()
-    showTitle()
-    item.isChecked = true
-    item.isCheckable = true
-
-}
-
-fun showRangeChosen(item: MenuItem): Boolean {
-    if (chosen_num == 0 && !isPlayFolder) {
-        Toast.makeText(mainActivity, "没有相应单词", Toast.LENGTH_LONG).show()
-        return false
-    }
-    iShowRange = SHOW_CHOSEN
-    setMenuItemCheckFalse()
-    item.isChecked = true
-    item.isCheckable = true
-    sortFiles()
-    sortWords()
-    if (wordList[playOrder[wordIndex]].rememberDepth == SHOW_DEL) {
-        readTextFile(0)
-    } else {
-        showTitle()
-    }
-    return true
-}
-
-fun showRangeDel(item: MenuItem): Boolean {
-    if (removed_num == 0 && !isPlayFolder) {
-        Toast.makeText(mainActivity, "没有相应单词", Toast.LENGTH_LONG).show()
-        return false
-    }
-    iShowRange = SHOW_DEL
-    setMenuItemCheckFalse()
-    item.isChecked = true
-    item.isCheckable = true
-    sortFiles()
-    sortWords()
-    if (wordList[playOrder[wordIndex]].rememberDepth == SHOW_DEL) {
-        readTextFile(0)
-    } else {
-        showTitle()
-    }
-    return true
-}
-
-fun showRangeNormal(item: MenuItem): Boolean {
-    if (normal_num == 0 && !isPlayFolder) {
-        Toast.makeText(mainActivity, "没有相应单词", Toast.LENGTH_LONG).show()
-        return false
-    }
-    iShowRange = SHOW_RANGE_NORMAL
-    setMenuItemCheckFalse()
-    item.isChecked = true
-    sortFiles()
-    sortWords()
-    if (wordList[playOrder[wordIndex]].rememberDepth == SHOW_RANGE_NORMAL) {
-        showTitle()
-    } else {
-        readTextFile(0)
-    }
-    return true
-}
-
-fun showRangeFavorite(item: MenuItem): Boolean {
-    if (favorite_num == 0 && !isPlayFolder) {
-        Toast.makeText(mainActivity, "没有相应单词", Toast.LENGTH_LONG).show()
-        return false
-    }
-    iShowRange = SHOW_FAVORITE
-    setMenuItemCheckFalse()
-    item.isChecked = true
-    sortFiles()
-    sortWords()
-    if (wordList[playOrder[wordIndex]].rememberDepth == SHOW_FAVORITE) {
-        showTitle()
-    } else {
-        readTextFile(0)
-    }
-    return true
-}
-
-fun setMenuItemCheckFalse() {
-    chooseItem0?.isChecked = true
-    chooseItem1?.isChecked = true
-}
-
-fun showRangeClass(item: MenuItem) {
-    if (isPlayFolder) {
-        iShowRange = SHOW_RANGE_CLASS
-        CurrentClassStr = item.title.toString()
-        setMenuItemCheckFalse()
-        item.isChecked = true
-    } else {
-        for (i in 0..wordList.size - 2) {
-            if (wordList[playOrder[i]].wordClass.contains(item.title.toString())) {
-                iShowRange = SHOW_RANGE_CLASS
-                CurrentClassStr = item.title.toString()
-                setMenuItemCheckFalse()
-                item.isChecked = true
-                return
-            }
-        }
-        Toast.makeText(mainActivity, "没有相应单词", Toast.LENGTH_LONG).show()
     }
 }
 
@@ -205,22 +68,6 @@ fun showHelp() {
 
 """
 
-}
-
-fun showWordType(item: MenuItem, type: Int) {
-    item.isChecked = true
-    item.isCheckable = true
-    showWordType = type
-    showWord()
-}
-
-fun setMute(item: MenuItem, volume: Float) {
-    if (!isFirstTime) {
-        playVolume = volume
-        item.isChecked = true
-        item.isCheckable = true
-        mediaPlayer.setVolume(volume, volume)
-    }
 }
 
 fun editWordFile() {

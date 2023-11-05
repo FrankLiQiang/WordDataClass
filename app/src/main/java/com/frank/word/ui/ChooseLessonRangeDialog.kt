@@ -37,7 +37,7 @@ import com.frank.word.sortFiles
 var maxLessonNum = 0
 
 @Composable
-private fun ShowChooseLessonDialog(
+private fun ShowLessonRangeDialog(
     onDismiss: () -> Unit,
     onNegativeClick: () -> Unit,
     onPositiveClick: (Int, Int) -> Unit
@@ -128,7 +128,7 @@ private fun ShowChooseLessonDialog(
 fun SetLessonRangDialog() {
 
     if (isShowChooseLessonDialog) {
-        ShowChooseLessonDialog(
+        ShowLessonRangeDialog(
             onDismiss = {
                 isShowChooseLessonDialog = !isShowChooseLessonDialog
             },
@@ -142,7 +142,7 @@ fun SetLessonRangDialog() {
                 fileEndIndex = to - 1
 
                 if (fileIndex in fileBeginIndex..fileEndIndex) {
-                    return@ShowChooseLessonDialog
+                    return@ShowLessonRangeDialog
                 }
 
                 fileIndex = fileBeginIndex

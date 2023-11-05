@@ -46,7 +46,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.frank.word.ChooseLessonMenu
 import com.frank.word.R
 import com.frank.word.Word
 import com.frank.word.addMiddleTime
@@ -120,7 +119,6 @@ fun Home(
     val scrollState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
-    ChooseLessonMenu()
     Column(Modifier.background(Color.Black)) {
         if (isToDraw < -1) return
         Row(
@@ -129,8 +127,8 @@ fun Home(
 //                .height(30.dp)      //小米 Redmi Note11 Pro
                 .height(50.dp)        //Google Pixel 6A
         ) {}
+        SetChooseSingleLessonDialog()
         SetLessonRangDialog()
-        SetPauseTimeDialog()
         if (!isShowList) {
             if (!isEditFile) {
                 LinearProgressIndicator(
@@ -280,8 +278,7 @@ fun Home(
                         //scrollState.animateScrollToItem(row)
                         try {
                             scrollState.scrollToItem(row)
-                        } catch (e: Exception) {
-
+                        } catch (_: Exception) {
                         }
                         isToDraw = 1 - isToDraw
                     }

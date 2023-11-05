@@ -8,7 +8,14 @@ fun addTimeInit() {
     }
     sortType = 0
     musicStep = 0.0f
-    showWordType = SHOW_ALL
+    iShowForeign = true
+    iShowPronunciation = true
+    iShowMeaning = true
+
+    iShowForeign = true
+    iShowPronunciation = true
+    iShowMeaning = true
+
     sortWords()
     titleString = "$fileName(/${wordList.size - 1})"
     iStart = 0

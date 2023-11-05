@@ -7,32 +7,25 @@ import androidx.compose.runtime.setValue
 import com.frank.word.ui.moveToCurrentWord
 import kotlin.math.abs
 
-const val SHOW_ALL = 0
-const val SHOW_FOREIGN = 1
-const val SHOW_PRONUNCIATION = 2
-const val SHOW_NATIVE = 3
-const val SHOW_NONE = 4
-
 const val SHOW_RANGE_NORMAL = 0
 const val SHOW_FAVORITE = 1
 const val SHOW_DEL = 2
-const val SHOW_CHOSEN = 3
-const val SHOW_RANGE_ALL = 4
-const val SHOW_RANGE_CLASS = 5
 
-var showWordType = SHOW_ALL
-var iShowRange = SHOW_RANGE_ALL
-var removed_num = 0
-var normal_num = 0
-var favorite_num = 0
-var chosen_num = 0
+var iShowDel by mutableStateOf(true)
+var iShowNormal by mutableStateOf(true)
+var iShowFavorite by mutableStateOf(true)
+
+var iShowForeign by mutableStateOf(true)
+var iShowPronunciation by mutableStateOf(true)
+var iShowMeaning by mutableStateOf(true)
+
 var iEnd = 0
 var isNextLesson = false
-var all_num = 0  //by mutableStateOf(0)
-var CurrentClassStr by mutableStateOf("")
+var CurrentClassStr by mutableStateOf("全部")
 
 fun showWord() {
     if (showCurrentWord()) {
+        inputText = ""
         showSeekTo()
     }
 }
@@ -57,21 +50,6 @@ fun showFirstWord() {
     if (sortType == 1 || sortType == 2) {
         sortWords()
     }
-    val offset = if (isAdjust) 0 else 1
-    removed_num = 0
-    normal_num = 0
-    favorite_num = 0
-    for (i in 0 until wordList.size - offset) {
-        if (wordList[playOrder[i]].rememberDepth == SHOW_RANGE_NORMAL) {
-            normal_num++
-        } else if (wordList[playOrder[i]].rememberDepth == SHOW_FAVORITE) {
-            favorite_num++
-        } else if (wordList[playOrder[i]].rememberDepth == SHOW_DEL) {
-            removed_num++
-        }
-    }
-    chosen_num = normal_num + favorite_num
-    all_num = chosen_num + removed_num
     showWord()
 }
 
@@ -79,32 +57,28 @@ fun showCurrentWord(): Boolean {
     if (wordIndex >= wordList.size || wordIndex >= playOrder.size) {
         return false
     }
-    if (isShowList && wordIndex >= 0) {
+    if (isShowList && wordIndex >= 0 && !isFirstTime) {
         moveToCurrentWord(wordIndex)
     }
 
     var str = ""
-    if (showWordType == SHOW_ALL) {
-        str = if (wordList[playOrder[wordIndex]].foreign
-            == wordList[playOrder[wordIndex]].pronunciation
-        ) {
-            """
-     ${wordList[playOrder[wordIndex]].foreign}
-     ${wordList[playOrder[wordIndex]].native}
-     """.trimIndent()
+    if (iShowForeign) {
+        str += wordList[playOrder[wordIndex]].foreign
+    }
+    if (iShowPronunciation) {
+        if (iShowForeign) {
+            if (wordList[playOrder[wordIndex]].foreign != wordList[playOrder[wordIndex]].pronunciation) {
+                str += "\n" + wordList[playOrder[wordIndex]].pronunciation
+            }
         } else {
-            """
-     ${wordList[playOrder[wordIndex]].foreign}
-     ${wordList[playOrder[wordIndex]].pronunciation}
-     ${wordList[playOrder[wordIndex]].native}
-     """.trimIndent()
+            str += wordList[playOrder[wordIndex]].pronunciation
         }
-    } else if (showWordType == SHOW_FOREIGN) {
-        str = wordList[playOrder[wordIndex]].foreign
-    } else if (showWordType == SHOW_PRONUNCIATION) {
-        str = wordList[playOrder[wordIndex]].pronunciation
-    } else if (showWordType == SHOW_NATIVE) {
-        str = wordList[playOrder[wordIndex]].native
+    }
+    if (iShowMeaning) {
+        if (iShowPronunciation || iShowForeign) {
+            str += "\n"
+        }
+        str += wordList[playOrder[wordIndex]].native
     }
     currentShowWord = str
     currentSentence1 = wordList[playOrder[wordIndex]].sentence1
@@ -120,11 +94,11 @@ fun showCurrentWord(): Boolean {
 }
 
 fun showTitle() {
-     if (isAdjust) {
-        titleString ="$fileName(${wordIndex + 1}/${wordList.size})"
+    if (isAdjust) {
+        titleString = "$fileName(${wordIndex + 1}/${wordList.size})"
         musicStep = (wordIndex + 1).toFloat() / wordList.size.toFloat()
     } else {
-         titleString = "$fileName($wordShowIndex/$wordNum)"
+        titleString = "$fileName($wordShowIndex/$wordNum)"
         musicStep = wordShowIndex.toFloat() / wordNum.toFloat()
     }
 }
@@ -195,47 +169,22 @@ fun showNext() {
 }
 
 fun isRightIndex(index: Int): Boolean {
-    when (iShowRange) {
-        SHOW_RANGE_CLASS -> {
-//            if (isNumeric(wordList[playOrder[index]].wordClass)) {
-//                val wClass = wordList[playOrder[index]].wordClass.toInt()
-//                if (CurrentWordClass == 16) {
-//                    if (wClass in 23..25) {
-//                        return true
-//                    }
-//                } else if (CurrentWordClass == 17) {
-//                    if (wClass in 43..45) {
-//                        return true
-//                    }
-//                } else {
-//                    if (wClass % 20 == CurrentWordClass) {
-//                        return true
-//                    }
-//                }
-//            } else {
-            if (wordList[playOrder[index]].wordClass.contains(CurrentClassStr)) {
-                return true
-            }
-//        }
+    if (!isAdjust && wordList[playOrder[index]].rememberDepth == 3) {
+        return false
+    }
+    if (CurrentClassStr != "全部") {
+        if (!wordList[playOrder[index]].wordClass.contains(CurrentClassStr)) {
+            return false
         }
-
-        SHOW_RANGE_ALL -> {
-            return !(isAdjust || wordList[playOrder[index]].rememberDepth == 3)
-        }
-
-        SHOW_CHOSEN -> {
-            if (wordList[playOrder[index]].rememberDepth == SHOW_RANGE_NORMAL
-                || wordList[playOrder[index]].rememberDepth == SHOW_FAVORITE
-            ) {
-                return true
-            }
-        }
-
-        else -> {
-            if (wordList[playOrder[index]].rememberDepth == iShowRange) {
-                return true
-            }
-        }
+    }
+    if (iShowNormal && wordList[playOrder[index]].rememberDepth == SHOW_RANGE_NORMAL) {
+        return true
+    }
+    if (iShowFavorite && wordList[playOrder[index]].rememberDepth == SHOW_FAVORITE) {
+        return true
+    }
+    if (iShowDel && wordList[playOrder[index]].rememberDepth == SHOW_DEL) {
+        return true
     }
     return false
 }
