@@ -83,6 +83,7 @@ fun showCurrentWord(): Boolean {
     currentShowWord = str
     currentSentence1 = wordList[playOrder[wordIndex]].sentence1
     currentSentence2 = wordList[playOrder[wordIndex]].sentence2
+    currentSentence3 = wordList[playOrder[wordIndex]].sentence3
 
     isFAVORITE = wordList[playOrder[wordIndex]].rememberDepth == SHOW_FAVORITE
     isDEL = wordList[playOrder[wordIndex]].rememberDepth == SHOW_DEL
@@ -130,6 +131,7 @@ fun showPrev() {
             showPrevLesson()
         } else {
             wordIndex = wordList.size - offset + 1
+            wordShowIndex = wordNum + 1
             sortWords()
             showPrev()
         }
@@ -162,6 +164,7 @@ fun showNext() {
             showNextLesson()
         } else {
             wordIndex = -1
+            wordShowIndex = 0
             sortWords()
             showNext()
         }

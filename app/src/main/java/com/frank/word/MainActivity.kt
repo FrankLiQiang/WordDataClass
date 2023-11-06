@@ -37,7 +37,7 @@ import com.frank.word.ui.SetBlackSystemBars
 import com.frank.word.ui.SetSettingDialog
 import com.frank.word.ui.ShowTextFieldFun
 import com.frank.word.ui.maxLessonNum
-import com.frank.word.ui.saveInfo
+import com.frank.word.ui.SaveInfo
 import com.frank.word.ui.theme.WordTheme
 import kotlin.system.exitProcess
 
@@ -140,7 +140,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
             WordTheme {
                 SetSettingDialog()
                 if (isToSaveInfo) {
-                    saveInfo()
+                    SaveInfo()
                     isToSaveInfo = false
                 }
                 Surface(
@@ -189,6 +189,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
         menuInflater.inflate(R.menu.menu_main, menu)
         rangeItem = menu!!.findItem(R.id.folder_range)
         chooseItem = menu.findItem(R.id.choose_lesson)
+        editItem = menu.findItem(R.id.edit)
         return true
     }
 

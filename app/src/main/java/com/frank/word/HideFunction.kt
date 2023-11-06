@@ -332,6 +332,7 @@ fun adjustWord() {
         return
     }
     isAdjust = !isAdjust
+    editItem!!.isVisible = isAdjust
     if (isAdjust) {
         loopNumber = 1
     }

@@ -52,6 +52,7 @@ import com.frank.word.addMiddleTime
 import com.frank.word.addTime
 import com.frank.word.currentSentence1
 import com.frank.word.currentSentence2
+import com.frank.word.currentSentence3
 import com.frank.word.currentShowWord
 import com.frank.word.currentWordClass
 import com.frank.word.isDEL
@@ -198,6 +199,18 @@ fun Home(
                         .padding(5.dp)
                 )
             }
+            if (currentSentence3.isNotEmpty()) {
+                Text(
+                    text = AnnotatedString(currentSentence3),
+                    fontSize = myFontSize.sp,
+                    lineHeight = (myFontSize * 1.2f).sp,
+                    color = if (isPlay) Color.White else Color.Cyan,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                )
+            }
             if (isShowEditText && !isToAddTime) {
                 ShowTextFieldFun(
                     Modifier
@@ -277,7 +290,7 @@ fun Home(
                         lastClickItem = wordList[row]
                         //scrollState.animateScrollToItem(row)
                         try {
-                            scrollState.scrollToItem(row)
+                            scrollState.scrollToItem(row - 2)
                         } catch (_: Exception) {
                         }
                         isToDraw = 1 - isToDraw

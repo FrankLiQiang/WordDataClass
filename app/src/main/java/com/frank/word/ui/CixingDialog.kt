@@ -57,8 +57,7 @@ private fun ShowCixingDialog(
                                     isToDraw = 1 - isToDraw
                                 },
                             text = menuItem,
-                            fontSize = 23.sp,
-                            color = Color.White,
+                            fontSize = 18.sp,
                             lineHeight = (myFontSize + 2).sp,
                             maxLines = 10,
                             style = MaterialTheme.typography.labelMedium,

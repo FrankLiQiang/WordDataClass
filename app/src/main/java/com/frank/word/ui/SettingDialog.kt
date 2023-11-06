@@ -52,7 +52,7 @@ import com.frank.word.sortType
 
 
 @Composable
-fun readInfo() {
+fun ReadInfo() {
     val sp = LocalContext.current.getSharedPreferences("MY_WORD_RECITE_APP", Context.MODE_PRIVATE)
     loopNumber = sp.getInt("loopNumber", 1)
     pauseTime = sp.getLong("pauseTime", 0)
@@ -71,7 +71,7 @@ fun readInfo() {
 }
 
 @Composable
-fun saveInfo() {
+fun SaveInfo() {
     val sp = LocalContext.current.getSharedPreferences("MY_WORD_RECITE_APP", Context.MODE_PRIVATE)
     val editor: SharedPreferences.Editor = sp.edit()
     editor.putInt("loopNumber", loopNumber)
@@ -102,8 +102,7 @@ private fun ShowSettingDialog(
     onNegativeClick: () -> Unit,
 ) {
     SetCixingDialog()
-    SetPauseTimeDialog()
-    readInfo()
+    ReadInfo()
     Dialog(onDismissRequest = onDismiss) {
 
         Card(
