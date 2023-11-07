@@ -73,6 +73,7 @@ import com.frank.word.showWord
 import com.frank.word.wordClassColor
 import com.frank.word.wordIndex
 import com.frank.word.wordList
+import com.frank.word.wordShowIndex
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
@@ -290,7 +291,7 @@ fun Home(
                         lastClickItem = wordList[row]
                         //scrollState.animateScrollToItem(row)
                         try {
-                            scrollState.scrollToItem(row - 2)
+                            scrollState.scrollToItem(if (row > 2) row - 2 else 0)
                         } catch (_: Exception) {
                         }
                         isToDraw = 1 - isToDraw
@@ -351,6 +352,15 @@ fun Home(
                                 if (menuItem.isItemChosen) {
                                     lastClickItem = menuItem
                                     wordIndex = index
+                                    wordShowIndex = 0
+                                    for (i in 0.. wordList.size) {
+                                        if (isRightIndex(i)) {
+                                            wordShowIndex++
+                                        }
+                                        if (i >= index) {
+                                            break
+                                        }
+                                    }
                                     showWord()
                                 }
                                 isItem = true

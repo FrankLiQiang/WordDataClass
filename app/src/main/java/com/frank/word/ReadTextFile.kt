@@ -19,6 +19,8 @@ var wordShowIndex = 0
 var loopIndex: Int = 0
 var loopNumber by mutableStateOf(1)
 var sortType by mutableStateOf(0)
+var isOpenSingleFile by mutableStateOf(false)
+var isOpenFile by mutableStateOf(true)
 
 fun readTextFile(index: Int) {
     var start = pathAndName.lastIndexOf("/")

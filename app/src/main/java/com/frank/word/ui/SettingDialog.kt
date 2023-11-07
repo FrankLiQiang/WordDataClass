@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -39,6 +40,8 @@ import com.frank.word.iShowNormal
 import com.frank.word.iShowPronunciation
 import com.frank.word.isFirstTime
 import com.frank.word.isForeignOnly
+import com.frank.word.isOpenFile
+import com.frank.word.isOpenSingleFile
 import com.frank.word.isShowCixingDialog
 import com.frank.word.isShowEditText
 import com.frank.word.isShowList
@@ -46,14 +49,16 @@ import com.frank.word.isShowSettingDialog
 import com.frank.word.isToSaveInfo
 import com.frank.word.loopNumber
 import com.frank.word.mediaPlayer
+import com.frank.word.openFolder
+import com.frank.word.openMP3
 import com.frank.word.pauseTime
 import com.frank.word.playVolume
 import com.frank.word.sortType
 
-
 @Composable
 fun ReadInfo() {
     val sp = LocalContext.current.getSharedPreferences("MY_WORD_RECITE_APP", Context.MODE_PRIVATE)
+    isOpenSingleFile = sp.getBoolean("isOpenSingleFile", false)
     loopNumber = sp.getInt("loopNumber", 1)
     pauseTime = sp.getLong("pauseTime", 0)
     isShowEditText = sp.getBoolean("isShowEditText", false)
@@ -74,6 +79,7 @@ fun ReadInfo() {
 fun SaveInfo() {
     val sp = LocalContext.current.getSharedPreferences("MY_WORD_RECITE_APP", Context.MODE_PRIVATE)
     val editor: SharedPreferences.Editor = sp.edit()
+    editor.putBoolean("isOpenSingleFile", isOpenSingleFile)
     editor.putInt("loopNumber", loopNumber)
     editor.putLong("pauseTime", pauseTime)
     editor.putBoolean("isShowEditText", isShowEditText)
@@ -112,12 +118,33 @@ private fun ShowSettingDialog(
 
             Column(modifier = Modifier.padding(8.dp)) {
 
-                Text(
-                    text = LocalContext.current.getString(R.string.app_name),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    modifier = Modifier.padding(8.dp)
-                )
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = LocalContext.current.getString(R.string.app_name),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .weight(1.0f)
+                    )
+                    if (!isFirstTime) {
+                        Text(
+                            text = "打开音频",
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                        Checkbox(
+                            checked = isOpenFile,
+                            onCheckedChange = {
+                                isOpenFile = !isOpenFile
+                            },
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                    }
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     Modifier
@@ -127,19 +154,43 @@ private fun ShowSettingDialog(
                 ) {}
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(
-                    text = LocalContext.current.getString(R.string.loop_count) + " (" + loopNumber.toString() + ")",
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-                Slider(
-                    value = loopNumber.toFloat(),
-                    onValueChange = {
-                        loopNumber = it.toInt()
-                    },
-                    valueRange = 0f..5f,
-                    onValueChangeFinished = {}
-                )
+                Row(Modifier.padding(start = 5.dp)) {
+                    Column(
+                        Modifier
+                            .weight(2.0f)
+                    ) {
+                        Text(
+                            text = LocalContext.current.getString(R.string.loop_count) + " (" + loopNumber.toString() + ")",
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                        Slider(
+                            value = loopNumber.toFloat(),
+                            onValueChange = {
+                                loopNumber = it.toInt()
+                            },
+                            valueRange = 0f..5f,
+                            onValueChangeFinished = {}
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .weight(1.0f)
+                    ) {
+                        Checkbox(
+                            checked = isOpenSingleFile,
+                            onCheckedChange = {
+                                isOpenSingleFile = !isOpenSingleFile
+                            },
+                            modifier = Modifier.align(CenterHorizontally)
+                        )
+                        Text(
+                            text = "打开单个文件",
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.align(CenterHorizontally)
+                        )
+                    }
+                }
                 Row(Modifier.padding(start = 5.dp)) {
                     Column(
                         Modifier
@@ -425,13 +476,24 @@ fun SetSettingDialog() {
     if (isShowSettingDialog) {
         ShowSettingDialog(
             onDismiss = {
-                isShowSettingDialog = !isShowSettingDialog
-                isToSaveInfo = true
+                closeDialog()
             },
             onNegativeClick = {
-                isShowSettingDialog = !isShowSettingDialog
-                isToSaveInfo = true
+                closeDialog()
             },
         )
+    }
+}
+
+fun closeDialog() {
+    isShowSettingDialog = !isShowSettingDialog
+    isToSaveInfo = true
+    if (isOpenFile) {
+        if (isOpenSingleFile) {
+            openMP3()
+        } else {
+            openFolder()
+        }
+        isOpenFile = false
     }
 }
