@@ -7,38 +7,49 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.documentfile.provider.DocumentFile
 import com.frank.word.ui.Home
+import com.frank.word.ui.SaveInfo
 import com.frank.word.ui.SetBlackSystemBars
 import com.frank.word.ui.SetSettingDialog
 import com.frank.word.ui.ShowTextFieldFun
 import com.frank.word.ui.maxLessonNum
-import com.frank.word.ui.SaveInfo
 import com.frank.word.ui.theme.WordTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlin.system.exitProcess
 
 var myFontSize by mutableStateOf(30.0f)
@@ -55,7 +66,7 @@ var isFirstTime by mutableStateOf(true)
 var isEditFile by mutableStateOf(false)
 var playVolume by mutableStateOf(1.0f)
 var fileName = ""
-var titleString = ""
+var titleString by mutableStateOf("")
 lateinit var openMP3: () -> Unit
 lateinit var openFolder: () -> Unit
 lateinit var pause: () -> Unit
@@ -82,8 +93,6 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                 maxLessonNum = files.size
                 sortFiles()
                 isPlayFolder = true
-                rangeItem?.isVisible = true
-                chooseItem?.isVisible = true
                 pathAndName = files[0].uri.path ?: ""
                 mp3Uri = files[0].uri
                 readTextFile(0)
@@ -101,7 +110,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
 
         setContent {
             val appName = stringResource(id = R.string.app_name)
-            title = appName + "_".repeat(26 - appName.length)
+            titleString = appName
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.GetContent()
             ) { result ->
@@ -114,8 +123,6 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                     Toast.makeText(mainActivity, "请选择单词范围。", Toast.LENGTH_LONG).show()
                     isShowSettingDialog = true
                 } else {
-                    rangeItem?.isVisible = false
-                    chooseItem?.isVisible = false
                     isPlayFolder = false
                     launcher.launch("audio/*")
                 }
@@ -138,6 +145,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
             }
 
             WordTheme {
+                TransparentSystemBars()         // 沉浸式 状态栏 条件之二
                 SetSettingDialog()
                 if (isToSaveInfo) {
                     SaveInfo()
@@ -148,83 +156,97 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                     color = Color.Black // MaterialTheme.colorScheme.background,
                 ) {
                     SetBlackSystemBars()
-                    if (isFirstTime) {
-                        if (isShowDict) {
-                            Column {
-                                Row(Modifier.height(55.dp)) {}
-                                //Row(Modifier.height(40.dp)) {}
-                                ShowTextFieldFun(
-                                    Modifier
-                                        .weight(1.0f)
-                                        .fillMaxWidth()
-                                    //.padding(15.dp)
-                                )
-                                Slider(
-                                    value = myFontSize,
-                                    onValueChange = { myFontSize = it },
-                                    onValueChangeFinished = {},
-                                    valueRange = 20f..50f,
-                                    modifier = Modifier
-                                        .height(50.dp)
-                                        .padding(20.dp)
-                                )
-                                Row(Modifier.height(30.dp)) {}
-                            }
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        Row(Modifier.height(40.dp)) {}
+                        Row(Modifier.height(45.dp)) {
+                            Icon(
+                                painterResource(R.drawable.outline_folder_open_24),
+                                " ",
+                                Modifier
+                                    .size(45.dp)
+                                    .clickable {
+                                        if (isOpenSingleFile) {
+                                            openMP3()
+                                        } else if (!isFirstTime) {
+                                            isShowChooseLessonDialog = true
+//                                            isChooseSingleLessonDialog = true
+//                                            openFolder()
+                                        }
+                                    }
+                                    .padding(4.dp),
+                                tint = Color.White
+                            )
+                            Text(
+                                titleString,
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp,
+                                color = if (isPlay) Color.White else Color.Cyan,
+                                modifier = Modifier
+                                    .weight(1.0f)
+                                    .align(alignment = Alignment.CenterVertically)
+                                    .clickable {
+                                        if (!isFirstTime) {
+                                            if (isEditFile && isShowEditText) {
+                                                saveFile("")
+                                            } else if (isShowList) {
+                                                if (mediaPlayer.isPlaying) {
+                                                    mediaPlayer.pause()
+                                                } else {
+                                                    mediaPlayer.start()
+                                                }
+                                                isPlay = mediaPlayer.isPlaying
+                                            }
+                                        }
+                                    }
+                                    .padding(start = 5.dp, end = 0.dp)
+                            )
+                            Icon(
+                                painterResource(R.drawable.outline_settings_24),
+                                " ",
+                                Modifier
+                                    .size(45.dp)
+                                    .padding(5.dp)
+                                    .clickable { isShowSettingDialog = true },
+                                tint = Color.White
+                            )
                         }
-                    } else {
-                        Home(
-                            myFontSize,
-                            { myFontSize = it },
-                            { pause() },
-                            50.0f
-                        )
+                        if (isFirstTime) {
+                            if (isShowDict) {
+                                Column {
+//                                    Row(Modifier.height(55.dp)) {}
+                                    //Row(Modifier.height(40.dp)) {}
+                                    ShowTextFieldFun(
+                                        Modifier
+                                            .weight(1.0f)
+                                            .fillMaxWidth()
+                                        //.padding(15.dp)
+                                    )
+                                    Slider(
+                                        value = myFontSize,
+                                        onValueChange = { myFontSize = it },
+                                        onValueChangeFinished = {},
+                                        valueRange = 20f..50f,
+                                        modifier = Modifier
+                                            .height(50.dp)
+                                            .padding(20.dp)
+                                    )
+//                                Row(Modifier.height(30.dp)) {}
+                                }
+                            }
+                        } else {
+                            Home(
+                                myFontSize,
+                                { myFontSize = it },
+                                { pause() },
+                                50.0f
+                            )
+                        }
                     }
                 }
             }
         }
         //registerBluetoothReceiver()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        rangeItem = menu!!.findItem(R.id.folder_range)
-        chooseItem = menu.findItem(R.id.choose_lesson)
-        editItem = menu.findItem(R.id.edit)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> doHome()
-            R.id.read_only -> readOnly(item)
-            R.id.help -> showHelp()
-            R.id.open -> openMP3()
-            R.id.folder -> openFolder()
-            R.id.folder_range -> {
-                isShowChooseLessonDialog = true
-            }
-
-            R.id.choose_lesson -> {
-                isChooseSingleLessonDialog = true
-            }
-
-            R.id.middle_play -> {
-                isToAddTime = !isToAddTime
-                isMiddleTime = !isMiddleTime
-                isAdjust = isMiddleTime
-                item.isChecked = isMiddleTime
-                item.isCheckable = true
-            }
-
-            R.id.edit_word -> {
-                editWordFile()
-            }
-
-            R.id.setting -> {
-                isShowSettingDialog = true
-            }
-        }
-        return true
     }
 
     @Deprecated("Deprecated in Java")
@@ -273,3 +295,15 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
 //    }
 }
 
+@Composable
+fun TransparentSystemBars() {
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons = !isSystemInDarkTheme()
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = Color.Transparent,
+            darkIcons = useDarkIcons,
+            isNavigationBarContrastEnforced = false,
+        )
+    }
+}

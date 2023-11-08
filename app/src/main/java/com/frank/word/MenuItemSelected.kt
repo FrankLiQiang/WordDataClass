@@ -1,43 +1,5 @@
 package com.frank.word
 
-import android.view.MenuItem
-
-fun readOnly(item: MenuItem) {
-    item.isChecked = isShowEditText
-    isShowEditText = !isShowEditText
-}
-
-fun playOrder(item: MenuItem, index: Int) {
-    sortType = index
-    item.isChecked = true
-    sortFiles()
-    sortWords()
-}
-
-fun doHome() {
-    if (isShowList) {
-        if (mediaPlayer.isPlaying) {
-            mediaPlayer.pause()
-        } else {
-            mediaPlayer.start()
-        }
-        return
-    }
-    if (isFirstTime) {
-        inputText = ""
-        isShowDict = true
-        isToDraw = 1 - isToDraw
-    } else {
-        if (isEditFile && isShowEditText) {
-            saveFile("")
-        }
-        if (!isPlay) {
-            mediaPlayer.start()
-        }
-        readTextFile(0)
-    }
-}
-
 fun showHelp() {
     isShowEditText = true
 
@@ -63,6 +25,8 @@ fun showHelp() {
 @：调整单词播放时刻 切换
 %：修改词性
 (：修改音调
+)：编辑单词文件
+$：显示分割中日文间隔按钮
 9：添加，修改例句1
 ?：显示本帮助信息。
 

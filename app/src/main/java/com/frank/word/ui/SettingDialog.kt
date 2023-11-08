@@ -21,8 +21,8 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -118,33 +118,13 @@ private fun ShowSettingDialog(
 
             Column(modifier = Modifier.padding(8.dp)) {
 
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text = LocalContext.current.getString(R.string.app_name),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .weight(1.0f)
-                    )
-                    if (!isFirstTime) {
-                        Text(
-                            text = "打开音频",
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.align(CenterVertically)
-                        )
-                        Checkbox(
-                            checked = isOpenFile,
-                            onCheckedChange = {
-                                isOpenFile = !isOpenFile
-                            },
-                            modifier = Modifier.align(CenterVertically)
-                        )
-                    }
-                }
+                Text(
+                    text = LocalContext.current.getString(R.string.app_name),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     Modifier
@@ -461,6 +441,22 @@ private fun ShowSettingDialog(
                     horizontalArrangement = Arrangement.End,
                     modifier = Modifier.fillMaxWidth()
                 ) {
+
+                    Checkbox(
+                        checked = isOpenFile,
+                        onCheckedChange = {
+                            isOpenFile = !isOpenFile
+                        },
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                    Text(
+                        text = "打开音频",
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                    Row(
+                        modifier = Modifier.weight(1.0f)
+                    ) {}
 
                     TextButton(onClick = onNegativeClick) {
                         Text(text = LocalContext.current.getString(R.string.btnOK))

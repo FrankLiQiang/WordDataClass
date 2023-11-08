@@ -123,12 +123,6 @@ fun Home(
 
     Column(Modifier.background(Color.Black)) {
         if (isToDraw < -1) return
-        Row(
-            Modifier
-                .fillMaxWidth()
-//                .height(30.dp)      //小米 Redmi Note11 Pro
-                .height(50.dp)        //Google Pixel 6A
-        ) {}
         SetChooseSingleLessonDialog()
         SetLessonRangDialog()
         if (!isShowList) {
@@ -353,7 +347,7 @@ fun Home(
                                     lastClickItem = menuItem
                                     wordIndex = index
                                     wordShowIndex = 0
-                                    for (i in 0.. wordList.size) {
+                                    for (i in 0..wordList.size) {
                                         if (isRightIndex(i)) {
                                             wordShowIndex++
                                         }

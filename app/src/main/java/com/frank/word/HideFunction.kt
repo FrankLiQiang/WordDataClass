@@ -61,6 +61,12 @@ fun hideFunction(str: String) {
         editSentence2(str)
     } else if (str.endsWith("7")) {
         editSentence3(str)
+    } else if (str.endsWith("$")) {
+        isToAddTime = !isToAddTime
+        isMiddleTime = !isMiddleTime
+        isAdjust = isMiddleTime
+    } else if (str.endsWith(")")) {
+        editWordFile()
     } else {
         inputText = str
     }
@@ -332,7 +338,6 @@ fun adjustWord() {
         return
     }
     isAdjust = !isAdjust
-    editItem!!.isVisible = isAdjust
     if (isAdjust) {
         loopNumber = 1
     }

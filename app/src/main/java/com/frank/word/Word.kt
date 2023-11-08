@@ -15,7 +15,7 @@ var currentSentence2 by mutableStateOf("")
 var currentSentence3 by mutableStateOf("")
 var inputText by mutableStateOf("")
 var isShowEditText by mutableStateOf(false)
-var isShowDict by mutableStateOf(false)
+var isShowDict by mutableStateOf(true)
 
 var isNORMAL by mutableStateOf(false)
 var isFAVORITE by mutableStateOf(false)

@@ -25,8 +25,6 @@ fun playMp3() {
                 thisTask = object : TimerTask() {
                     override fun run() {
                         try {
-                            if (titleString.isNotEmpty()) mainActivity.title = titleString
-                            titleString = ""
                             doTask()
                         } catch (e: Exception) {
                             e.toString()
