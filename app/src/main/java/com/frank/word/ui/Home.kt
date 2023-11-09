@@ -21,7 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -65,6 +64,7 @@ import com.frank.word.isShowEditText
 import com.frank.word.isShowList
 import com.frank.word.isToAddTime
 import com.frank.word.isToDraw
+import com.frank.word.isToSaveInfo
 import com.frank.word.musicStep
 import com.frank.word.myFontSize
 import com.frank.word.showNext
@@ -108,7 +108,7 @@ fun Home(
                 Slider(
                     value = progress,
                     onValueChange = doSlider,
-                    onValueChangeFinished = {},
+                    onValueChangeFinished = { isToSaveInfo = true },
                     valueRange = 15f..maxProgress,
                     modifier = Modifier
                         .height(20.dp)

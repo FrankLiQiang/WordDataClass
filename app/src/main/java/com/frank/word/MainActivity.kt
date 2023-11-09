@@ -225,7 +225,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                                     Slider(
                                         value = myFontSize,
                                         onValueChange = { myFontSize = it },
-                                        onValueChangeFinished = {},
+                                        onValueChangeFinished = {isToSaveInfo = true},
                                         valueRange = 20f..50f,
                                         modifier = Modifier
                                             .height(50.dp)

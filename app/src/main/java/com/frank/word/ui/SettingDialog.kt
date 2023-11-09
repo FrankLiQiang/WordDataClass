@@ -49,6 +49,7 @@ import com.frank.word.isShowSettingDialog
 import com.frank.word.isToSaveInfo
 import com.frank.word.loopNumber
 import com.frank.word.mediaPlayer
+import com.frank.word.myFontSize
 import com.frank.word.openFolder
 import com.frank.word.openMP3
 import com.frank.word.pauseTime
@@ -58,6 +59,7 @@ import com.frank.word.sortType
 @Composable
 fun ReadInfo() {
     val sp = LocalContext.current.getSharedPreferences("MY_WORD_RECITE_APP", Context.MODE_PRIVATE)
+    myFontSize = sp.getFloat("myFontSize", 30.0f)
     isOpenSingleFile = sp.getBoolean("isOpenSingleFile", false)
     loopNumber = sp.getInt("loopNumber", 1)
     pauseTime = sp.getLong("pauseTime", 0)
@@ -79,6 +81,7 @@ fun ReadInfo() {
 fun SaveInfo() {
     val sp = LocalContext.current.getSharedPreferences("MY_WORD_RECITE_APP", Context.MODE_PRIVATE)
     val editor: SharedPreferences.Editor = sp.edit()
+    editor.putFloat("myFontSize", myFontSize)
     editor.putBoolean("isOpenSingleFile", isOpenSingleFile)
     editor.putInt("loopNumber", loopNumber)
     editor.putLong("pauseTime", pauseTime)
