@@ -297,17 +297,18 @@ fun Home(
                     if (isRightIndex(index)) {
                         NavigationDrawerItem(
                             modifier = Modifier.height(60.dp),
-                            colors = NavigationDrawerItemDefaults.colors(
-                                selectedContainerColor = Color.White,
-                                unselectedContainerColor = Color.White,
-                            ),
+//                            colors = NavigationDrawerItemDefaults.colors(
+//                                selectedContainerColor = Color.White,
+//                                unselectedContainerColor = Color.White,
+//                            ),
                             shape = MaterialTheme.shapes.small,
                             selected = true,
                             icon = {
                                 Icon(
                                     painter = painterResource(R.drawable.baseline_brightness_1_24),
                                     contentDescription = stringResource(id = R.string.app_name),
-                                    tint = if (menuItem.isItemChosen) Color.Red else Color.DarkGray,
+                                    tint = if (menuItem.isItemChosen) Color.Red else
+                                        (if (isSystemInDarkTheme()) Color.White else Color.Black)
                                 )
                             },
                             label = {
@@ -315,7 +316,7 @@ fun Home(
                                     Text(
                                         text = decimalFormat.format(index + 1),
                                         fontSize = 14.sp,
-                                        color = Color.Blue,
+//                                        color = Color.Blue,
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                         style = MaterialTheme.typography.labelMedium,
@@ -323,7 +324,7 @@ fun Home(
                                     Text(
                                         text = menuItem.foreign,
                                         fontSize = myFontSize.sp,
-                                        color = Color.Black,
+//                                        color = Color.Black,
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                         style = MaterialTheme.typography.labelMedium,
@@ -331,7 +332,7 @@ fun Home(
                                     Text(
                                         text = menuItem.wordClass + menuItem.tone,
                                         fontSize = 20.sp,
-                                        color = Color.Blue,
+//                                        color = Color.Blue,
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                         style = MaterialTheme.typography.labelMedium,
@@ -365,7 +366,7 @@ fun Home(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .background(Color.LightGray)
+//                                    .background(Color.LightGray)
                             )
                             {
                                 Text(
@@ -391,10 +392,10 @@ fun Home(
                                         },
                                     text = menuItem.pronunciation + "\n" + menuItem.native,
                                     fontSize = myFontSize.sp,
-                                    color = Color.Black,
+//                                    color = Color.Black,
                                     lineHeight = (myFontSize + 2).sp,
                                     maxLines = 10,
-                                    style = MaterialTheme.typography.labelMedium,
+//                                    style = MaterialTheme.typography.labelMedium,
                                 )
                             }
                         }
