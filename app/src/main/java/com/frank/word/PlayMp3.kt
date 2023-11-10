@@ -12,7 +12,7 @@ var mp3Uri: Uri? = null
 
 fun playMp3() {
 
-    if (isFirstTime) {
+    if (isFirstTime || isFirstTimeForPlay) {
         mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(
                 AudioAttributes.Builder()
@@ -37,7 +37,8 @@ fun playMp3() {
     } else {
         mediaPlayer.reset()
     }
-    isFirstTime = true
+//    isFirstTime = true
+    isFirstTimeForPlay = true
     mediaPlayer.setDataSource(mainActivity, mp3Uri!!)
     mediaPlayer.prepare()
     mediaPlayer.setVolume(playVolume, playVolume)
@@ -54,9 +55,10 @@ fun doTask() {
             return
         }
     }
-    if (isFirstTime) {
+    if (isFirstTimeForPlay) {
         mediaPlayer.seekTo(iStart)
         isFirstTime = false
+        isFirstTimeForPlay = false
     }
     val currentPosition = mediaPlayer.currentPosition
     if (loopNumber == 0) {

@@ -226,7 +226,7 @@ fun Home(
 
                                 MotionEvent.ACTION_UP -> {
                                     if (kotlin.math.abs(it.x - StartX) < 10) {
-                                        pause
+                                        pause(0)
                                     } else {
                                         if (it.x > StartX) {
                                             showNext()
@@ -275,7 +275,7 @@ fun Home(
                 state = scrollState,
                 modifier = Modifier
                     .weight(1f)
-                    .background(Color.White)
+//                    .background(Color.White)
             ) {
 
                 if (isToDraw < -1) return@LazyColumn

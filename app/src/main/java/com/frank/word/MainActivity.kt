@@ -63,6 +63,7 @@ lateinit var mediaPlayer: MediaPlayer
 
 var isPlay by mutableStateOf(true)
 var isFirstTime by mutableStateOf(true)
+var isFirstTimeForPlay by mutableStateOf(true)
 var isEditFile by mutableStateOf(false)
 var playVolume by mutableStateOf(1.0f)
 var fileName = ""
