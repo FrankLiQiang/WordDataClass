@@ -225,10 +225,14 @@ fun Home(
                                 }
 
                                 MotionEvent.ACTION_UP -> {
-                                    if (it.x > StartX) {
-                                        showNext()
+                                    if (kotlin.math.abs(it.x - StartX) < 10) {
+                                        pause
                                     } else {
-                                        showPrev()
+                                        if (it.x > StartX) {
+                                            showNext()
+                                        } else {
+                                            showPrev()
+                                        }
                                     }
                                 }
                             }
