@@ -62,7 +62,6 @@ lateinit var folderName: String
 lateinit var pathAndName: String
 
 lateinit var mainActivity: MainActivity
-lateinit var mediaPlayer: MediaPlayer
 
 var isPlay by mutableStateOf(true)
 var isFirstTime by mutableStateOf(true)
@@ -152,11 +151,11 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                 }
             }
             pause = {
-                isPlay = !mediaPlayer.isPlaying
-                if (mediaPlayer.isPlaying) {
-                    mediaPlayer.pause()
+                isPlay = !mMediaPlayer.isPlaying
+                if (mMediaPlayer.isPlaying) {
+                    mMediaPlayer.pause()
                 } else {
-                    mediaPlayer.start()
+                    mMediaPlayer.start()
                 }
             }
 
@@ -206,12 +205,12 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                                             if (isEditFile && isShowEditText) {
                                                 saveFile("")
                                             } else if (isShowList) {
-                                                if (mediaPlayer.isPlaying) {
-                                                    mediaPlayer.pause()
+                                                if (mMediaPlayer.isPlaying) {
+                                                    mMediaPlayer.pause()
                                                 } else {
-                                                    mediaPlayer.start()
+                                                    mMediaPlayer.start()
                                                 }
-                                                isPlay = mediaPlayer.isPlaying
+                                                isPlay = mMediaPlayer.isPlaying
                                             }
                                         }
                                     }
@@ -279,7 +278,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         var bRet = true
         if (KeyEvent.KEYCODE_HEADSETHOOK == keyCode) {
-            mediaPlayer.pause()
+            mMediaPlayer.pause()
             bRet = true
         } else if (KeyEvent.KEYCODE_MEDIA_NEXT == keyCode) {
             showNext()
@@ -294,8 +293,8 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
     //https://www.cnblogs.com/komine/p/16187278.html
     override fun onKeyDown(keyAction: Int) {
         when (keyAction) {
-            MediaButtonReceiver.KeyActions.PLAY_ACTION -> mediaPlayer.start()
-            MediaButtonReceiver.KeyActions.PAUSE_ACTION -> mediaPlayer.pause()
+            MediaButtonReceiver.KeyActions.PLAY_ACTION -> mMediaPlayer.start()
+            MediaButtonReceiver.KeyActions.PAUSE_ACTION -> mMediaPlayer.pause()
             MediaButtonReceiver.KeyActions.PREV_ACTION -> showPrev()
             MediaButtonReceiver.KeyActions.NEXT_ACTION -> showNext()
         }

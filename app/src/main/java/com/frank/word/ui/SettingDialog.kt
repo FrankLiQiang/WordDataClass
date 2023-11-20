@@ -48,7 +48,7 @@ import com.frank.word.isShowList
 import com.frank.word.isShowSettingDialog
 import com.frank.word.isToSaveInfo
 import com.frank.word.loopNumber
-import com.frank.word.mediaPlayer
+import com.frank.word.mMediaPlayer
 import com.frank.word.myFontSize
 import com.frank.word.openFolder
 import com.frank.word.openMP3
@@ -420,7 +420,7 @@ private fun ShowSettingDialog(
                             onCheckedChange = {
                                 playVolume = if (it) 0f else 1f
                                 if (!isFirstTime) {
-                                    mediaPlayer.setVolume(playVolume, playVolume)
+                                    mMediaPlayer.setVolume(playVolume, playVolume)
                                 }
                             },
                             modifier = Modifier.align(CenterHorizontally)

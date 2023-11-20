@@ -15,7 +15,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import java.util.TimerTask
 
-private const val ACTION_PLAY: String = "com.example.action.PLAY"
+lateinit var mMediaPlayer: MediaPlayer
 
 class MyService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
 
@@ -27,11 +27,8 @@ class MyService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnError
         }
     }
 
-    private var mMediaPlayer: MediaPlayer? = MediaPlayer()  //null
-
     override fun onCreate() {
         super.onCreate()
-        mediaPlayer = MediaPlayer()
         Log.d("data", "onCreate")
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -49,49 +46,31 @@ class MyService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnError
             .setContentText("这是内容")
             .setSmallIcon(R.drawable.outline_add_circle_outline_24)
             .build()
-        manager.notify(1,notification);
-//        startForeground(1, notification)
+//        manager.notify(1,notification);
+        startForeground(1, notification)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        when (intent.action) {
-            ACTION_PLAY -> {
-//                mediaPlayer = MediaPlayer()
-                mediaPlayer = MediaPlayer().apply {
-                    setAudioAttributes(
-                        AudioAttributes.Builder()
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .setUsage(AudioAttributes.USAGE_MEDIA)
-                            .build()
-                    )
-
-                    if (thisTask == null) {
-                        thisTask = object : TimerTask() {
-                            override fun run() {
-                                try {
-                                    doTask()
-                                } catch (e: Exception) {
-                                    e.toString()
-                                }
-                            }
-                        }
-                        thisTimer.scheduleAtFixedRate(thisTask, 100, 100)
-                    }
-                }
-                mMediaPlayer?.apply {
-                    setWakeMode(applicationContext, PowerManager.PARTIAL_WAKE_LOCK)
-                    setOnPreparedListener(this@MyService)
-                    isLooping = true
-                    prepareAsync() // prepare async to not block main thread
-                }
-            }
+        mMediaPlayer = MediaPlayer().apply {
+            setWakeMode(mainActivity, PowerManager.PARTIAL_WAKE_LOCK)
+            setOnPreparedListener(this@MyService)
+            setDataSource(mainActivity, mp3Uri!!)
+            isLooping = true
+            prepareAsync()
+            setVolume(playVolume, playVolume)
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build()
+            )
         }
         return START_STICKY_COMPATIBILITY
     }
 
     fun initMediaPlayer() {
         // ...initialize the MediaPlayer here...
-        mediaPlayer?.setOnErrorListener(this@MyService)
+        mMediaPlayer.setOnErrorListener(this@MyService)
     }
 
     override fun onBind(intent: Intent?): IBinder {
@@ -100,7 +79,20 @@ class MyService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnError
 
     /** Called when MediaPlayer is ready */
     override fun onPrepared(mediaPlayer: MediaPlayer) {
+        isFirstTimeForPlay = true
         mediaPlayer.start()
+        if (thisTask == null) {
+            thisTask = object : TimerTask() {
+                override fun run() {
+                    try {
+                        doTask()
+                    } catch (e: Exception) {
+                        e.toString()
+                    }
+                }
+            }
+            thisTimer.scheduleAtFixedRate(thisTask, 100, 100)
+        }
     }
 
     override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
@@ -109,6 +101,6 @@ class MyService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnError
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer?.release()
+        mMediaPlayer.release()
     }
 }

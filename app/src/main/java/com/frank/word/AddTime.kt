@@ -22,7 +22,7 @@ fun addTimeInit() {
 }
 
 fun addMiddleTime() {
-    wordList[wordIndex].middlePlayTime = mediaPlayer.currentPosition
+    wordList[wordIndex].middlePlayTime = mMediaPlayer.currentPosition
     if (wordIndex == wordList.size - 2) {
         saveFile("")
     }
@@ -31,7 +31,7 @@ fun addMiddleTime() {
 
 fun addTime() {
     if (wordIndex < wordList.size) {
-        iStart = mediaPlayer.currentPosition
+        iStart = mMediaPlayer.currentPosition
         showCurrentWord()
         wordList[wordIndex].startPlayTime = iStart
         if (wordList[wordIndex].foreign == "3") {
@@ -66,7 +66,7 @@ fun changeTime(isToLeft: Boolean) {
                 wordList[playOrder[wordIndex]].startPlayTime = iStart
             }
         } else {
-            if (iStart < mediaPlayer.duration - 200) {
+            if (iStart < mMediaPlayer.duration - 200) {
                 iStart += 100
                 wordList[playOrder[wordIndex]].startPlayTime = iStart
             }

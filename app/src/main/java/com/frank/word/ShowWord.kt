@@ -40,8 +40,8 @@ fun showSeekTo() {
                 wordList[playOrder[wordIndex] + 1].startPlayTime
             }
         }
-        if (!isFirstTime && abs(iStart - mediaPlayer.currentPosition) > 1000) {
-            mediaPlayer.seekTo(iStart)
+        if (!isFirstTime && abs(iStart - mMediaPlayer.currentPosition) > 1000) {
+            mMediaPlayer.seekTo(iStart)
         }
     }
 }

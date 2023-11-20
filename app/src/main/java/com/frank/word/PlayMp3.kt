@@ -1,9 +1,7 @@
 package com.frank.word
 
-import android.media.AudioAttributes
-import android.media.MediaPlayer
+import android.content.Intent
 import android.net.Uri
-import android.os.PowerManager
 import java.util.Timer
 import java.util.TimerTask
 
@@ -14,60 +12,34 @@ var mp3Uri: Uri? = null
 fun playMp3() {
 
     if (isFirstTime || isFirstTimeForPlay) {
-        mediaPlayer = MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
-
-            if (thisTask == null) {
-                thisTask = object : TimerTask() {
-                    override fun run() {
-                        try {
-                            doTask()
-                        } catch (e: Exception) {
-                            e.toString()
-                        }
-                    }
-                }
-                thisTimer.scheduleAtFixedRate(thisTask, 100, 100)
-            }
-        }
+        val intent = Intent(mainActivity, MyService::class.java)
+        mainActivity.startService(intent)
     } else {
-        mediaPlayer.reset()
+        mMediaPlayer.reset()
+        mMediaPlayer.setDataSource(mainActivity, mp3Uri!!)
+        mMediaPlayer.prepareAsync()
+        mMediaPlayer.start()
     }
-//    isFirstTime = true
-    isFirstTimeForPlay = true
-    mediaPlayer.setWakeMode(mainActivity, PowerManager.PARTIAL_WAKE_LOCK)
-    mediaPlayer.setDataSource(mainActivity, mp3Uri!!)
-    mediaPlayer.prepareAsync()
-    mediaPlayer.setVolume(playVolume, playVolume)
-    mediaPlayer.start()
-//    val intent = Intent(mainActivity, MyService::class.java)
-//    mainActivity.startService(intent)
-    //MediaButtonReceiver(mainActivity,mainActivity)
 }
 
 fun doTask() {
-    if (!mediaPlayer.isPlaying) return
+    if (!mMediaPlayer.isPlaying) return
 
     if (!isLRC_Time_OK || !isLRC_Format_OK) {
-        iEnd = mediaPlayer.duration
+        iEnd = mMediaPlayer.duration
         if (isLRC_Time_OK || !isLRC_Format_OK) {
             return
         }
     }
     if (isFirstTimeForPlay) {
-        mediaPlayer.seekTo(iStart)
+        mMediaPlayer.seekTo(iStart)
         isFirstTime = false
         isFirstTimeForPlay = false
     }
-    val currentPosition = mediaPlayer.currentPosition
+    val currentPosition = mMediaPlayer.currentPosition
     if (loopNumber == 0) {
         if (currentPosition >= iEnd) {
-            mediaPlayer.seekTo(iStart)
+            mMediaPlayer.seekTo(iStart)
         }
         return
     } else if (loopNumber == 1) {
@@ -75,9 +47,9 @@ fun doTask() {
             if (currentPosition > iEnd) {
                 if (isForeignOnly) {
                     Thread() {
-                        mediaPlayer.pause()
+                        mMediaPlayer.pause()
                         Thread.sleep(pauseTime)
-                        mediaPlayer.start()
+                        mMediaPlayer.start()
                         showNext()
                     }.start()
                 } else {
@@ -99,7 +71,7 @@ fun doTask() {
         }
         if (loopIndex < loopNumber - 1) {
             loopIndex++
-            mediaPlayer.seekTo(iStart)
+            mMediaPlayer.seekTo(iStart)
             return
         }
         loopIndex = 0
