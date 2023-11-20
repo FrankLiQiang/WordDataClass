@@ -3,6 +3,7 @@ package com.frank.word
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.PowerManager
 import java.util.Timer
 import java.util.TimerTask
 
@@ -39,10 +40,13 @@ fun playMp3() {
     }
 //    isFirstTime = true
     isFirstTimeForPlay = true
+    mediaPlayer.setWakeMode(mainActivity, PowerManager.PARTIAL_WAKE_LOCK)
     mediaPlayer.setDataSource(mainActivity, mp3Uri!!)
-    mediaPlayer.prepare()
+    mediaPlayer.prepareAsync()
     mediaPlayer.setVolume(playVolume, playVolume)
     mediaPlayer.start()
+//    val intent = Intent(mainActivity, MyService::class.java)
+//    mainActivity.startService(intent)
     //MediaButtonReceiver(mainActivity,mainActivity)
 }
 

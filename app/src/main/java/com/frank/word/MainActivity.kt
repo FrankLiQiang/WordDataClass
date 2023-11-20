@@ -2,10 +2,13 @@ package com.frank.word
 
 //import android.bluetooth.BluetoothAdapter
 //import android.bluetooth.BluetoothDevice
+import android.content.ComponentName
 import android.content.Intent
+import android.content.ServiceConnection
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.os.IBinder
 import android.view.KeyEvent
 import android.view.WindowManager
 import android.widget.Toast
@@ -73,6 +76,18 @@ lateinit var openFolder: () -> Unit
 lateinit var pause: () -> Unit
 
 class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
+
+    lateinit var myBinder: MyService.mBinder
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            myBinder = service as MyService.mBinder
+//            myBinder.startDownload()
+//            myBinder.getProgress()
+        }
+
+        override fun onServiceDisconnected(name: ComponentName) {
+        }
+    }
 
     //    private val mBluetoothStateReceiver: BluetoothStateReceiver = BluetoothStateReceiver()
     private val dirRequest =
@@ -226,7 +241,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                                     Slider(
                                         value = myFontSize,
                                         onValueChange = { myFontSize = it },
-                                        onValueChangeFinished = {isToSaveInfo = true},
+                                        onValueChangeFinished = { isToSaveInfo = true },
                                         valueRange = 20f..50f,
                                         modifier = Modifier
                                             .height(50.dp)
@@ -255,6 +270,8 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
         if (!isFirstTime) {
             MediaPlayer().stop()
             MediaPlayer().release()
+            val intent = Intent(this, MyService::class.java)
+            stopService(intent) // 停止Service
         }
         exitProcess(0)
     }
