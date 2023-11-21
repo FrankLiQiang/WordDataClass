@@ -9,6 +9,7 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
@@ -24,6 +25,23 @@ class MyService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnError
     class mBinder : Binder() {
         fun a() {
             Log.d("data", "service")
+        }
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.app_name)
+            val descriptionText = getString(R.string.app_name)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("CHANNEL_ID", name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
 
@@ -44,7 +62,9 @@ class MyService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnError
         val notification = NotificationCompat.Builder(this, "my_service")
             .setContentTitle("这是主题")
             .setContentText("这是内容")
-            .setSmallIcon(R.drawable.outline_add_circle_outline_24)
+            .setContentIntent(pi)
+            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setAutoCancel(false)
             .build()
 //        manager.notify(1,notification);
         startForeground(1, notification)
