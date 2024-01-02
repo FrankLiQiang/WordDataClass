@@ -104,6 +104,14 @@ fun showTitle() {
     }
 }
 
+fun sumWords() {
+    wordNum = 0
+    for (i: Int in 0 until wordList.size - 1) {
+        if (isRightIndex(i)) {
+            wordNum++
+        }
+    }
+}
 var beginIndex = -1
 fun showPrev() {
     if (!isPlayFolder) {

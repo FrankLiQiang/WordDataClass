@@ -55,6 +55,7 @@ import com.frank.word.openMP3
 import com.frank.word.pauseTime
 import com.frank.word.playVolume
 import com.frank.word.sortType
+import com.frank.word.sumWords
 
 @Composable
 fun ReadInfo() {
@@ -286,6 +287,7 @@ private fun ShowSettingDialog(
                             checked = iShowDel,
                             onCheckedChange = {
                                 iShowDel = !iShowDel
+                                sumWords()
                             },
                             modifier = Modifier.align(CenterHorizontally)
                         )
@@ -299,6 +301,7 @@ private fun ShowSettingDialog(
                             checked = iShowNormal,
                             onCheckedChange = {
                                 iShowNormal = !iShowNormal
+                                sumWords()
                             },
                             modifier = Modifier.align(CenterHorizontally)
                         )
@@ -315,6 +318,7 @@ private fun ShowSettingDialog(
                             checked = iShowFavorite,
                             onCheckedChange = {
                                 iShowFavorite = !iShowFavorite
+                                sumWords()
                             },
                             modifier = Modifier.align(CenterHorizontally)
                         )
