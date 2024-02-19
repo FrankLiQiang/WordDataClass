@@ -137,14 +137,6 @@ fun WordList(modifier: Modifier) {
                                 overflow = TextOverflow.Ellipsis,
                                 style = MaterialTheme.typography.labelMedium,
                             )
-                            Text(
-                                text = menuItem.wordClass + menuItem.tone,
-                                fontSize = 20.sp,
-//                                        color = Color.Blue,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                                style = MaterialTheme.typography.labelMedium,
-                            )
                         }
                     },
                     onClick = {
@@ -199,6 +191,13 @@ fun WordList(modifier: Modifier) {
                             lineHeight = (myFontSize + 2).sp,
                             maxLines = 10,
 //                                    style = MaterialTheme.typography.labelMedium,
+                        )
+                        Text(
+                            text = "　" + menuItem.wordClass + menuItem.tone,
+                            fontSize = 20.sp,
+                            color = Color.White,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
                 }
