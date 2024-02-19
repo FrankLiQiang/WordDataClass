@@ -15,6 +15,9 @@ var iShowDel by mutableStateOf(true)
 var iShowNormal by mutableStateOf(true)
 var iShowFavorite by mutableStateOf(true)
 
+var iShowForeign0 by mutableStateOf(true)
+var iShowPronunciation0 by mutableStateOf(true)
+var iShowMeaning0 by mutableStateOf(true)
 var iShowForeign by mutableStateOf(true)
 var iShowPronunciation by mutableStateOf(true)
 var iShowMeaning by mutableStateOf(true)
@@ -71,7 +74,12 @@ fun showCurrentWord(): Boolean {
                 str += "\n" + wordList[playOrder[wordIndex]].pronunciation
             }
         } else {
-            str += wordList[playOrder[wordIndex]].pronunciation
+            val c = wordList[playOrder[wordIndex]].pronunciation.toCharArray()[0]
+            if (c in 'a'..'z' || c in 'A'..'Z') {
+                str += wordList[playOrder[wordIndex]].foreign
+            } else {
+                str += wordList[playOrder[wordIndex]].pronunciation
+            }
         }
     }
     if (iShowMeaning) {

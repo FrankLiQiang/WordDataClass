@@ -11,37 +11,26 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,12 +43,17 @@ import com.frank.word.currentSentence2
 import com.frank.word.currentSentence3
 import com.frank.word.currentShowWord
 import com.frank.word.currentWordClass
+import com.frank.word.iShowForeign
+import com.frank.word.iShowForeign0
+import com.frank.word.iShowMeaning
+import com.frank.word.iShowMeaning0
+import com.frank.word.iShowPronunciation
+import com.frank.word.iShowPronunciation0
 import com.frank.word.isDEL
 import com.frank.word.isEditFile
 import com.frank.word.isFAVORITE
 import com.frank.word.isMiddleTime
 import com.frank.word.isPlay
-import com.frank.word.isRightIndex
 import com.frank.word.isShowEditText
 import com.frank.word.isShowList
 import com.frank.word.isToAddTime
@@ -67,15 +61,11 @@ import com.frank.word.isToDraw
 import com.frank.word.isToSaveInfo
 import com.frank.word.musicStep
 import com.frank.word.myFontSize
+import com.frank.word.showCurrentWord
 import com.frank.word.showNext
 import com.frank.word.showPrev
-import com.frank.word.showWord
 import com.frank.word.wordClassColor
-import com.frank.word.wordIndex
-import com.frank.word.wordList
-import com.frank.word.wordShowIndex
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
 private var StartX = 0f
@@ -118,9 +108,6 @@ fun Home(
         }
     }
 
-    val scrollState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
-
     Column(Modifier.background(Color.Black)) {
         if (isToDraw < -1) return
         SetChooseSingleLessonDialog()
@@ -159,6 +146,25 @@ fun Home(
                         onClick = pause,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .pointerInteropFilter {
+                                when (it.action) {
+                                    MotionEvent.ACTION_DOWN -> {
+                                        iShowForeign0 = iShowForeign
+                                        iShowPronunciation0 = iShowPronunciation
+                                        iShowMeaning0 = iShowMeaning
+                                        iShowForeign = true
+                                        iShowPronunciation = true
+                                        iShowMeaning = true
+                                    }
+                                    MotionEvent.ACTION_UP -> {
+                                        iShowForeign = iShowForeign0
+                                        iShowPronunciation = iShowPronunciation0
+                                        iShowMeaning = iShowMeaning0
+                                    }
+                                }
+                                showCurrentWord()
+                                true
+                            }
                             .background(
                                 if (isFAVORITE)
                                     colorResource(R.color.purple_700)
@@ -271,142 +277,8 @@ fun Home(
                 Modifier
                     .fillMaxWidth()
             )
-            LazyColumn(
-                state = scrollState,
-                modifier = Modifier
-                    .weight(1f)
-//                    .background(Color.White)
-            ) {
-
-                if (isToDraw < -1) return@LazyColumn
-
-                moveToCurrentWord = { row ->
-                    coroutineScope.launch {
-                        if (lastClickItem != null && wordList[row] != lastClickItem) {
-                            lastClickItem!!.isItemChosen = false
-                        }
-                        wordList[row].isItemChosen = true
-                        lastClickItem = wordList[row]
-                        //scrollState.animateScrollToItem(row)
-                        try {
-                            scrollState.scrollToItem(if (row > 2) row - 2 else 0)
-                        } catch (_: Exception) {
-                        }
-                        isToDraw = 1 - isToDraw
-                    }
-                }
-
-                itemsIndexed(wordList.subList(0, wordList.size - 1)) { index, menuItem ->
-
-                    if (isRightIndex(index)) {
-                        NavigationDrawerItem(
-                            modifier = Modifier.height(60.dp),
-//                            colors = NavigationDrawerItemDefaults.colors(
-//                                selectedContainerColor = Color.White,
-//                                unselectedContainerColor = Color.White,
-//                            ),
-                            shape = MaterialTheme.shapes.small,
-                            selected = true,
-                            icon = {
-                                Icon(
-                                    painter = painterResource(R.drawable.baseline_brightness_1_24),
-                                    contentDescription = stringResource(id = R.string.app_name),
-                                    tint = if (menuItem.isItemChosen) Color.Red else
-                                        (if (isSystemInDarkTheme()) Color.White else Color.Black)
-                                )
-                            },
-                            label = {
-                                Row {
-                                    Text(
-                                        text = decimalFormat.format(index + 1),
-                                        fontSize = 14.sp,
-//                                        color = Color.Blue,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        style = MaterialTheme.typography.labelMedium,
-                                    )
-                                    Text(
-                                        text = menuItem.foreign,
-                                        fontSize = myFontSize.sp,
-//                                        color = Color.Black,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        style = MaterialTheme.typography.labelMedium,
-                                    )
-                                    Text(
-                                        text = menuItem.wordClass + menuItem.tone,
-                                        fontSize = 20.sp,
-//                                        color = Color.Blue,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        style = MaterialTheme.typography.labelMedium,
-                                    )
-                                }
-                            },
-                            onClick = {
-                                if (lastClickItem != null && menuItem != lastClickItem) {
-                                    lastClickItem!!.isItemChosen = false
-                                }
-                                menuItem.isItemChosen = !menuItem.isItemChosen
-                                if (menuItem.isItemChosen) {
-                                    lastClickItem = menuItem
-                                    wordIndex = index
-                                    wordShowIndex = 0
-                                    for (i in 0..wordList.size) {
-                                        if (isRightIndex(i)) {
-                                            wordShowIndex++
-                                        }
-                                        if (i >= index) {
-                                            break
-                                        }
-                                    }
-                                    showWord()
-                                }
-                                isItem = true
-                                isToDraw = 1 - isToDraw
-                            },
-                        )
-                        if (menuItem.isItemChosen) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-//                                    .background(Color.LightGray)
-                            )
-                            {
-                                Text(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(
-                                            brush = Brush.verticalGradient(
-                                                colors = listOf(
-                                                    Color.DarkGray,
-                                                    Color.LightGray,
-                                                ),
-                                                startY = 0f,
-                                                endY = 30f,
-                                                tileMode = TileMode.Clamp
-                                            )
-                                        )
-                                        .padding(5.dp)
-                                        .padding(start = 50.dp)
-                                        .clickable {
-                                            menuItem.isItemChosen = false
-                                            isItem = false
-                                            isToDraw = 1 - isToDraw
-                                        },
-                                    text = menuItem.pronunciation + "\n" + menuItem.native,
-                                    fontSize = myFontSize.sp,
-//                                    color = Color.Black,
-                                    lineHeight = (myFontSize + 2).sp,
-                                    maxLines = 10,
-//                                    style = MaterialTheme.typography.labelMedium,
-                                )
-                            }
-                        }
-                        Divider(color = Color.LightGray)
-                    }
-                }
-            }
+            WordList(Modifier
+                .weight(1f))
             showSlider()
         }
     }
