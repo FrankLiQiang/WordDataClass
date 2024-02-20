@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -165,7 +166,7 @@ fun WordList(modifier: Modifier) {
                 if (menuItem.isItemChosen) {
                     Column(
                         modifier = Modifier.fillMaxWidth()
-//                                    .background(Color.LightGray)
+                                    .background(colorResource(R.color.cixingbg))
                     ) {
                         Text(
                             modifier = Modifier
@@ -197,7 +198,7 @@ fun WordList(modifier: Modifier) {
                             fontSize = 20.sp,
                             color = Color.White,
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }

@@ -234,7 +234,7 @@ fun Home(
                                     if (kotlin.math.abs(it.x - StartX) < 10) {
                                         pause(0)
                                     } else {
-                                        if (it.x > StartX) {
+                                        if (it.x < StartX) {
                                             showNext()
                                         } else {
                                             showPrev()
