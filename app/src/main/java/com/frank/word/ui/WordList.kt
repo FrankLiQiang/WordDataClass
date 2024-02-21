@@ -19,13 +19,14 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -165,20 +166,20 @@ fun WordList(modifier: Modifier) {
                 )
                 if (menuItem.isItemChosen) {
                     Column(
-                        modifier = Modifier.fillMaxWidth()
-                                    .background(colorResource(R.color.cixingbg))
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color.DarkGray,
+                                        Color.LightGray,
+                                    ), startY = 0f, endY = 30f, tileMode = TileMode.Clamp
+                                )
+                            )
                     ) {
                         Text(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(
-                                    brush = Brush.verticalGradient(
-                                        colors = listOf(
-                                            Color.DarkGray,
-                                            Color.LightGray,
-                                        ), startY = 0f, endY = 30f, tileMode = TileMode.Clamp
-                                    )
-                                )
                                 .padding(5.dp)
                                 .padding(start = 50.dp)
                                 .clickable {
@@ -191,13 +192,16 @@ fun WordList(modifier: Modifier) {
 //                                    color = Color.Black,
                             lineHeight = (myFontSize + 2).sp,
                             maxLines = 10,
-//                                    style = MaterialTheme.typography.labelMedium,
                         )
                         Text(
                             text = "　" + menuItem.wordClass + menuItem.tone,
                             fontSize = 20.sp,
-                            color = Color.White,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 30.dp)
+                                .align(Alignment.End),
                             maxLines = 1,
+                            textAlign = TextAlign.End,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
