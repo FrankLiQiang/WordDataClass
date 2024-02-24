@@ -112,7 +112,16 @@ fun Home(
         if (isToDraw < -1) return
         SetChooseSingleLessonDialog()
         SetLessonRangDialog()
-        if (!isShowList) {
+        if (isShowList) {
+            LinearProgressIndicator(
+                progress = musicStep,
+                Modifier
+                    .fillMaxWidth()
+            )
+            WordList(Modifier
+                .weight(1f))
+            showSlider()
+        } else {
             if (!isEditFile) {
                 LinearProgressIndicator(
                     progress = musicStep,
@@ -176,6 +185,30 @@ fun Home(
                     )
                 }
             }
+
+            val m = Modifier
+                .fillMaxWidth()
+                .pointerInteropFilter {
+                    when (it.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            StartX = it.x
+                        }
+
+                        MotionEvent.ACTION_UP -> {
+                            if (kotlin.math.abs(it.x - StartX) < 10) {
+                                pause(0)
+                            } else {
+                                if (it.x < StartX) {
+                                    showNext()
+                                } else {
+                                    showPrev()
+                                }
+                            }
+                        }
+                    }
+                    true
+                }
+                .padding(5.dp)
             if (currentSentence1.isNotEmpty()) {
                 Text(
                     text = AnnotatedString(currentSentence1),
@@ -183,9 +216,7 @@ fun Home(
                     color = if (isPlay) Color.White else Color.Cyan,
                     textAlign = TextAlign.Start,
                     lineHeight = (myFontSize * 1.2f).sp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                    //.padding(5.dp)
+                    modifier = m
                 )
             }
             if (currentSentence2.isNotEmpty()) {
@@ -195,9 +226,7 @@ fun Home(
                     lineHeight = (myFontSize * 1.2f).sp,
                     color = if (isPlay) Color.White else Color.Cyan,
                     textAlign = TextAlign.Start,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp)
+                    modifier = m
                 )
             }
             if (currentSentence3.isNotEmpty()) {
@@ -207,45 +236,15 @@ fun Home(
                     lineHeight = (myFontSize * 1.2f).sp,
                     color = if (isPlay) Color.White else Color.Cyan,
                     textAlign = TextAlign.Start,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp)
+                    modifier = m
                 )
             }
             if (isShowEditText && !isToAddTime) {
                 ShowTextFieldFun(
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1.0f)
-                        .padding(5.dp)
+                    m.weight(1.0f)
                 )
             } else if (!isToAddTime) {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .weight(1.0f)
-                        .pointerInteropFilter {
-                            when (it.action) {
-                                MotionEvent.ACTION_DOWN -> {
-                                    StartX = it.x
-                                }
-
-                                MotionEvent.ACTION_UP -> {
-                                    if (kotlin.math.abs(it.x - StartX) < 10) {
-                                        pause(0)
-                                    } else {
-                                        if (it.x < StartX) {
-                                            showNext()
-                                        } else {
-                                            showPrev()
-                                        }
-                                    }
-                                }
-                            }
-                            true
-                        }
-                        .padding(5.dp)
-                ) {}
+                Row(m.weight(1.0f)) {}
             }
             if (isToAddTime) {
                 Icon(
@@ -271,15 +270,6 @@ fun Home(
                 showSlider(0)
                 BottomBar()
             }
-        } else {
-            LinearProgressIndicator(
-                progress = musicStep,
-                Modifier
-                    .fillMaxWidth()
-            )
-            WordList(Modifier
-                .weight(1f))
-            showSlider()
         }
     }
 }
