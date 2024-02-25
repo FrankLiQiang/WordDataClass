@@ -27,7 +27,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
@@ -56,6 +55,7 @@ import com.frank.word.ui.ShowTextFieldFun
 import com.frank.word.ui.maxLessonNum
 import com.frank.word.ui.theme.WordTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlin.system.exitProcess
@@ -180,7 +180,7 @@ class MainActivity : ComponentActivity(), MediaButtonReceiver.IKeyDownListener {
                     val cameraPermissionState = rememberPermissionState(
                         Manifest.permission.POST_NOTIFICATIONS
                     )
-                    if (cameraPermissionState.hasPermission) {
+                    if (cameraPermissionState.status.isGranted) {
                         SetSettingDialog()
                         Column(modifier = Modifier.fillMaxSize()) {
                             Row(Modifier.height(40.dp)) {}
