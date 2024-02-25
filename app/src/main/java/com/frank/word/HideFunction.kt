@@ -231,10 +231,10 @@ fun searchWord(s: String) {
     }
     if (foundIndex == -1) {
         inputText = "Not Found!"
-        //TODO 得到焦点
     } else {
         wordIndex = foundIndex
         inputText = ""
+        wordShowIndex = wordIndex + 1
         showWord()
     }
 }
