@@ -241,7 +241,10 @@ fun Home(
             }
             if (isShowEditText && !isToAddTime) {
                 ShowTextFieldFun(
-                    m.weight(1.0f)
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(1.0f)
+                        .padding(5.dp)
                 )
             } else if (!isToAddTime) {
                 Row(m.weight(1.0f)) {}
